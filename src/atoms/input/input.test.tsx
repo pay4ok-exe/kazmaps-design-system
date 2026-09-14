@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { createRef } from "react";
+import { createRef, type ChangeEvent } from "react";
 
 import { Input } from "./input";
 
@@ -59,5 +59,8 @@ describe("Input", () => {
     render(<Input label="БИН" mask="bin" onChange={onChange} />);
     await userEvent.type(screen.getByLabelText("БИН"), "12ab34567890123");
     expect(screen.getByLabelText<HTMLInputElement>("БИН").value).toBe("123456789012");
+    expect((onChange.mock.calls.at(-1)?.[0] as ChangeEvent<HTMLInputElement>).target.value).toBe(
+      "123456789012",
+    );
   });
 });

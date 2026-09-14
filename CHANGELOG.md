@@ -11,7 +11,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
   `PhoneInput` (корневой вход и `/maps`): регион, маска, E.164. Тип `InputMask` сужен до
   `"email" | "bin" | "url"`, пометка `@deprecated` с пропа `mask` снята — оставшиеся маски
   поддерживаются. Миграция: `<Input mask="phone" … />` → `<PhoneInput … />` (business-client,
-  main-web и booking-client этот проп уже не используют, обновление пина не требует правок).
+  main-web и booking-client этот проп уже не используют, из-за этого удаления правок при
+  обновлении пина не требуется).
 
 ## [0.5.1] — 2026-09-10
 
