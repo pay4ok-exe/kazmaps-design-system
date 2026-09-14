@@ -3,6 +3,16 @@
 All notable changes to `@temirtator/kazmaps-design-system` are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: semver.
 
+## [0.6.0] — 2026-09-14
+
+### Removed
+
+- `Input mask="phone"` (atoms), помеченный устаревшим с 0.3.0. Телефон вводится только через
+  `PhoneInput` (корневой вход и `/maps`): регион, маска, E.164. Тип `InputMask` сужен до
+  `"email" | "bin" | "url"`, пометка `@deprecated` с пропа `mask` снята — оставшиеся маски
+  поддерживаются. Миграция: `<Input mask="phone" … />` → `<PhoneInput … />` (business-client,
+  main-web и booking-client этот проп уже не используют, обновление пина не требует правок).
+
 ## [0.5.1] — 2026-09-10
 
 ### Fixed
