@@ -8,7 +8,7 @@ export const States: StoryObj<typeof Input> = {
   render: () => (
     <div className="flex w-80 flex-col gap-4">
       <Input label="Название" placeholder="ТОО Ромашка" />
-      <Input label="Телефон" mask="phone" hint="Формат +7" />
+      <Input label="БИН" mask="bin" hint="12 цифр" />
       <Input label="Email" error="Неверный формат" defaultValue="not-an-email" />
       <Input label="Пароль" type="password" revealable />
       <Input label="Недоступно" disabled placeholder="disabled" />
