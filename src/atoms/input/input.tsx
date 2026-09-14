@@ -2,14 +2,11 @@
 
 import { Eye, EyeOff } from "lucide-react";
 import { forwardRef, type InputHTMLAttributes, type ReactNode, useId, useState } from "react";
-import InputMask, { type BeforeMaskedStateChangeFn } from "react-input-mask-format";
 
-import { findRegion } from "../../data/regions";
 import { cn } from "../../lib/cn";
-import { digitsOnly, formatNational, literalDigits, maskFor } from "../../lib/phone";
 
-/** @deprecated `mask="phone"` заменяется компонентом `PhoneInput`; удаление в следующей минорной версии после миграции business-client на `PhoneInput`. */
-export type InputMask = "phone" | "email" | "bin" | "url";
+/** Лёгкое встроенное форматирование для не-телефонных полей; телефон — `PhoneInput`. */
+export type InputMask = "email" | "bin" | "url";
 
 export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
@@ -18,7 +15,7 @@ export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   required?: boolean;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
-  /** @deprecated `mask="phone"` использует прежний движок форматирования; используйте `PhoneInput`. Удаление в следующей минорной версии после миграции business-client на `PhoneInput`. */
+  /** `email` задаёт тип поля; `bin` оставляет 12 цифр; `url` нормализуется на blur. */
   mask?: InputMask;
   revealable?: boolean;
   /** Подпись reveal-кнопки в состоянии «пароль скрыт». */
@@ -31,32 +28,11 @@ function formatBin(raw: string): string {
   return raw.replace(/\D/g, "").slice(0, 12);
 }
 
-/** Normalize a URL on blur: strip spaces, prepend https:// when no scheme. Empty stays empty. */
 function normalizeUrl(raw: string): string {
   const v = raw.trim().replace(/\s+/g, "");
   if (!v) return "";
   return /^[a-z][\w+.-]*:\/\//i.test(v) ? v : `https://${v}`;
 }
-
-const KZ = findRegion("KZ")!;
-const PHONE_MASK = `+${KZ.dial} ${maskFor(KZ)}`;
-const PHONE_EMPTY_SIGNATURE = KZ.dial + literalDigits(maskFor(KZ));
-
-const phoneRules: BeforeMaskedStateChangeFn = ({ previousState, currentState, nextState }) => {
-  const isChange = previousState !== undefined && currentState !== undefined;
-  if (!isChange) {
-    return digitsOnly(nextState.value) === PHONE_EMPTY_SIGNATURE
-      ? { ...nextState, value: "" }
-      : nextState;
-  }
-  const rawDigits = digitsOnly(currentState.value);
-  let digits = rawDigits;
-  if (digits.length === 11 && (digits.startsWith("8") || digits.startsWith("7")))
-    digits = digits.slice(1);
-  if (digits === rawDigits) return nextState;
-  const value = `+7 ${formatNational(KZ, digits.slice(0, 10))}`;
-  return { ...nextState, value, selection: { start: value.length, end: value.length } };
-};
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   {
@@ -99,8 +75,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     onChange?.(e);
   };
 
-  // URL is normalized on blur (not per-keystroke) so typing isn't disrupted; the
-  // synthesized onChange pushes the normalized value into RHF before onBlur.
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (mask === "url") {
       e.target.value = normalizeUrl(e.target.value);
@@ -108,8 +82,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     }
     onBlur?.(e);
   };
-
-  const { value, disabled, readOnly, onFocus, onMouseDown, ...restWithoutControlled } = rest;
 
   const inputClassName = cn(
     "h-full w-full bg-transparent text-[length:var(--text-sm)] text-[var(--ink)]",
@@ -120,32 +92,20 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     className,
   );
 
-  const inputEl =
-    mask === "phone" ? (
-      <input
-        id={id}
-        type="tel"
-        inputMode="tel"
-        required={required}
-        aria-describedby={hasDesc ? descId : undefined}
-        aria-invalid={hasError || undefined}
-        className={inputClassName}
-        {...restWithoutControlled}
-      />
-    ) : (
-      <input
-        ref={ref}
-        id={id}
-        type={resolvedType}
-        required={required}
-        aria-describedby={hasDesc ? descId : undefined}
-        aria-invalid={hasError || undefined}
-        onChange={mask ? handleChange : onChange}
-        onBlur={mask === "url" ? handleBlur : onBlur}
-        className={inputClassName}
-        {...rest}
-      />
-    );
+  const inputEl = (
+    <input
+      ref={ref}
+      id={id}
+      type={resolvedType}
+      required={required}
+      aria-describedby={hasDesc ? descId : undefined}
+      aria-invalid={hasError || undefined}
+      onChange={mask ? handleChange : onChange}
+      onBlur={mask === "url" ? handleBlur : onBlur}
+      className={inputClassName}
+      {...rest}
+    />
+  );
 
   return (
     <div className="flex flex-col gap-1">
@@ -182,25 +142,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           </span>
         )}
 
-        {mask === "phone" ? (
-          <InputMask
-            ref={ref}
-            mask={PHONE_MASK}
-            maskPlaceholder="_"
-            value={value}
-            onChange={onChange}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            onMouseDown={onMouseDown}
-            disabled={disabled}
-            readOnly={readOnly}
-            beforeMaskedStateChange={phoneRules}
-          >
-            {inputEl}
-          </InputMask>
-        ) : (
-          inputEl
-        )}
+        {inputEl}
 
         {isPassword && revealable ? (
           <button
