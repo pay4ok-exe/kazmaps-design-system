@@ -10,7 +10,7 @@ export default meta;
 export const States: StoryObj<typeof PhoneInput> = {
   render: () => (
     <div className="flex w-[340px] flex-col gap-4">
-      <PhoneInput label="Пусто" hint="Код придёт в WhatsApp" />
+      <PhoneInput label="Пусто" />
       <PhoneInput label="Заполнено" defaultValue="+77012345678" />
       <PhoneInput label="Ошибка" defaultValue="+7701234" invalid />
     </div>
@@ -34,7 +34,6 @@ export const Live: StoryObj<typeof PhoneInput> = { render: () => <LiveDemo /> };
 export const Playground: StoryObj<typeof PhoneInput> = {
   args: {
     label: "Номер телефона",
-    hint: "",
     defaultRegion: "KZ",
     locale: "ru",
     invalid: false,

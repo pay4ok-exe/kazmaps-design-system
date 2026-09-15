@@ -160,7 +160,7 @@ if (!valid) show("Введите номер полностью");
 | `onFocus`, `onBlur`                       | `FocusEventHandler`            | Проксируются на внутренний `<input>`.                                                     |
 | `regions`                                 | `RegionCode[]`                 | Ограничивает список регионов.                                                             |
 | `locale`                                  | `"ru" \| "en"`                 | Язык названий стран; по умолчанию `"ru"`.                                                 |
-| `label`, `hint`                           | `string`                       | Подпись над полем и подсказка под ним.                                                    |
+| `label`                                   | `string`                       | Подпись над полем. Подсказок и текста ошибки под полем нет — только тост.                 |
 | `invalid`                                 | `boolean`                      | Красная обводка и `aria-invalid`; текст ошибки — тостом.                                  |
 | `required`, `disabled`, `readOnly`        | `boolean`                      |                                                                                           |
 | `id`, `name`, `autoFocus`, `autoComplete` |                                | Как у обычного `<input>`; `autoComplete` по умолчанию `"tel-national"`.                   |

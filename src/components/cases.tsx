@@ -96,7 +96,7 @@ export const KIT_CASES: [string, ReactElement][] = [
     </Panel>,
   ],
   ["PasswordInput", <PasswordInput key="k" label="Пароль" value="secret" onChange={noop} />],
-  ["PhoneInput", <PhoneInput key="k" label="Телефон" hint="Код придёт в WhatsApp" />],
+  ["PhoneInput", <PhoneInput key="k" label="Телефон" />],
   ["PhoneInput invalid", <PhoneInput key="k" label="Телефон" invalid />],
   [
     "PlaceRow",

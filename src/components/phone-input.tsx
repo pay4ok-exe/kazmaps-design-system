@@ -27,7 +27,6 @@ export type PhoneInputProps = {
   regions?: RegionCode[];
   locale?: "ru" | "en";
   label?: string;
-  hint?: string;
   invalid?: boolean;
   required?: boolean;
   disabled?: boolean;
@@ -51,7 +50,6 @@ export function PhoneInput({
   regions: regionCodes,
   locale = "ru",
   label,
-  hint,
   invalid = false,
   required,
   disabled,
@@ -65,7 +63,6 @@ export function PhoneInput({
 }: PhoneInputProps) {
   const generatedId = useId();
   const id = idProp ?? generatedId;
-  const descId = `${id}-desc`;
   const pickerId = `${id}-picker`;
   const labels = { ...DEFAULT_LABELS, ...labelsProp };
 
@@ -92,8 +89,6 @@ export function PhoneInput({
   });
 
   const hasError = invalid;
-  const description = hint;
-  const hasDesc = Boolean(description);
 
   return (
     <div className={className}>
@@ -177,7 +172,6 @@ export function PhoneInput({
                 autoFocus={autoFocus}
                 required={required}
                 placeholder={region.mask ? region.mask.replace(/\d/g, "0") : undefined}
-                aria-describedby={hasDesc ? descId : undefined}
                 aria-invalid={hasError || undefined}
                 className={`min-w-0 flex-1 bg-transparent text-base leading-(--typography-line-height-20) outline-none [font-weight:var(--font-weight-regular)] placeholder:text-(color:--text-tertiary) ${hasError ? "text-(color:--text-danger)" : "text-(color:--text-primary)"}`}
               />
@@ -197,15 +191,6 @@ export function PhoneInput({
           />
         ) : null}
       </div>
-
-      {hasDesc ? (
-        <p
-          id={descId}
-          className="mt-(--spacing-gap-4) text-xs leading-(--typography-line-height-16) text-(color:--text-tertiary)"
-        >
-          {description}
-        </p>
-      ) : null}
     </div>
   );
 }
