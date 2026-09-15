@@ -214,6 +214,10 @@
 ## Кит бренда
 
 - maps: `--shadow-field` = `rgba(0, 0, 0, 0.04) 0px 4px 4px 0px`
+- maps: `--shadow-hud` = `rgba(0, 0, 0, 0.12) 0px 4px 8px 0px`
+- maps: `--shadow-hud-hover` = `rgba(0, 0, 0, 0.24) 0px 4px 8px 0px`
+- maps: `--shadow-hud-side` = `rgba(0, 0, 0, 0.08) 4px 0px 8px 0px`
+- maps: `--shadow-hud-badge` = `rgba(0, 0, 0, 0.12) 0px 2px 8px 0px`
 - maps: `--ease-standard` = `cubic-bezier(0.4, 0, 0.2, 1)`
 - maps: `--motion-fast` = `140ms`
 - maps: `--motion-panel` = `240ms`

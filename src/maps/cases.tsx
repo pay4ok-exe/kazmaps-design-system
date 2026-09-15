@@ -1,4 +1,4 @@
-import { Coffee, Layers, MapPin, Route, Users } from "lucide-react";
+import { ChevronLeft, Coffee, Layers, MapPin, Plus, Route, Sun, Users } from "lucide-react";
 import { type ReactElement, useEffect } from "react";
 
 import {
@@ -7,14 +7,18 @@ import {
   Button,
   Chip,
   CodeInput,
+  CollapseHandle,
   DayPicker,
   Dialog,
   EmptyState,
+  ForecastCard,
   IconButton,
   InDevelopment,
+  LegalLink,
   ListRow,
   LogoLockup,
   LogoPin,
+  MapTrafficBadge,
   Panel,
   PasswordInput,
   PhoneInput,
@@ -31,6 +35,7 @@ import {
   TextInput,
   ToastProvider,
   Toggle,
+  WeatherBadge,
   ToggleSwitch,
   useToast,
 } from "./index";
@@ -65,7 +70,7 @@ export const KIT_CASES: [string, ReactElement][] = [
   [
     "IconButton",
     <IconButton key="k" label="Моё местоположение">
-      <MapPin size={18} aria-hidden="true" />
+      <Plus size={24} aria-hidden="true" />
     </IconButton>,
   ],
   ["AvatarInitial", <AvatarInitial key="k" name="Айгерим" seed="Айгерим" />],
@@ -173,6 +178,57 @@ export const KIT_CASES: [string, ReactElement][] = [
       onChange={noop}
       options={[{ value: "almaty", label: "Алматы" }]}
     />,
+  ],
+  [
+    "IconButton circle",
+    <IconButton key="k" shape="circle" label="Профиль">
+      <Users size={20} aria-hidden="true" />
+    </IconButton>,
+  ],
+  ["MapTrafficBadge", <MapTrafficBadge key="k" level="orange" value={6} label="Пробки" />],
+  ["MapTrafficBadge off", <MapTrafficBadge key="k" level={null} value={3} label="Пробки" />],
+  [
+    "WeatherBadge",
+    <WeatherBadge
+      key="k"
+      aria-label="Погода"
+      temperature="18"
+      icon={<Sun size={20} aria-hidden="true" className="text-(color:--weather-sun)" />}
+    />,
+  ],
+  [
+    "ForecastCard",
+    <ForecastCard
+      key="k"
+      current
+      title="14:00"
+      icon={<Sun size={32} aria-hidden="true" className="text-(color:--weather-sun)" />}
+      temperature="+20°"
+      precipitation="0%"
+    />,
+  ],
+  [
+    "ForecastCard weekly",
+    <ForecastCard
+      key="k"
+      title="Пн"
+      day="понедельник"
+      icon={<Sun size={32} aria-hidden="true" className="text-(color:--weather-sun)" />}
+      temperature="+20°"
+      precipitation="10%"
+    />,
+  ],
+  [
+    "CollapseHandle",
+    <CollapseHandle key="k" open label="Свернуть панель">
+      <ChevronLeft size={20} aria-hidden="true" />
+    </CollapseHandle>,
+  ],
+  [
+    "LegalLink",
+    <LegalLink key="k" href="https://kazmaps.dev">
+      Условия
+    </LegalLink>,
   ],
   ["ShimmerBlock", <ShimmerBlock key="k" className="h-4 w-24" />],
   ["StarRating", <StarRating key="k" value={4.5} />],
