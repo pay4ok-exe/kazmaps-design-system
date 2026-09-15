@@ -1,3 +1,4 @@
+export { Avatar } from "./avatar";
 export type { AvatarInitialSize } from "./avatar-initial";
 export { AvatarInitial } from "./avatar-initial";
 export type { BottomSheetProps, BottomSheetSnap } from "./bottom-sheet";
@@ -32,7 +33,6 @@ export type { NavRailItem, NavRailProps } from "./nav-rail";
 export { NavRail } from "./nav-rail";
 export type { PanelVariant } from "./panel";
 export { Panel } from "./panel";
-export { ProfileButton } from "./profile-button";
 export type { PasswordInputProps } from "./password-input";
 export { PasswordInput } from "./password-input";
 export type { PhoneInputProps, PhoneValue } from "./phone-input";
