@@ -189,11 +189,30 @@ const numeric = new Set(
     Object.keys(steps).map((step) => cssName(`${group}/${step}`)),
   ),
 );
+const syncRoles = (current, contract, fallback, override) => {
+  const own = current ?? {};
+  const keep = Object.keys(own)
+    .filter((role) => contract.includes(role))
+    .map((role) => [role, override(role) ?? own[role]]);
+  const added = contract.filter((role) => !(role in own)).map((role) => [role, fallback[role]]);
+  return Object.fromEntries([...keep, ...added]);
+};
+const themedContract = Object.values(GROUPS).flat();
 const OTHER_BRANDS = ["business", "booking"];
 for (const name of OTHER_BRANDS) {
   const path = `tokens/brands/${name}.json`;
   const brand = read(path);
-  for (const role of numeric) brand.static[role] = statics[role];
+  for (const theme of Object.keys(themes)) {
+    brand.themes[theme] = syncRoles(
+      brand.themes[theme],
+      themedContract,
+      themes[theme],
+      () => undefined,
+    );
+  }
+  brand.static = syncRoles(brand.static, staticRoles, statics, (role) =>
+    numeric.has(role) ? statics[role] : undefined,
+  );
   write(path, brand);
   GENERATED.push(path);
 }

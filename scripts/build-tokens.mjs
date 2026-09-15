@@ -71,10 +71,9 @@ export function coreCss(core) {
 }
 
 export function colorRoles(schema, brands) {
-  const [sample] = brands;
-  return themedRoles(schema).filter(
-    (r) => sample.themes[sample.defaultTheme][r].$type === "color",
-  );
+  const source = brands.find((b) => b.brand === "maps") ?? brands[0];
+  if (source === undefined) throw new Error("colorRoles: не загружен ни один бренд");
+  return themedRoles(schema).filter((r) => source.themes[source.defaultTheme][r].$type === "color");
 }
 
 export function themeCss(schema, brands) {
@@ -97,7 +96,13 @@ export function tokensMd({ schema, brands }) {
   ];
 
   const heads = brands.flatMap((b) => schema.themes.map((t) => `${b.brand} ${t}`));
-  lines.push("", "## Роли по темам", "", row(["Роль", ...heads]), row(["---", ...heads.map(() => "---")]));
+  lines.push(
+    "",
+    "## Роли по темам",
+    "",
+    row(["Роль", ...heads]),
+    row(["---", ...heads.map(() => "---")]),
+  );
   for (const role of themedRoles(schema))
     lines.push(
       row([
