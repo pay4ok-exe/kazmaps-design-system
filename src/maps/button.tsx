@@ -5,9 +5,8 @@ import type { ComponentProps, ReactNode } from "react";
    высота 40, радиус 10, обводка 1, кегль 16/20. Различаются только заливка,
    стопы градиентной обводки и — при Icon=True — правый паддинг и gap.
 
-   Расхождения макета с самим собой, которые здесь не воспроизведены буквально —
-   identical hover, кегль шрифта при Icon=True, отсутствие outline — разобраны
-   в docs/figma-deltas.md, раздел «Кнопка». */
+   Расхождения макета с самим собой — identical hover и отсутствие outline —
+   разобраны в docs/figma-deltas.md, раздел «Кнопка». */
 
 export type ButtonVariant = "accent" | "neutral" | "danger" | "outline" | "outline-accent";
 export type ButtonSize = "sm" | "md" | "lg";
@@ -93,6 +92,15 @@ const SIZE_CLASSES: Record<ButtonSize, SizeSpec> = {
   lg: { base: "h-11 text-[13.5px]", textOnly: "px-4", withIcon: "px-4 gap-2" },
 };
 
+/* Вес текста в макете зависит от наличия иконки: без неё Medium 500, с ней
+   Regular 450. Воспроизведено буквально — разница в полступени переменного Inter
+   не стоит того, чтобы спорить с замером. Что это похоже на недосмотр
+   дизайнера — записано в docs/figma-deltas.md. */
+const WEIGHT_CLASSES = {
+  withIcon: "[font-weight:var(--font-weight-book)]",
+  textOnly: "[font-weight:var(--font-weight-medium)]",
+};
+
 export function Button({
   children,
   icon,
@@ -114,7 +122,7 @@ export function Button({
     <button
       type="button"
       {...rest}
-      className={`inline-flex items-center justify-center rounded-(--dimension-corner-radius-10) font-medium whitespace-nowrap transition-interactive focus-ring ${sizing.base} ${icon ? sizing.withIcon : sizing.textOnly} ${VARIANT_CLASSES[variant]} ${DISABLED_CLASSES} ${fullWidth ? "w-full" : ""} ${className}`}
+      className={`inline-flex items-center justify-center rounded-(--dimension-corner-radius-10) whitespace-nowrap transition-interactive focus-ring ${sizing.base} ${icon ? `${sizing.withIcon} ${WEIGHT_CLASSES.withIcon}` : `${sizing.textOnly} ${WEIGHT_CLASSES.textOnly}`} ${VARIANT_CLASSES[variant]} ${DISABLED_CLASSES} ${fullWidth ? "w-full" : ""} ${className}`}
     >
       {children}
       {icon}

@@ -56,6 +56,23 @@ describe("Button", () => {
     expect(withIcon).toContain("gap-(--spacing-gap-6)");
   });
 
+  // Вес 450 против 500 в зависимости от иконки — замер макета, а не описка.
+  // Отличить 450 от 400 можно только по fontWeight: style у обоих «Regular».
+  it("иконка меняет вес текста с 500 на 450", () => {
+    render(
+      <>
+        <Button>без иконки</Button>
+        <Button icon={<span />}>с иконкой</Button>
+      </>,
+    );
+    expect(screen.getByRole("button", { name: "без иконки" }).className).toContain(
+      "[font-weight:var(--font-weight-medium)]",
+    );
+    expect(screen.getByRole("button", { name: "с иконкой" }).className).toContain(
+      "[font-weight:var(--font-weight-book)]",
+    );
+  });
+
   it.each<["accent" | "neutral" | "danger", string]>([
     ["accent", "--action-accent-primary"],
     ["neutral", "--action-neutral-primary"],

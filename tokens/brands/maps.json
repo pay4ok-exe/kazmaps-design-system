@@ -790,7 +790,23 @@
     },
     "font-sans": {
       "$type": "fontFamily",
-      "$value": "var(--font-ibm-plex-sans), system-ui, sans-serif"
+      "$value": "var(--font-inter), system-ui, sans-serif"
+    },
+    "font-weight-regular": {
+      "$type": "fontWeight",
+      "$value": "400"
+    },
+    "font-weight-book": {
+      "$type": "fontWeight",
+      "$value": "450"
+    },
+    "font-weight-medium": {
+      "$type": "fontWeight",
+      "$value": "500"
+    },
+    "font-weight-strong": {
+      "$type": "fontWeight",
+      "$value": "550"
     },
     "text-xs": {
       "$type": "dimension",

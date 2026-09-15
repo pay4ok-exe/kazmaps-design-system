@@ -98,12 +98,30 @@ for (const [group, steps] of Object.entries(fig.numerics)) {
 
 const WAITING = "ожидает значения от дизайнера";
 
-// Шрифт из макета не приходит переменной — оставляем текущее семейство бренда.
+/* Гарнитура и начертания переменными в Figma не заданы — это свойства текстовых
+   нод. Сняты обходом всех 89 текстов страницы Components: везде Inter, веса
+   ровно четыре — 400, 450, 500 и 550.
+
+   450 и 550 существуют только у переменного Inter, статичные начертания их не
+   дают. Отсюда два следствия: в main-web шрифт подключается без списка weight
+   (иначе next/font отдаст статику и промежуточные веса схлопнутся к соседним),
+   а в компонентах вес пишется как [font-weight:var(--font-weight-*)] —
+   font-(--x) в Tailwind v4 уходит в семейство, подсказки weight у него нет. */
 staticRoles.push("font-sans");
 statics["font-sans"] = {
   $type: "fontFamily",
-  $value: "var(--font-ibm-plex-sans), system-ui, sans-serif",
+  $value: "var(--font-inter), system-ui, sans-serif",
 };
+
+for (const [role, value] of Object.entries({
+  "font-weight-regular": "400",
+  "font-weight-book": "450",
+  "font-weight-medium": "500",
+  "font-weight-strong": "550",
+})) {
+  staticRoles.push(role);
+  statics[role] = { $type: "fontWeight", $value: value };
+}
 
 /* Шкалу --text-* Tailwind держим в rem, хотя Figma отдаёт px: px-кегль игнорирует
    пользовательский размер шрифта в браузере, а ступени всё равно совпадают —
