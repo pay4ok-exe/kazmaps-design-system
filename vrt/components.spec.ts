@@ -8,7 +8,7 @@ const BRANDS = ["maps", "business", "booking"] as const;
 const BRAND_SLICE = new Set([
   "components-button--all-variants",
   "components--place-row",
-  "components--text-input",
+  "components-textinput--all-variants",
 ]);
 const INTERACTIVE = /--(playground|live)$/;
 
@@ -73,11 +73,13 @@ test("inside strokes do not add to the measured heights", async ({ page }) => {
   expect(new Set(await heights("components--chip", "#storybook-root button"))).toEqual(
     new Set([28]),
   );
-  expect(new Set(await heights("components--text-input", "#storybook-root input"))).toEqual(
-    new Set([20]),
-  );
   expect(
-    new Set(await heights("components--text-input", "#storybook-root div:has(> input)")),
+    new Set(await heights("components-textinput--all-variants", "#storybook-root input")),
+  ).toEqual(new Set([20]));
+  expect(
+    new Set(
+      await heights("components-textinput--all-variants", "#storybook-root div:has(> input)"),
+    ),
   ).toEqual(new Set([36]));
   expect(
     new Set(await heights("components--search-input", "#storybook-root div:has(> input)")),

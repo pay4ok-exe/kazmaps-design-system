@@ -3,7 +3,10 @@
 import type { InputHTMLAttributes, ReactNode } from "react";
 import { useId } from "react";
 
-export type TextInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> & {
+export type TextInputProps = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "onChange" | "value" | "prefix"
+> & {
   value: string;
   onChange: (value: string) => void;
   label?: string;

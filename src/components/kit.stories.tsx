@@ -35,7 +35,6 @@ export const ListRow: StoryObj = cases("ListRow");
 export const LogoLockup: StoryObj = cases("LogoLockup");
 export const Panel: StoryObj = cases("Panel");
 export const PasswordInput: StoryObj = cases("PasswordInput");
-export const PhoneInput: StoryObj = cases("PhoneInput");
 export const PlaceRow: StoryObj = cases("PlaceRow");
 export const QrCode: StoryObj = cases("QrCode");
 export const ScaleBar: StoryObj = cases("ScaleBar");
@@ -52,7 +51,6 @@ export const LegalLink: StoryObj = cases("LegalLink");
 export const NavRail: StoryObj = cases("NavRail");
 export const ShimmerBlock: StoryObj = cases("ShimmerBlock");
 export const StarRating: StoryObj = cases("StarRating");
-export const TextInput: StoryObj = cases("TextInput");
 export const Toggle: StoryObj = cases("Toggle");
 export const ToggleSwitch: StoryObj = cases("ToggleSwitch");
 
