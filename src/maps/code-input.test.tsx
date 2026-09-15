@@ -76,3 +76,11 @@ describe("CodeInput input sources", () => {
     expect(onChange).toHaveBeenCalledWith(0, "7");
   });
 });
+
+describe("CodeInput idle ring", () => {
+  it("keeps the empty cell ring transparent instead of the text colour", () => {
+    render(<CodeInput values={["", "5"]} onChange={vi.fn()} />);
+    expect(cells()[0].className).toContain("inset-ring-transparent");
+    expect(cells()[1].className).not.toContain("inset-ring-transparent");
+  });
+});

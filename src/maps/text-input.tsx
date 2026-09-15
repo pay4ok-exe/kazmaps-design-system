@@ -55,7 +55,7 @@ export function TextInput({
         className={`flex items-center gap-(--spacing-gap-8) overflow-hidden rounded-(--dimension-corner-radius-10) inset-ring-[length:var(--stroke-border-1)] bg-(--background-secondary) px-(--spacing-padding-12) py-(--spacing-padding-8) transition-surface ${
           invalid
             ? "inset-ring-(--border-error) focus-ring-within"
-            : "hover:inset-ring-(--border-secondary) has-[input:focus]:inset-ring-(--border-focus)"
+            : "inset-ring-transparent hover:inset-ring-(--border-secondary) has-[input:focus]:inset-ring-(--border-focus)"
         }`}
       >
         {prefix == null ? null : (

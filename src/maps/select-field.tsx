@@ -44,7 +44,7 @@ const TRAILING_SPACE =
    не border: прозрачная рамка была костылём под то, что border съедает у
    содержимого свою толщину. */
 const RING_CLASSES = {
-  quiet: "hover:inset-ring-(--border-secondary)",
+  quiet: "inset-ring-transparent hover:inset-ring-(--border-secondary)",
   bordered: "inset-ring-(--border-secondary) hover:inset-ring-(--border-primary)",
 };
 

@@ -44,7 +44,7 @@ export function PlaceRow({
       onClick={onClick}
       /* Обводка макета выровнена внутрь и места не занимает — inset-ring, а не
          border: тот съел бы у содержимого свою толщину. */
-      className={`flex w-full items-center gap-(--spacing-gap-4) rounded-(--dimension-corner-radius-16) inset-ring-[length:var(--stroke-border-1)] bg-(--background-primary) p-(--spacing-padding-4) text-left transition-interactive focus-ring hover:inset-ring-(--border-secondary) ${className}`}
+      className={`flex w-full items-center gap-(--spacing-gap-4) rounded-(--dimension-corner-radius-16) inset-ring-[length:var(--stroke-border-1)] inset-ring-transparent bg-(--background-primary) p-(--spacing-padding-4) text-left transition-interactive focus-ring hover:inset-ring-(--border-secondary) ${className}`}
     >
       <span className="size-(--dimension-width-64) shrink-0 overflow-hidden rounded-(--dimension-corner-radius-12) bg-(--background-secondary)">
         {photoUrl ? <img src={photoUrl} alt={photoAlt} className="size-full object-cover" /> : null}

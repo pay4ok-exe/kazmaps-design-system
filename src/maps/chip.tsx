@@ -43,7 +43,7 @@ const PADDING = {
    фильтры в main-web. */
 const STATE = {
   active: "inset-ring-(--action-accent-primary) text-(color:--text-accent)",
-  idle: "text-(color:--text-primary) hover:inset-ring-(--border-secondary)",
+  idle: "inset-ring-transparent text-(color:--text-primary) hover:inset-ring-(--border-secondary)",
 };
 
 export function Chip({

@@ -8,7 +8,7 @@
     transition-timing-function: var(--ease-standard);
   }
   .transition-surface {
-    transition-property: background-color, color, border-color;
+    transition-property: background-color, color, border-color, box-shadow;
     transition-duration: var(--motion-panel);
     transition-timing-function: var(--ease-standard);
   }

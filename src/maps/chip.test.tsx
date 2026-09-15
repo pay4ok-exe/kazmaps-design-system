@@ -57,3 +57,12 @@ describe("Chip: тон", () => {
     expect(chip.querySelector("span")?.className).toContain("bg-(--tag-blue)");
   });
 });
+
+describe("Chip idle ring", () => {
+  it("keeps the idle ring transparent instead of the text colour", () => {
+    render(<Chip label="Кафе" />);
+    expect(screen.getByRole("button", { name: "Кафе" }).className).toContain(
+      "inset-ring-transparent",
+    );
+  });
+});

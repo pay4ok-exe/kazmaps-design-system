@@ -54,3 +54,12 @@ describe("TextInput id and focus", () => {
     );
   });
 });
+
+describe("TextInput idle ring", () => {
+  it("keeps the idle ring transparent instead of the text colour", () => {
+    const { container } = render(<TextInput value="" onChange={vi.fn()} />);
+    expect(container.firstElementChild?.firstElementChild?.className).toContain(
+      "inset-ring-transparent",
+    );
+  });
+});

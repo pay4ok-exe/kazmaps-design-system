@@ -105,7 +105,7 @@ export function CodeInput({
             invalid
               ? "inset-ring-(--border-error) text-(color:--text-danger)"
               : `text-(color:--text-primary) focus:inset-ring-(--border-focus) ${
-                  digit ? "inset-ring-(--border-primary)" : ""
+                  digit ? "inset-ring-(--border-primary)" : "inset-ring-transparent"
                 }`
           }`}
         />

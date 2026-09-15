@@ -54,3 +54,11 @@ describe("maps PhoneInput focus", () => {
     expect(shell?.className).toContain("focus-ring-within");
   });
 });
+
+describe("maps PhoneInput idle ring", () => {
+  it("keeps the idle ring transparent instead of the text colour", () => {
+    render(<PhoneInput label="Телефон" onChange={vi.fn()} />);
+    const shell = screen.getByLabelText("Телефон").closest("div.flex");
+    expect(shell?.className).toContain("inset-ring-transparent");
+  });
+});

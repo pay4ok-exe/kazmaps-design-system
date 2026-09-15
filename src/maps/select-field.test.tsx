@@ -75,3 +75,12 @@ describe("SelectField id", () => {
     expect(screen.getByLabelText("Город")).toHaveAttribute("id", "city");
   });
 });
+
+describe("SelectField idle ring", () => {
+  it("keeps the quiet ring transparent instead of the text colour", () => {
+    const { container } = render(
+      <SelectField value="almaty" onChange={vi.fn()} options={OPTIONS} />,
+    );
+    expect(container.querySelector("select")?.className).toContain("inset-ring-transparent");
+  });
+});

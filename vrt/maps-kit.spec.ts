@@ -73,4 +73,7 @@ test("inside strokes do not add to the measured heights", async ({ page }) => {
     await heights("maps-kit--search-input", "#storybook-root div:has(> input) > button"),
   ).toEqual([34]);
   expect(await heights("maps-kit--place-row", "#storybook-root button")).toEqual([72]);
+  expect(new Set(await heights("maps-kit--code-input", "#storybook-root input"))).toEqual(
+    new Set([48]),
+  );
 });

@@ -120,7 +120,7 @@ export function PhoneInput({
           className={`flex items-center gap-(--spacing-gap-8) overflow-hidden rounded-(--dimension-corner-radius-10) inset-ring-[length:var(--stroke-border-1)] bg-(--background-secondary) py-(--spacing-padding-4) pr-(--spacing-padding-8) pl-(--spacing-padding-4) transition-surface ${
             hasError
               ? "inset-ring-(--border-error) focus-ring-within"
-              : "hover:inset-ring-(--border-secondary) has-[input:focus]:inset-ring-(--border-focus)"
+              : "inset-ring-transparent hover:inset-ring-(--border-secondary) has-[input:focus]:inset-ring-(--border-focus)"
           } ${disabled ? "opacity-50" : ""}`}
         >
           <button
