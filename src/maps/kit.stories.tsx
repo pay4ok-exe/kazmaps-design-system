@@ -34,7 +34,6 @@ export const InDevelopment: StoryObj = cases("InDevelopment");
 export const EmptyState: StoryObj = cases("EmptyState");
 export const ListRow: StoryObj = cases("ListRow");
 export const LogoLockup: StoryObj = cases("LogoLockup");
-export const LogoPin: StoryObj = cases("LogoPin");
 export const Panel: StoryObj = cases("Panel");
 export const PasswordInput: StoryObj = cases("PasswordInput");
 export const PhoneInput: StoryObj = cases("PhoneInput");

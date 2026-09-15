@@ -17,7 +17,6 @@ import {
   LegalLink,
   ListRow,
   LogoLockup,
-  LogoPin,
   MapCompass,
   MapTrafficBadge,
   NavRail,
@@ -107,7 +106,6 @@ export const KIT_CASES: [string, ReactElement][] = [
     <ListRow key="k" title="Помощь" href="https://kazmaps.dev" target="_blank" rel="noreferrer" />,
   ],
   ["LogoLockup", <LogoLockup key="k" />],
-  ["LogoPin", <LogoPin key="k" />],
   [
     "Panel",
     <Panel key="k">
