@@ -35,7 +35,19 @@ function Cell({ caption, children }: { caption: string; children: React.ReactNod
   );
 }
 
-function Row({ title, note, photoUrl }: { title: string; note: string; photoUrl?: string }) {
+function Row({
+  title,
+  note,
+  photoUrl,
+  name,
+  seed,
+}: {
+  title: string;
+  note: string;
+  photoUrl?: string;
+  name?: string;
+  seed?: string;
+}) {
   const glyph = <IconUserLight />;
   return (
     <section className="flex flex-col gap-(--spacing-gap-8)">
@@ -49,18 +61,20 @@ function Row({ title, note, photoUrl }: { title: string; note: string; photoUrl?
       </div>
       <div className="flex items-center gap-(--spacing-gap-16)">
         <Cell caption="Default">
-          <Avatar label="Профиль" photoUrl={photoUrl} icon={glyph} />
+          <Avatar label="Профиль" photoUrl={photoUrl} name={name} seed={seed} icon={glyph} />
         </Cell>
         <Cell caption="Hover">
           <Avatar
             label="Профиль"
             photoUrl={photoUrl}
+            name={name}
+            seed={seed}
             icon={glyph}
             className={AVATAR_STATE.hoverPreview}
           />
         </Cell>
         <Cell caption="Active">
-          <Avatar label="Профиль" photoUrl={photoUrl} icon={glyph} active />
+          <Avatar label="Профиль" photoUrl={photoUrl} name={name} seed={seed} icon={glyph} active />
         </Cell>
       </div>
     </section>
@@ -77,6 +91,12 @@ export const AllVariants: StoryObj = {
       <Row
         title="Без снимка"
         note="Image=False в макете: глиф User weight=light, паддинг 8. На наведении глиф СВЕТЛЕЕТ — так в макете, как и у Map Action типа Default (docs/figma-deltas.md, пункт 13)."
+      />
+      <Row
+        title="Без снимка, но с именем"
+        note="Запасной вариант вместо глифа: первая буква имени на цвете из tag/*, выведенном из seed. В макете такого варианта нет — он заменил удалённый AvatarInitial, на котором держались списки друзей и чатов."
+        name="Айгерим"
+        seed="aigerim"
       />
       <Row
         title="Со снимком"
