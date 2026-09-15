@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
-import { useId } from "react";
+import { useId, useImperativeHandle } from "react";
 import InputMask from "react-input-mask-format";
 
 import { DEFAULT_REGION, type RegionCode } from "../data/regions";
@@ -37,6 +37,10 @@ export type PhoneInputProps = {
   autoComplete?: string;
   labels?: Partial<PhoneInputLabels>;
   className?: string;
+  ref?: React.Ref<HTMLInputElement>;
+  "aria-describedby"?: string;
+  "aria-label"?: string;
+  "aria-labelledby"?: string;
 };
 
 export function PhoneInput({
@@ -60,6 +64,10 @@ export function PhoneInput({
   autoComplete = "tel-national",
   labels: labelsProp,
   className = "",
+  ref,
+  "aria-describedby": ariaDescribedBy,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
 }: PhoneInputProps) {
   const generatedId = useId();
   const id = idProp ?? generatedId;
@@ -87,6 +95,8 @@ export function PhoneInput({
     onChange,
     onRegionChange,
   });
+
+  useImperativeHandle(ref, () => inputRef.current!, [inputRef]);
 
   const hasError = invalid;
 
@@ -177,6 +187,9 @@ export function PhoneInput({
                 required={required}
                 placeholder={region.mask ? region.mask.replace(/\d/g, "0") : undefined}
                 aria-invalid={hasError || undefined}
+                aria-describedby={ariaDescribedBy}
+                aria-label={ariaLabel}
+                aria-labelledby={ariaLabelledBy}
                 className={`min-w-0 flex-1 bg-transparent text-base leading-(--typography-line-height-20) outline-none [font-weight:var(--font-weight-regular)] placeholder:text-(color:--text-tertiary) ${hasError ? "text-(color:--text-danger)" : "text-(color:--text-primary)"}`}
               />
             </InputMask>

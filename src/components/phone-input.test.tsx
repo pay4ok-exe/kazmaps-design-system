@@ -1,3 +1,4 @@
+import { createRef } from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
@@ -79,6 +80,26 @@ describe("PhoneInput dial code", () => {
 describe("PhoneInput field name", () => {
   it("keeps the dial code out of the field's accessible name", () => {
     render(<PhoneInput label="Телефон" onChange={vi.fn()} />);
+    expect(screen.getByRole("textbox", { name: "Телефон" })).toBeInTheDocument();
+  });
+});
+
+describe("PhoneInput ref and aria", () => {
+  it("forwards ref to the input element", () => {
+    const ref = createRef<HTMLInputElement>();
+    render(<PhoneInput label="Телефон" onChange={vi.fn()} ref={ref} />);
+    expect(ref.current).toBe(screen.getByLabelText("Телефон"));
+  });
+
+  it("links the field to error text rendered outside it", () => {
+    render(
+      <PhoneInput label="Телефон" aria-describedby="phone-error" invalid onChange={vi.fn()} />,
+    );
+    expect(screen.getByLabelText("Телефон")).toHaveAttribute("aria-describedby", "phone-error");
+  });
+
+  it("can be named without a visible label", () => {
+    render(<PhoneInput aria-label="Телефон" onChange={vi.fn()} />);
     expect(screen.getByRole("textbox", { name: "Телефон" })).toBeInTheDocument();
   });
 });
