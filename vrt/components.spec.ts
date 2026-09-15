@@ -51,7 +51,7 @@ for (const id of STORIES) {
 for (const theme of THEMES) {
   test(`phone-input-picker — ${theme}`, async ({ page }) => {
     await page.goto(
-      `/iframe.html?viewMode=story&id=components-phoneinput--live&globals=brand:maps;theme:${theme}`,
+      `/iframe.html?viewMode=story&id=components-phoneinput--playground&globals=brand:maps;theme:${theme}`,
     );
     await expect(page.getByLabel("Номер телефона")).toBeVisible();
     await page.getByRole("button", { name: /Регион/ }).click();

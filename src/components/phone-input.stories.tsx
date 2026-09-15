@@ -17,20 +17,6 @@ export const States: StoryObj<typeof PhoneInput> = {
   ),
 };
 
-function LiveDemo() {
-  const [value, setValue] = useState<PhoneValue | null>(null);
-  return (
-    <div className="flex w-[340px] flex-col gap-3">
-      <PhoneInput label="Номер телефона" onChange={setValue} />
-      <pre data-testid="readout" className="text-[12px] text-(color:--text-tertiary)">
-        {JSON.stringify(value)}
-      </pre>
-    </div>
-  );
-}
-
-export const Live: StoryObj<typeof PhoneInput> = { render: () => <LiveDemo /> };
-
 export const Playground: StoryObj<typeof PhoneInput> = {
   args: {
     label: "Номер телефона",
@@ -53,9 +39,18 @@ export const Playground: StoryObj<typeof PhoneInput> = {
     onFocus: { table: { disable: true } },
     onBlur: { table: { disable: true } },
   },
-  render: (args) => (
-    <div className="w-[340px]">
-      <PhoneInput key={args.defaultRegion} {...args} />
-    </div>
-  ),
+  render: function Render(args) {
+    const [value, setValue] = useState<PhoneValue | null>(null);
+    return (
+      <div className="flex w-[340px] flex-col gap-(--spacing-gap-12)">
+        <PhoneInput key={args.defaultRegion} {...args} onChange={setValue} />
+        <pre
+          data-testid="readout"
+          className="text-[12px] leading-(--typography-line-height-16) text-(color:--text-tertiary)"
+        >
+          {value ? JSON.stringify(value) : "onChange → здесь"}
+        </pre>
+      </div>
+    );
+  },
 };

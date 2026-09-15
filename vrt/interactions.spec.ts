@@ -1,9 +1,9 @@
 import { expect, test, type Page } from "@playwright/test";
 
 const BRANDS = [
-  { brand: "maps", story: "components-phoneinput--live" },
-  { brand: "business", story: "components-phoneinput--live" },
-  { brand: "booking", story: "components-phoneinput--live" },
+  { brand: "maps", story: "components-phoneinput--playground" },
+  { brand: "business", story: "components-phoneinput--playground" },
+  { brand: "booking", story: "components-phoneinput--playground" },
 ] as const;
 
 async function openLive(page: Page, brand: string, story: string): Promise<void> {
