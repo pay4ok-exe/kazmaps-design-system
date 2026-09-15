@@ -19,7 +19,7 @@ export function RegionFlag({
   return (
     <span
       aria-hidden="true"
-      className={cn("inline-block shrink-0 leading-none", className)}
+      className={cn("inline-block shrink-0 leading-(--typography-line-height-16)", className)}
       style={{ fontSize: size, fontFamily: '"Twemoji Country Flags", var(--font-sans)' }}
     >
       {flagEmoji(iso)}

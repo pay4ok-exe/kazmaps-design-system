@@ -60,14 +60,14 @@ describe("E.164", () => {
   });
   it("formatNational applies the mask without trailing placeholders", () => {
     expect(formatNational(KZ, "")).toBe("");
-    expect(formatNational(KZ, "70")).toBe("(70");
-    expect(formatNational(KZ, "7012345678")).toBe("(701) 234-56-78");
-    expect(formatNational(KZ, "0123456789")).toBe("(701) 234-56-78");
+    expect(formatNational(KZ, "70")).toBe("70");
+    expect(formatNational(KZ, "7012345678")).toBe("701 234 56 78");
+    expect(formatNational(KZ, "0123456789")).toBe("701 234 56 78");
     expect(formatNational(US, "2125551234")).toBe("212 555 123 4");
   });
   it("formatE164 for labels", () => {
-    expect(formatE164("+77012345678")).toBe("+7 701 234-56-78");
-    expect(formatE164("+998901234567")).toBe("+998 90 123-45-67");
+    expect(formatE164("+77012345678")).toBe("+7 701 234 56 78");
+    expect(formatE164("+998901234567")).toBe("+998 90 123 45 67");
     expect(formatE164("+12125551234")).toBe("+1 212 555 123 4");
     expect(formatE164("garbage")).toBe("garbage");
   });

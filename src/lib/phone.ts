@@ -104,10 +104,7 @@ export function formatE164(value: string): string {
   const parsed = parseE164(value);
   if (!parsed) return value;
   const { region, national } = parsed;
-  const body = region.mask
-    ? formatNational(region, national).replace(/[()]/g, "")
-    : formatNational(region, national);
-  return `+${region.dial} ${body}`;
+  return `+${region.dial} ${formatNational(region, national)}`;
 }
 
 export function isKazakhstanMobile(value: string): boolean {

@@ -139,43 +139,50 @@ export function PhoneInput({
                 setOpen(true);
               }
             }}
-            className="flex shrink-0 items-center gap-(--spacing-gap-4) rounded-(--dimension-corner-radius-6) bg-(--background-primary) py-(--spacing-padding-6) pr-(--spacing-padding-6) pl-(--spacing-padding-8) text-xs leading-(--typography-line-height-16) text-(color:--text-primary) focus-ring"
+            className="flex shrink-0 items-center gap-(--spacing-gap-4) rounded-(--dimension-corner-radius-6) bg-(--background-primary) py-(--spacing-padding-6) pr-(--spacing-padding-6) pl-(--spacing-padding-8) leading-(--typography-line-height-16) text-(color:--icon-primary) focus-ring"
           >
             <RegionFlag iso={region.iso} />
-            <span className="tabular-nums">+{region.dial}</span>
             <ChevronDown
-              size={14}
+              size={16}
               aria-hidden="true"
               className={`transition-transform ${open ? "rotate-180" : ""}`}
             />
           </button>
 
-          <InputMask
-            ref={inputRef}
-            mask={mask}
-            maskPlaceholder={region.mask ? "_" : null}
-            value={formatted}
-            onChange={handleChange}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            disabled={disabled}
-            readOnly={readOnly}
-            beforeMaskedStateChange={beforeMaskedStateChange}
-          >
-            <input
-              id={id}
-              name={name}
-              type="tel"
-              inputMode="tel"
-              autoComplete={autoComplete}
-              autoFocus={autoFocus}
-              required={required}
-              placeholder={region.mask ? region.mask.replace(/9/g, "_") : undefined}
-              aria-describedby={hasDesc ? descId : undefined}
-              aria-invalid={hasError || undefined}
-              className={`min-w-0 flex-1 bg-transparent text-base leading-(--typography-line-height-20) outline-none [font-weight:var(--font-weight-regular)] placeholder:text-(color:--text-tertiary) ${hasError ? "text-(color:--text-danger)" : "text-(color:--text-primary)"}`}
-            />
-          </InputMask>
+          <span className="flex min-w-0 flex-1 items-center gap-(--spacing-gap-4)">
+            <span
+              aria-hidden="true"
+              className={`shrink-0 text-base leading-(--typography-line-height-20) tabular-nums [font-weight:var(--font-weight-regular)] ${hasError ? "text-(color:--text-danger)" : "text-(color:--text-primary)"}`}
+            >
+              +{region.dial}
+            </span>
+            <InputMask
+              ref={inputRef}
+              mask={mask}
+              maskPlaceholder={null}
+              value={formatted}
+              onChange={handleChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              disabled={disabled}
+              readOnly={readOnly}
+              beforeMaskedStateChange={beforeMaskedStateChange}
+            >
+              <input
+                id={id}
+                name={name}
+                type="tel"
+                inputMode="tel"
+                autoComplete={autoComplete}
+                autoFocus={autoFocus}
+                required={required}
+                placeholder={region.mask ? region.mask.replace(/\d/g, "0") : undefined}
+                aria-describedby={hasDesc ? descId : undefined}
+                aria-invalid={hasError || undefined}
+                className={`min-w-0 flex-1 bg-transparent text-base leading-(--typography-line-height-20) outline-none [font-weight:var(--font-weight-regular)] placeholder:text-(color:--text-tertiary) ${hasError ? "text-(color:--text-danger)" : "text-(color:--text-primary)"}`}
+              />
+            </InputMask>
+          </span>
         </div>
 
         {open ? (

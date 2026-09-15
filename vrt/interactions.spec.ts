@@ -21,7 +21,7 @@ for (const { brand, story } of BRANDS) {
       await input.click();
       await expect(input).toHaveValue("");
       await input.pressSequentially("7012345678");
-      await expect(input).toHaveValue("(701) 234-56-78");
+      await expect(input).toHaveValue("701 234 56 78");
       await expect(readout(page)).toContainText('"e164":"+77012345678"');
     });
 
@@ -33,7 +33,7 @@ for (const { brand, story } of BRANDS) {
       await input.click();
       await expect(input).toHaveValue("");
       await input.pressSequentially("7771234567");
-      await expect(input).toHaveValue("(777) 123-45-67");
+      await expect(input).toHaveValue("777 123 45 67");
       await expect(readout(page)).toContainText('"e164":"+77771234567"');
     });
 
@@ -43,7 +43,7 @@ for (const { brand, story } of BRANDS) {
       await input.click();
       await page.evaluate(() => navigator.clipboard.writeText("8 701 234 56 78"));
       await page.keyboard.press("ControlOrMeta+V");
-      await expect(input).toHaveValue("(701) 234-56-78");
+      await expect(input).toHaveValue("701 234 56 78");
     });
 
     test("fill() (autofill-like) with an international number switches region", async ({
@@ -52,8 +52,9 @@ for (const { brand, story } of BRANDS) {
       await openLive(page, brand, story);
       const input = page.getByLabel("Номер телефона");
       await input.fill("+998901234567");
-      await expect(page.getByRole("button", { name: /Регион/ })).toContainText("+998");
-      await expect(input).toHaveValue("90 123-45-67");
+      await expect(page.getByRole("button", { name: /Узбекистан/ })).toBeVisible();
+      await expect(page.getByText("+998", { exact: true })).toBeVisible();
+      await expect(input).toHaveValue("90 123 45 67");
       await expect(readout(page)).toContainText('"region":"UZ"');
     });
 
@@ -64,11 +65,10 @@ for (const { brand, story } of BRANDS) {
       await input.pressSequentially("7012345678");
       await page.keyboard.press("Home");
       await page.keyboard.press("ArrowRight");
-      await page.keyboard.press("ArrowRight");
       await page.keyboard.press("Delete");
-      await expect(input).toHaveValue("(712) 345-67-8_");
+      await expect(input).toHaveValue("712 345 67 8");
       await page.keyboard.type("0");
-      await expect(input).toHaveValue("(701) 234-56-78");
+      await expect(input).toHaveValue("701 234 56 78");
     });
 
     test("picker opens with mouse and keyboard, selection refocuses the input", async ({

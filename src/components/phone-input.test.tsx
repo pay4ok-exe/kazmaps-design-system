@@ -9,7 +9,7 @@ describe("maps PhoneInput", () => {
     render(<PhoneInput label="Телефон" onChange={onChange} />);
     const input = screen.getByLabelText("Телефон");
     await userEvent.type(input, "7012345678");
-    expect(input).toHaveValue("(701) 234-56-78");
+    expect(input).toHaveValue("701 234 56 78");
     expect(onChange).toHaveBeenLastCalledWith(
       expect.objectContaining({ e164: "+77012345678", complete: true }),
     );
@@ -20,7 +20,7 @@ describe("maps PhoneInput", () => {
     render(<PhoneInput label="Телефон" onChange={onChange} />);
     const input = screen.getByLabelText("Телефон");
     await userEvent.type(input, "7771234567");
-    expect(input).toHaveValue("(777) 123-45-67");
+    expect(input).toHaveValue("777 123 45 67");
     expect(onChange).toHaveBeenLastCalledWith(
       expect.objectContaining({ e164: "+77771234567", complete: true }),
     );
@@ -31,7 +31,7 @@ describe("maps PhoneInput", () => {
     render(<PhoneInput label="Телефон" onChange={onChange} />);
     const input = screen.getByLabelText("Телефон");
     await userEvent.type(input, "87071234567");
-    expect(input).toHaveValue("(707) 123-45-67");
+    expect(input).toHaveValue("707 123 45 67");
     expect(onChange).toHaveBeenLastCalledWith(
       expect.objectContaining({ e164: "+77071234567", complete: true }),
     );
