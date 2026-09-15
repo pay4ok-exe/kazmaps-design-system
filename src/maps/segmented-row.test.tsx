@@ -21,8 +21,6 @@ describe("SegmentedRow", () => {
     expect(onSelect).toHaveBeenCalledWith("layers");
   });
 
-  /* В макете акцентом заливается иконочный чип, а не кнопка целиком: подпись
-     остаётся под ним и просто меняет цвет на text/link. */
   it("акцентом заливается чип, а не кнопка", () => {
     render(<SegmentedRow items={ITEMS} activeId="map" onSelect={vi.fn()} label="Слои" />);
     expect(chipOf("Карта")).toContain("bg-(--action-accent-primary)");

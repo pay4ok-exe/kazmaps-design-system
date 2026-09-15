@@ -27,9 +27,7 @@ export type PhoneInputProps = {
   regions?: RegionCode[];
   locale?: "ru" | "en";
   label?: string;
-  /** Подсказка под полем: остаётся, это не ошибка. */
   hint?: string;
-  /** Визуальное состояние ошибки. Текст показывает тост, не поле. */
   invalid?: boolean;
   required?: boolean;
   disabled?: boolean;
@@ -93,8 +91,6 @@ export function PhoneInput({
     onRegionChange,
   });
 
-  /* Текста ошибки у поля нет: в KazMaps его показывает тост. Остаётся только
-     визуальное состояние плюс подсказка, которая ошибкой не является. */
   const hasError = invalid;
   const description = hint;
   const hasDesc = Boolean(description);

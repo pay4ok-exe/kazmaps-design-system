@@ -31,10 +31,6 @@ const line = (name, value) => `  --${name}: ${value};`;
 const block = (selector, lines) => `${selector} {\n${lines.join("\n")}\n}\n`;
 const entries = (group) => Object.entries(group ?? {}).map(([k, v]) => line(k, v.$value));
 
-/* Бренд может заменить общий контракт своим набором ролей (schema.byBrand.<brand>
-   с replacesContract). Это нужно, потому что имена ролей = имена Figma Variables,
-   а файлы макетов у брендов разные: держать их в одном списке означало бы
-   требовать от business и booking роли, которых в их макетах нет. */
 const override = (schema, brandName) =>
   schema.byBrand?.[brandName]?.replacesContract ? schema.byBrand[brandName] : null;
 
@@ -98,8 +94,6 @@ export function coreCss(core) {
 }
 
 export function themeCss(schema, brands) {
-  // @theme один на все бренды: объединяем роли, иначе бренд со своим контрактом
-  // не получит tailwind-утилит цвета. Группа shadow — не цвет, ей утилита не нужна.
   const roles = new Set();
   for (const brand of brands)
     for (const [group, list] of Object.entries(themedGroups(schema, brand.brand)))

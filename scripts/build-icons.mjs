@@ -1,16 +1,3 @@
-/* Собирает React-компоненты из src/icons/svg/*.svg.
- *
- * Иконки макета бывают двух родов, и путать их нельзя:
- *
- *   одноцветные (Interface, Map UI) — заливка привязана к одному примитиву,
- *     поэтому переводится в currentColor и слушается ролей icon/* через
- *     обычный text-(color:--icon-*);
- *
- *   многоцветные (Weather) — несут литералы, и это значения ролей weather/*
- *     СВЕТЛОЙ темы. Оставить их как есть значит молча сломать тёмную: облако
- *     останется светло-голубым на тёмном фоне. Поэтому литералы подменяются
- *     на var(--weather-*), и тема начинает работать сама.
- */
 import { execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -20,9 +7,6 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SVG_DIR = join(ROOT, "src/icons/svg");
 const OUT_DIR = join(ROOT, "src/icons/generated");
 
-/* Литералы сняты с нод раздела Weather Icons и совпадают со светлыми значениями
-   ролей в tokens/brands/maps.json. Если дизайнер сменит палитру погоды, замена
-   перестанет срабатывать — и тест icons.test.ts это поймает, а не прод. */
 const WEATHER_COLORS = {
   "#F1C21B": "--weather-sun",
   "#A4AAB3": "--weather-moon",
@@ -51,16 +35,12 @@ function normalise(svg) {
       multicolour = true;
       return `fill="var(${role})"`;
     }
-    // Чёрный — это «раскрась мной»: одноцветная иконка.
     if (hex.toLowerCase() === "#000000") return 'fill="currentColor"';
     throw new Error(`неизвестный литерал ${hex}: добавьте роль в WEATHER_COLORS`);
   });
 
   body = body.replace(/fill="black"/g, 'fill="currentColor"');
 
-  /* SVG пишет атрибуты через дефис, JSX ждёт camelCase. React такие имена не
-     ругает предупреждением, а молча выбрасывает — а без fill-rule фигуры с
-     дырками (кольца, буквы) заливаются сплошняком. */
   body = body.replace(
     /\s([a-z]+(?:-[a-z]+)+)=/g,
     (match, attr) => ` ${attr.replace(/-([a-z])/g, (_, c) => c.toUpperCase())}=`,

@@ -15,9 +15,6 @@ const pascal = (slug: string) =>
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join("");
 
-/* Карта собирается один раз на модуле, а рисуются глифы через createElement.
-   Поиск компонента прямо в рендере с присваиванием в переменную с большой
-   буквы линтер справедливо считает созданием компонента на каждый рендер. */
 const GLYPHS: Record<string, IconComponent> = Object.fromEntries(
   ICON_MANIFEST.map(({ slug }) => [
     slug,
@@ -52,7 +49,6 @@ function Grid({ slugs, min = 96 }: { slugs: readonly string[]; min?: number }) {
   );
 }
 
-// Иконки есть только у бренда maps — открывать их в business нечего.
 const MAPS = { brand: "maps" };
 
 export const Все: StoryObj = {
@@ -60,8 +56,6 @@ export const Все: StoryObj = {
   render: () => <Grid slugs={ICON_MANIFEST.map((i) => i.slug)} />,
 };
 
-/* Одноцветные залиты currentColor, поэтому слушаются роли у родителя. Здесь это
-   видно буквально: одни и те же глифы в четырёх ролях icon/*. */
 export const Раскраска: StoryObj = {
   globals: MAPS,
   render: () => {
@@ -83,16 +77,11 @@ export const Раскраска: StoryObj = {
   },
 };
 
-/* Иконки погоды несут роли weather/*, а не currentColor. Переключите тему в
-   тулбаре: если какая-то из них не изменилась — значит в разметке остался
-   литерал светлой темы. */
 export const Погода: StoryObj = {
   globals: MAPS,
   render: () => <Grid slugs={ICON_MANIFEST.filter((i) => i.multicolour).map((i) => i.slug)} />,
 };
 
-/* 31 иконка снята в двух начертаниях. Разница тонкая, и увидеть её проще
-   парами, чем в общей сетке. */
 export const Начертания: StoryObj = {
   globals: MAPS,
   render: () => {

@@ -6,16 +6,6 @@ import { createPortal } from "react-dom";
 
 import { useFocusTrap } from "./use-focus-trap";
 
-/* Замер макета: Dialog (137:440). Радиус 16, фон background/primary, тень
-   --shadow-modal (измеренная, не унаследованная). Обводки у панели нет.
-
-   Шапка — паддинг 8/8/0/8: снизу НОЛЬ, отступ до содержимого даёт уже сам
-   контейнер своей шестнадцаткой. Заголовок в своей рамке с паддингом 4/8,
-   текст 16/20 весом 500. Контейнер — паддинг 16, gap 16.
-
-   Подложка красится ролью overlay/modal-dialog: это не общий чёрный с альфой,
-   а роль, у которой в тёмной теме своя плотность (10% против 20%). */
-
 export type DialogSize = "sm" | "md";
 
 const SIZE_CLASSES: Record<DialogSize, string> = {
@@ -27,12 +17,6 @@ const subscribeNoop = () => () => undefined;
 const getClientSnapshot = () => true;
 const getServerSnapshot = () => false;
 
-/* _ Dialog Close (137:422) — в макете приватный компонент, поэтому наружу не
-   экспортируется. От IconButton отличается принципиально: у него нет тени и
-   другая палитра — он лежит на панели, а не поверх карты.
-
-   Hover и Press делят одну заливку background/tertiary и различаются только
-   цветом глифа: на наведении icon/primary, на нажатии icon/tertiary. */
 function DialogClose({ onClose, label }: { onClose: () => void; label: string }) {
   return (
     <button
@@ -58,7 +42,6 @@ export function Dialog({
   showHeader = true,
 }: {
   title: string;
-  /** Подзаголовка в макете нет — остался от кита. */
   subtitle?: ReactNode;
   children: ReactNode;
   onClose: () => void;

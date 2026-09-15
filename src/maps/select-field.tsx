@@ -4,16 +4,6 @@ import { ChevronDown } from "lucide-react";
 import type { SelectHTMLAttributes } from "react";
 import { useId } from "react";
 
-/* Замер макета: компонент-сет Select Field (129:77), 6 вариантов
-   State(Default|Hover|Focus) × Stroke(False|True). Геометрия у всех шести
-   одинаковая: 28 высотой, радиус 6, паддинг 6/6/6/8, gap 4, текст 12/16 весом
-   400, фон background/primary.
-
-   Stroke — это не «есть рамка или нет», а насколько она заметна в покое:
-   при Stroke=False рамки в покое нет и она появляется на наведении, при
-   Stroke=True она есть сразу и на наведении становится темнее. Focus в обоих
-   случаях одинаков. */
-
 export type SelectFieldOption = { value: string; label: string };
 
 export type SelectFieldProps = Omit<
@@ -23,26 +13,14 @@ export type SelectFieldProps = Omit<
   value: string;
   onChange: (value: string) => void;
   options: SelectFieldOption[];
-  /**
-   * Видимая подпись над полем. Необязательна, но доступное имя обязательно:
-   * без `label` передайте `aria-label`, иначе select останется безымянным
-   * для скринридера.
-   */
   label?: string;
-  /** Stroke=True в макете: рамка видна уже в покое. */
   bordered?: boolean;
   className?: string;
 };
 
-/* Правый паддинг в макете не равен левому: между текстом и шевроном gap 4, сам
-   шеврон 16, до края 6. У нативного select нет flex-потока, поэтому место под
-   шеврон приходится держать паддингом — отсюда сумма, а не одно число. */
 const TRAILING_SPACE =
   "pr-[calc(var(--spacing-padding-6)+var(--dimension-width-16)+var(--spacing-gap-4))]";
 
-/* Обводка в макете выровнена ВНУТРЬ и места не занимает, поэтому inset-ring, а
-   не border: прозрачная рамка была костылём под то, что border съедает у
-   содержимого свою толщину. */
 const RING_CLASSES = {
   quiet: "inset-ring-transparent hover:inset-ring-(--border-secondary)",
   bordered: "inset-ring-(--border-secondary) hover:inset-ring-(--border-primary)",

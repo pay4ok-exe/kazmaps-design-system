@@ -175,8 +175,6 @@ export const KIT_CASES: [string, ReactElement][] = [
   ],
   [
     "SelectField bordered",
-    // Без видимой подписи имя приходит из aria-label — иначе select остаётся
-    // безымянным для скринридера (axe: select-name).
     <SelectField
       key="k"
       bordered

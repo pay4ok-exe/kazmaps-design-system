@@ -2,9 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { KIT_CASES, OVERLAY_CASES } from "./cases";
 
-/* По истории на компонент, а не одна простыня: в общем списке невозможно
-   ни найти нужный, ни поделиться ссылкой на него. Button и MapCompass живут
-   в собственных файлах — у них матрица свойств шире одной строки. */
 const meta: Meta = { title: "Maps kit", globals: { brand: "maps" } };
 export default meta;
 

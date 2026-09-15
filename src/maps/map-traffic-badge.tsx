@@ -1,18 +1,5 @@
 import type { ComponentProps } from "react";
 
-/* Замер макета: Map Traffic (106:427), пять состояний. Внешняя плашка 36×36,
-   паддинг 8, радиус 10, фон background/primary, тень --shadow-hud. Внутри
-   кружок 20×20 с ПОЛУТОРНОЙ обводкой и цифрой 12/16 весом 450.
-
-   Обводка кружка выровнена по ЦЕНТРУ, а не внутрь, как у остальных компонентов
-   макета: половина толщины уходит наружу. Ни border (всегда внутрь), ни
-   inset-ring этого не дают — нужен outline со сдвигом на половину толщины.
-   Кружок не фокусируется, так что outline здесь ничему не мешает.
-
-   Уровень задаёт сразу тройку ролей — заливку, обводку и цвет цифры, — и все
-   три берутся из группы traffic/*. Без уровня (пробки выключены) заливки нет
-   вовсе, а обводка и цифра уходят в icon/secondary. */
-
 export type TrafficLevel = "green" | "yellow" | "orange" | "red";
 
 const LEVEL_CLASSES: Record<TrafficLevel, string> = {
@@ -34,9 +21,7 @@ export function MapTrafficBadge({
   className = "",
   ...rest
 }: ComponentProps<"button"> & {
-  /** null — пробки выключены: состояние Disabled макета. */
   level: TrafficLevel | null;
-  /** Балл пробок. Показывается и в выключенном состоянии, как в макете. */
   value: number;
   label: string;
 }) {

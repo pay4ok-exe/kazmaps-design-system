@@ -1,21 +1,11 @@
 import { Search } from "lucide-react";
 import type { InputHTMLAttributes, ReactNode } from "react";
 
-/* Замер макета: Search Field (79:157), три состояния. Паддинг 8 со всех сторон,
-   gap 8, радиус 10, фон background/primary, тень --shadow-field, иконка 20,
-   текст 12/16 весом 450. Высота 36 нигде не задана числом — она складывается из
-   паддингов и самого высокого ребёнка (иконки), поэтому здесь её тоже нет:
-   высота остаётся производной, как в auto-layout макета.
-
-   Состояния различаются рамкой, а на фокусе ещё и цветом иконки с текстом:
-   default border/secondary, hover border/primary, focus border/focus. */
-
 export type SearchInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> & {
   value: string;
   onChange: (value: string) => void;
   onSubmit?: () => void;
   submitLabel?: string;
-  /** Плотный вариант без тени — своего макета не имеет, нужен плавающим панелям. */
   compact?: boolean;
   suffix?: ReactNode;
   className?: string;
@@ -55,8 +45,6 @@ export function SearchInput({
       />
       {suffix}
       {onSubmit === undefined ? null : (
-        /* Кнопки отправки в макете нет — она осталась от кита, потому что на неё
-           опираются экраны поиска. Переведена на новые роли, геометрия прежняя. */
         <button
           type="button"
           aria-label={submitLabel}

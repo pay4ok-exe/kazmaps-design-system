@@ -32,8 +32,6 @@ type Schema = {
 const schema = readJson("tokens/schema.json") as Schema;
 const BRANDS = ["business", "booking", "maps"];
 
-// Бренд со своим файлом Figma заменяет общий контракт целиком (см. build-tokens.mjs).
-// Проверять его общим списком ролей бессмысленно — списки не пересекаются.
 const contractFor = (name: string): Contract =>
   schema.byBrand?.[name]?.replacesContract
     ? schema.byBrand[name]

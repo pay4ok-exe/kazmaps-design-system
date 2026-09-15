@@ -27,9 +27,6 @@ describe("ToggleSwitch", () => {
     expect(screen.getByRole("group", { name: "Вид" })).toBeInTheDocument();
   });
 
-  /* Ширина и сдвиг индикатора считаются от числа пунктов, а не зашиты под два:
-     проверяем обе формулы, потому что ошибка в них не роняет тесты рендера,
-     а тихо смещает подложку мимо подписи. */
   it("индикатор занимает долю трека по числу пунктов", () => {
     const { container } = render(
       <ToggleSwitch options={OPTIONS} activeId="map" onSelect={vi.fn()} label="Вид" />,
@@ -60,8 +57,6 @@ describe("ToggleSwitch", () => {
     expect(indicator(container)).toBeNull();
   });
 
-  // Hover и Active в макете — одно состояние подписи, поэтому невыбранный пункт
-  // на наведении красится в тот же text/primary, что и выбранный.
   it("невыбранный пункт на наведении красится как выбранный", () => {
     render(<ToggleSwitch options={OPTIONS} activeId="map" onSelect={vi.fn()} label="Вид" />);
     const inactive = screen.getByRole("button", { name: "Список" }).className;

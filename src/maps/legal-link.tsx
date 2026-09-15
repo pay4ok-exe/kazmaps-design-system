@@ -1,11 +1,5 @@
 import type { AnchorHTMLAttributes, ReactNode } from "react";
 
-/* Замер макета: Legal (109:720), два состояния. Паддинг 4/6, радиус 4, фон
-   background/primary, текст 10/12 весом 400. Единственное различие состояний —
-   цвет: text/primary в покое и text/link на наведении.
-
-   Тени у этой плашки нет, в отличие от остальных элементов поверх карты. */
-
 export function LegalLink({
   children,
   className = "",

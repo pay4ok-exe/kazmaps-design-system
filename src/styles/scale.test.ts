@@ -39,16 +39,12 @@ const EXPECTED: Record<string, Record<string, string>> = {
     "text-xl": "1.25rem",
     "text-2xl": "1.5rem",
     "text-3xl": "1.875rem",
-    // Радиусы maps приходят из numerics макета, поэтому здесь не литерал, а
-    // наводка на роль; сами значения проверяет тест ниже.
     "radius-sm": "var(--dimension-corner-radius-4)",
     "radius-md": "var(--dimension-corner-radius-6)",
     "radius-lg": "var(--dimension-corner-radius-8)",
   },
 };
 
-// Шкала радиусов maps должна разрешаться в измеренные числа макета, а не просто
-// куда-то ссылаться: алиас, наведённый на несуществующую роль, тихо даст 0.
 const MAPS_RADIUS_SOURCE: Record<string, string> = {
   "dimension-corner-radius-4": "4px",
   "dimension-corner-radius-6": "6px",
@@ -66,7 +62,6 @@ const MAPS_KIT_STATIC: Record<string, string> = {
   "shadow-column": "rgba(16, 24, 40, 0.05) 2px 0px 8px 0px",
   "shadow-button-sm": "rgba(16, 24, 40, 0.08) 0px 1px 3px 0px",
   "shadow-button-md": "rgba(16, 24, 40, 0.1) 0px 1px 3px 0px",
-  // Измеренные в макете (эффекты на нодах), в отличие от ожидающих ниже.
   "shadow-field": "rgba(0, 0, 0, 0.04) 0px 4px 4px 0px",
   "shadow-hud": "rgba(0, 0, 0, 0.12) 0px 4px 8px 0px",
   "shadow-hud-hover": "rgba(0, 0, 0, 0.24) 0px 4px 8px 0px",
@@ -127,8 +122,6 @@ describe("brand scale", () => {
   });
 });
 
-// maps здесь нет намеренно: роли highlight в его макете не существует, а ссылок
-// на --highlight/--gold в main-web нет ни одной — роль не переносили.
 describe("highlight roles", () => {
   const VALUES: Record<string, Record<string, [string, string]>> = {
     business: { light: ["#c99a16", "#f9f0d8"], dark: ["#f0bf00", "#241f10"] },

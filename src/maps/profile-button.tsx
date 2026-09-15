@@ -1,22 +1,5 @@
 import type { ComponentProps, ReactNode } from "react";
 
-/* Замер макета: Profile (110:962), шесть вариантов Image(True|False) ×
-   State(Default|Hover|Active). Круг 40, фон background/primary, тень
-   --shadow-hud (на наведении --shadow-hud-hover).
-
-   IconButton сюда не подошёл: паддинг зависит от содержимого — 2 под снимок и
-   8 под глиф, — а у IconButton он один. Плюс снимок в состоянии Active
-   получает кольцо, которого у IconButton нет вовсе.
-
-   Со снимком: паддинг 2, картинка 36 кругом, в Active обводка 1 цветом
-   icon/accent — и она единственная в макете выровнена НАРУЖУ (strokeAlign
-   OUTSIDE): кольцо ложится снаружи снимка, не сжимая его. Поэтому ring, а не
-   border и не inset-ring. Без снимка: паддинг 8, глиф 24 цветом icon/primary, на
-   наведении icon/tertiary, в Active icon/accent.
-
-   Внимание: на наведении глиф СВЕТЛЕЕТ, как и у Map Action типа Default.
-   Так в макете — см. docs/figma-deltas.md, пункт 13. */
-
 export function ProfileButton({
   photoUrl,
   photoAlt = "",
@@ -26,12 +9,9 @@ export function ProfileButton({
   className = "",
   ...rest
 }: ComponentProps<"button"> & {
-  /** Снимок профиля. Без него рисуется глиф. */
   photoUrl?: string;
   photoAlt?: string;
-  /** Глиф для варианта без снимка; в макете это User 24×24. */
   icon?: ReactNode;
-  /** Профиль открыт. */
   active?: boolean;
   label: string;
 }) {

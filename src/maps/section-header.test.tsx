@@ -4,8 +4,6 @@ import { describe, expect, it } from "vitest";
 import { SectionHeader } from "./section-header";
 
 describe("SectionHeader", () => {
-  /* До замера это была мелкая подпись в верхнем регистре с разрядкой. В макете
-     заголовок один и он крупный — 16/20 весом 500 цветом text/primary. */
   it("рисует заголовок кеглем макета, а не капсом", () => {
     render(<SectionHeader>Рядом</SectionHeader>);
     const className = screen.getByText("Рядом").className;

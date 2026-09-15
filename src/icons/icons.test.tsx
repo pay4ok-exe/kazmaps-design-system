@@ -16,9 +16,6 @@ describe("иконки: генерация", () => {
     expect(ICON_MANIFEST).toHaveLength(svgs.length);
   });
 
-  /* SVG пишет атрибуты через дефис, а React такие имена молча выбрасывает.
-     Без fill-rule фигуры с дырками заливаются сплошняком — заметить это на
-     глаз трудно, поэтому проверяем разметку. */
   it("атрибуты переведены в camelCase", () => {
     for (const { slug } of ICON_MANIFEST) {
       const src = readFileSync(join(ROOT, `src/icons/generated/${slug}.tsx`), "utf8");
@@ -28,9 +25,6 @@ describe("иконки: генерация", () => {
 });
 
 describe("иконки: цвет", () => {
-  /* Литералы погоды — это значения ролей СВЕТЛОЙ темы. Если они останутся в
-     разметке, тёмная тема сломается молча: облако будет светло-голубым на
-     тёмном фоне. */
   it("многоцветные ссылаются на роли, а не на литералы", () => {
     for (const { slug, multicolour } of ICON_MANIFEST) {
       if (!multicolour) continue;

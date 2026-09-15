@@ -1,15 +1,3 @@
-/* Тянет иконки из Figma в src/icons/svg/*.svg.
- *
- * Почему REST, а не выгрузка руками: набор живой — дизайнер правит глифы и
- * добавляет новые. Разовый перенос пришлось бы повторять вручную и сверять
- * глазами, а этот скрипт перезапускается одной командой и показывает дифом,
- * что именно изменилось.
- *
- *   FIGMA_TOKEN=<personal access token> npm run icons:import
- *
- * Токен берётся в Figma → Settings → Security → Personal access tokens,
- * достаточно области file_read.
- */
 import { mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -34,7 +22,6 @@ const api = async (path) => {
   return res.json();
 };
 
-/** `Cloud Sunny ` → `cloud-sunny`. Хвостовые пробелы в именах макета реальны. */
 const slug = (name) =>
   name
     .trim()
@@ -42,23 +29,15 @@ const slug = (name) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 
-// ---- какие ноды тянуть ------------------------------------------------------
-
 const file = await api(`/v1/files/${FILE_KEY}?depth=4`);
 const page = file.document.children.find((p) => p.name === ICONS_PAGE);
 if (!page) throw new Error(`страница ${ICONS_PAGE} не найдена`);
 
 const wanted = [];
 const walk = (node, setName) => {
-  /* Подчёркивание в начале имени — принятая в этом макете пометка служебного
-     слоя (_Tab Action, _ Dialog Close). Такие в набор не идут: _Compass Icon
-     нарисован в поле 40 вместо 24 и несёт чистый #FF0000 — стрелку севера,
-     которой нет ни в одной роли. Понадобится — заведём отдельным компонентом
-     со своим замером, как сделали с кнопкой закрытия диалога. */
   if (node.name.trimStart().startsWith("_")) return;
 
   if (node.type === "COMPONENT") {
-    // Внутри COMPONENT_SET имя варианта выглядит как "weight=bold".
     const weight = setName ? node.name.split("=")[1]?.trim() : null;
     wanted.push({
       id: node.id,
@@ -73,10 +52,6 @@ walk(page, null);
 
 if (wanted.length === 0) throw new Error("на странице Icons не нашлось ни одного компонента");
 
-// ---- ссылки на SVG ----------------------------------------------------------
-
-/* Запрос по списку id: Figma отдаёт временные ссылки, качать их надо сразу.
-   Режем на части, иначе длинный URL упирается в ограничение сервера. */
 const CHUNK = 60;
 const urls = {};
 for (let i = 0; i < wanted.length; i += CHUNK) {
@@ -87,8 +62,6 @@ for (let i = 0; i < wanted.length; i += CHUNK) {
   if (err) throw new Error(String(err));
   Object.assign(urls, images);
 }
-
-// ---- запись -----------------------------------------------------------------
 
 const downloads = [];
 for (const node of wanted) {

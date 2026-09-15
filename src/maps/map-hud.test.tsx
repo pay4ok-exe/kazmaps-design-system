@@ -10,8 +10,6 @@ import { MapTrafficBadge } from "./map-traffic-badge";
 import { WeatherBadge } from "./weather-badge";
 
 describe("IconButton", () => {
-  /* Все элементы поверх карты сидят на одной паре теней: покой 12%, наведение
-     24%. Разъехаться им нельзя — они лежат рядом на одном экране. */
   it("несёт тень HUD и усиливает её на наведении", () => {
     render(<IconButton label="Приблизить">+</IconButton>);
     const className = screen.getByRole("button", { name: "Приблизить" }).className;
@@ -51,8 +49,6 @@ describe("IconButton", () => {
 });
 
 describe("MapTrafficBadge", () => {
-  /* Уровень задаёт сразу тройку ролей. Проверяем, что берутся именно они, а не
-     ближайшие похожие: traffic/* и tag/* легко перепутать — оба про цвет. */
   it("уровень красит заливку, обводку и цифру из группы traffic", () => {
     render(<MapTrafficBadge level="red" value={7} label="Пробки" />);
     const ring = screen.getByText("7").className;
@@ -60,7 +56,6 @@ describe("MapTrafficBadge", () => {
     expect(ring).toContain("outline-(--traffic-border-red)");
     expect(ring).toContain("text-(color:--traffic-text-red)");
     expect(ring).toContain("outline-[length:var(--stroke-border-1_5)]");
-    // Обводка кружка выровнена по центру: половина толщины уходит наружу.
     expect(ring).toContain("-outline-offset-[0.75px]");
   });
 
@@ -74,7 +69,6 @@ describe("MapTrafficBadge", () => {
 });
 
 describe("WeatherBadge", () => {
-  // Число и знак градуса в макете — разные ноды разного цвета.
   it("градус и знак градуса красятся по-разному", () => {
     render(<WeatherBadge icon={<span />} temperature="18" aria-label="Погода" />);
     expect(screen.getByText("18").className).toContain("text-(color:--text-secondary)");
@@ -88,8 +82,6 @@ describe("WeatherBadge", () => {
 });
 
 describe("ForecastCard", () => {
-  /* Time и Type меняют разное: недельный добавляет строку дня, текущий делает
-     заголовок тяжелее и поднимает контраст осадков. */
   it("текущий утяжеляет заголовок и поднимает контраст осадков", () => {
     const { rerender } = render(
       <ForecastCard title="14:00" icon={<span />} temperature="+20°" precipitation="0%" current />,
@@ -125,7 +117,6 @@ describe("ForecastCard", () => {
 });
 
 describe("CollapseHandle", () => {
-  // Тень вбок, а не вниз: полоска липнет к краю панели.
   it("несёт боковую тень и сообщает состояние панели", () => {
     render(
       <CollapseHandle label="Свернуть" open>
@@ -156,8 +147,6 @@ describe("LegalLink", () => {
 });
 
 describe("Dialog close", () => {
-  /* Кнопка закрытия в макете приватная и на IconButton не похожа: тени нет,
-     палитра другая — она лежит на панели, а не поверх карты. */
   it("без тени, hover и press делят заливку и различаются глифом", () => {
     render(
       <Dialog title="Заголовок" onClose={() => undefined}>

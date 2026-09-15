@@ -42,11 +42,6 @@ function Row({
   );
 }
 
-/* Сетка повторяет компонент-сет макета: типы по столбцам, наличие иконки и
-   выключенность по строкам. Состояний Hover и Pressed здесь нет намеренно —
-   это состояния взаимодействия, их видно только курсором. Отдельная история
-   для них бессмысленна ещё и потому, что Hover в макете побайтово равен
-   Default (docs/figma-deltas.md, пункт 1). */
 export const ВсеВарианты: StoryObj = {
   render: () => (
     <div className="flex flex-col gap-(--spacing-gap-24)">
@@ -90,9 +85,6 @@ export const ВсеВарианты: StoryObj = {
   ),
 };
 
-/* В макете размер ровно один — 40px, это md. sm и lg остались от кита и
-   источника не имеют: их высоты 34 и 44 не ложатся даже на шкалу
-   dimension/height (28 → 40 → 64). */
 export const Размеры: StoryObj = {
   render: () => (
     <div className="flex flex-col gap-(--spacing-gap-24)">

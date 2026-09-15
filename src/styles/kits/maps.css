@@ -18,14 +18,6 @@
   .animate-shimmer-placeholder {
     animation: shimmer-placeholder var(--motion-shimmer) var(--ease-standard) infinite;
   }
-  /* Все обводки макета выровнены ВНУТРЬ (strokeAlign INSIDE): они лежат поверх
-     паддинга и места не занимают. CSS-border так не умеет — он всегда съедает у
-     содержимого свою толщину и сдвигает текст на пиксель. Сплошные обводки
-     поэтому переведены на inset-ring, а градиентную рисует этот слой: лежит
-     поверх кнопки, вырезает середину маской и на раскладку не влияет вовсе.
-
-     Градиент снят с макета сэмплом пикселей: сверху action/<type>/subtle, снизу
-     action/<type>/secondary. */
   .gradient-ring {
     padding: var(--stroke-border-1);
     background: linear-gradient(180deg, var(--btn-ring-from), var(--btn-ring-to));

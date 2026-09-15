@@ -14,8 +14,6 @@ const meta: Meta<typeof MapCompass> = {
 };
 export default meta;
 
-/* Ползунком видно главное свойство компаса: циферблат крутится ПРОТИВ азимута.
-   Карта повёрнута на 90° — север уехал влево, туда же уходит стрелка. */
 export const Песочница: StoryObj<typeof MapCompass> = {};
 
 export const Состояния: StoryObj = {
@@ -38,8 +36,6 @@ export const Состояния: StoryObj = {
   ),
 };
 
-/* Компас в работе: азимут меняется действием, а не пропом из аргументов.
-   Ровно так его дёргает карта. */
 export const ОтДействия: StoryObj = {
   render: function Interactive() {
     const [heading, setHeading] = useState(35);

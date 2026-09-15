@@ -24,9 +24,6 @@ describe("SelectField", () => {
     expect(screen.getByLabelText("Город").tagName).toBe("SELECT");
   });
 
-  /* Stroke в макете меняет не наличие рамки, а её заметность в покое: при
-     Stroke=False рамка прозрачна и проявляется на наведении. Прозрачная, а не
-     отсутствующая — иначе текст сдвинется на пиксель в момент наведения. */
   it("bordered=false держит обводку невидимой и проявляет её на наведении", () => {
     const { container } = render(
       <SelectField value="almaty" onChange={vi.fn()} options={OPTIONS} />,

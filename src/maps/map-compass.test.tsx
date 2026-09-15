@@ -15,8 +15,6 @@ describe("MapCompass", () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  /* Циферблат крутится ПРОТИВ азимута: карта повёрнута на 90°, значит север
-     уехал влево, и стрелка должна уехать туда же. Знак здесь легко потерять. */
   it("циферблат поворачивается против азимута", () => {
     const { container, rerender } = render(<MapCompass label="Север" />);
     expect(dial(container)).toHaveStyle({ rotate: "0deg" });
@@ -24,7 +22,6 @@ describe("MapCompass", () => {
     expect(dial(container)).toHaveStyle({ rotate: "-90deg" });
   });
 
-  /* Состояния меняют только цвет буквы N — циферблат во всех трёх одинаков. */
   it("aligned подсвечивает букву акцентом", () => {
     const { rerender } = render(<MapCompass label="Север" />);
     expect(screen.getByRole("button", { name: "Север" }).className).toContain(
@@ -36,7 +33,6 @@ describe("MapCompass", () => {
     );
   });
 
-  // 40 с паддингом 12, а не 36/6 как у IconButton — иначе буква N не встанет.
   it("держит размер и паддинг макета", () => {
     render(<MapCompass label="Север" />);
     const className = screen.getByRole("button", { name: "Север" }).className;
@@ -57,7 +53,6 @@ describe("ProfileButton", () => {
     );
   });
 
-  // Кольцо есть только у снимка и только в active — это вариант Image=True.
   it("кольцо появляется только на активном снимке", () => {
     const { container, rerender } = render(<ProfileButton label="Профиль" photoUrl="/a.png" />);
     expect(container.querySelector("img")?.className).not.toContain("ring-(--icon-accent)");
@@ -65,8 +60,6 @@ describe("ProfileButton", () => {
     expect(container.querySelector("img")?.className).toContain("ring-(--icon-accent)");
   });
 
-  /* На наведении глиф СВЕТЛЕЕТ — так в макете, как и у Map Action типа
-     Default. Выглядит недосмотром, но это замер (пункт 13 в figma-deltas). */
   it("глиф светлеет на наведении и уходит в акцент при active", () => {
     const { rerender } = render(<ProfileButton label="Профиль" icon={<span />} />);
     let className = screen.getByRole("button", { name: "Профиль" }).className;

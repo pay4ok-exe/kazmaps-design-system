@@ -2,19 +2,6 @@ import type { ReactNode } from "react";
 
 import { TabAction } from "./tab-action";
 
-/* Замер макета: Nav bar (134:406), четыре варианта — по одному на активную
-   вкладку. Рельс 64 шириной, паддинг 16 сверху и снизу, фон background/primary,
-   раскладка вертикальная со SPACE_BETWEEN: основные действия прижаты вверх,
-   второстепенные вниз. Внутри групп gap 20.
-
-   Высота 1024 в макете — это высота холста варианта, а не свойство компонента:
-   SPACE_BETWEEN работает только когда рельс тянется на всю доступную высоту,
-   поэтому здесь h-full, а не число.
-
-   Пункт — тот же _Tab Action, что и в SegmentedRow, поэтому его разметка
-   лежит в tab-action.tsx и здесь только переиспользуется. Отличается лишь то,
-   как сообщается выбор: ряд говорит о нажатии, рельс — о текущей странице. */
-
 export interface NavRailItem {
   id: string;
   label: string;
@@ -24,10 +11,8 @@ export interface NavRailItem {
 
 export interface NavRailProps {
   items: NavRailItem[];
-  /** Нижняя группа: в макете это «Установить приложение». */
   secondaryItems?: NavRailItem[];
   activeId: string | null;
-  /** Назначение рельса для скринридера. */
   label: string;
   className?: string;
 }

@@ -4,8 +4,6 @@ import { describe, expect, it, vi } from "vitest";
 
 import { Button, type ButtonSize } from "./button";
 
-/* Именно утилита border-*, а не подстрока: inset-ring-(--border-primary) тоже
-   содержит «border-», но раскладку не трогает. */
 const usesBorderUtility = (className: string) =>
   className.split(" ").some((c) => c === "border" || /^(\w+:)?border-/.test(c));
 
@@ -43,8 +41,6 @@ describe("Button", () => {
     expect(screen.getByRole("button", { name: "b" }).className).toContain(heightClass);
   });
 
-  // Правый паддинг у иконочного варианта в макете меньше левого (10 против 12) —
-  // ровно это и легко потерять при рефакторинге, поэтому проверяется явно.
   it("иконка включает асимметричный паддинг и gap макета", () => {
     render(
       <>
@@ -61,8 +57,6 @@ describe("Button", () => {
     expect(withIcon).toContain("gap-(--spacing-gap-6)");
   });
 
-  // Вес 450 против 500 в зависимости от иконки — замер макета, а не описка.
-  // Отличить 450 от 400 можно только по fontWeight: style у обоих «Regular».
   it("иконка меняет вес текста с 500 на 450", () => {
     render(
       <>
@@ -87,9 +81,6 @@ describe("Button", () => {
     expect(screen.getByRole("button", { name: variant }).className).toContain(`bg-(${fill})`);
   });
 
-  /* Обводка в макете выровнена ВНУТРЬ и места не занимает. CSS-border так не
-     умеет — он съел бы у содержимого свою толщину и сдвинул текст с измеренных
-     12 на 13. Поэтому кольцо рисует отдельный слой поверх кнопки. */
   it("градиентное кольцо — отдельный слой, а не border", () => {
     const { container } = render(<Button variant="accent">accent</Button>);
     const button = screen.getByRole("button", { name: "accent" });

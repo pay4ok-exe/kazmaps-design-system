@@ -26,8 +26,6 @@ describe("NavRail", () => {
     expect(onSelect).toHaveBeenCalledTimes(1);
   });
 
-  /* Рельс сообщает о ТЕКУЩЕЙ СТРАНИЦЕ, а ряд — о нажатии. Оба рисуют один и тот
-     же _Tab Action, и перепутать семантику легко. */
   it("активный пункт помечен aria-current, а не aria-pressed", () => {
     render(<NavRail label="Разделы" activeId="search" items={[item("search", "Поиск")]} />);
     const button = screen.getByRole("button", { name: "Поиск" });
@@ -51,8 +49,6 @@ describe("NavRail", () => {
     expect(screen.getByRole("button", { name: "Установить" })).toBeInTheDocument();
   });
 
-  /* Высота 1024 в макете — размер холста варианта. SPACE_BETWEEN работает только
-     когда рельс тянется на всю высоту, поэтому число сюда переносить нельзя. */
   it("тянется на всю высоту, а не фиксирует её числом", () => {
     const { container } = render(
       <NavRail label="Разделы" activeId="search" items={[item("search", "Поиск")]} />,

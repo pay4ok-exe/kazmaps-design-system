@@ -12,8 +12,6 @@ describe("SearchInput", () => {
     expect(onChange).toHaveBeenCalledWith("к");
   });
 
-  /* Высота 36 в макете нигде не задана числом — она складывается из паддинга 8
-     и иконки 20. Фиксация высоты классом развалила бы это при смене кегля. */
   it("высота остаётся производной от паддинга, а не задана числом", () => {
     const { container } = render(<SearchInput value="" onChange={vi.fn()} />);
     const className = container.firstElementChild?.className ?? "";

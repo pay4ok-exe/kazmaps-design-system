@@ -1,27 +1,11 @@
 import type { ReactNode } from "react";
 
-/* Замер макета: Forecast Card (179:199), четыре варианта Time(Current|Future) ×
-   Type(Hourly|Weekly). Ширина 64, паддинг 4/4/6/4 — снизу шестёрка, — gap 4,
-   радиус 8, фон background/secondary. Пиктограмма 32.
-
-   Time и Type меняют разное, и их легко перепутать:
-     Type=Weekly добавляет строку дня (10/12 весом 450, text/secondary) между
-       заголовком и пиктограммой — отсюда высота 112 против 96;
-     Time=Current делает ЗАГОЛОВОК тяжелее (500 против 400) и поднимает
-       осадки с text/tertiary до text/secondary.
-   То есть «текущее» подчёркнуто не заливкой, а весом и контрастом. */
-
 export interface ForecastCardProps {
-  /** Час или дата — верхняя строка. */
   title: ReactNode;
-  /** День недели: только для недельного прогноза. */
   day?: ReactNode;
-  /** Пиктограмма 32×32; цвет задаёт вызывающий ролью weather/*. */
   icon: ReactNode;
   temperature: ReactNode;
-  /** Вероятность осадков. */
   precipitation: ReactNode;
-  /** Текущий час или день — выделяется весом заголовка, а не фоном. */
   current?: boolean;
   className?: string;
 }

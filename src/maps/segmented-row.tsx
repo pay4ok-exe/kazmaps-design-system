@@ -2,10 +2,6 @@ import type { ReactNode } from "react";
 
 import { TabAction } from "./tab-action";
 
-/* Ряд пунктов _Tab Action (76:342). Сама разметка пункта — в tab-action.tsx:
-   тот же пункт стоит в вертикальном рельсе NavRail, и держать его в двух
-   местах значит гарантированно их разъехать. */
-
 export interface SegmentedRowItem {
   id: string;
   label: string;

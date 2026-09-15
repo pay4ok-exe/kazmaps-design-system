@@ -1,24 +1,10 @@
 import type { ReactNode } from "react";
 
-/* Замер макета: Category Label (81:181). Радиус 10, фон background/primary,
-   gap 6, текст 12/16 весом 450 цветом text/primary. Паддинг несимметричный —
-   2/6/2/2: слева всего 2, потому что там стоит иконочный чип 24 с собственным
-   паддингом 4 и радиусом 8, залитый tag/gray.
-
-   Высота 28 числом нигде не задана: она складывается из паддингов и чипа
-   (2 + 24 + 2), поэтому и здесь не фиксируется. */
-
-/* Welcome Label (157:895) из секции Login — тот же чип с точностью до двух
-   заливок: поверхность background/secondary вместо primary и иконочный чип
-   tag/blue вместо tag/gray. Геометрия совпадает полностью, поэтому это тон, а
-   не отдельный компонент. */
 export type ChipTone = "neutral" | "info";
 
 export interface ChipProps {
   label: string;
-  /** Иконка в чипе слева. В макете она есть всегда; без неё паддинг симметричный. */
   icon?: ReactNode;
-  /** neutral — Category Label, info — Welcome Label. */
   tone?: ChipTone;
   active?: boolean;
   onClick?: () => void;
@@ -30,17 +16,11 @@ const TONE = {
   info: { surface: "bg-(--background-secondary)", badge: "bg-(--tag-blue)" },
 };
 
-/* Без иконки паддинг слева измерить негде — в макете такого варианта нет.
-   Берём измеренную правую шестёрку на обе стороны: так высота остаётся теми же
-   28 (6 + 16 + 6), что и с иконкой. */
 const PADDING = {
   withIcon: "py-(--spacing-padding-2) pr-(--spacing-padding-6) pl-(--spacing-padding-2)",
   textOnly: "px-(--spacing-padding-6) py-(--spacing-padding-6)",
 };
 
-/* active в макете отсутствует: Category Label снят только в Default и Hover.
-   Вариант оставлен от кита и переведён на новые роли — на него опираются
-   фильтры в main-web. */
 const STATE = {
   active: "inset-ring-(--action-accent-primary) text-(color:--text-accent)",
   idle: "inset-ring-transparent text-(color:--text-primary) hover:inset-ring-(--border-secondary)",
