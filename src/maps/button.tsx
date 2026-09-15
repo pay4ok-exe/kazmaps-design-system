@@ -6,7 +6,7 @@ import type { ComponentProps, ReactNode } from "react";
    стопы градиентной обводки и — при Icon=True — правый паддинг и gap.
 
    Расхождения макета с самим собой — identical hover и отсутствие outline —
-   разобраны в docs/figma-deltas.md, раздел «Кнопка». */
+   записаны в docs/figma-deltas.md, пункты 1 и 2. */
 
 export type ButtonVariant = "accent" | "neutral" | "danger" | "outline" | "outline-accent";
 export type ButtonSize = "sm" | "md" | "lg";
@@ -95,7 +95,7 @@ const SIZE_CLASSES: Record<ButtonSize, SizeSpec> = {
 /* Вес текста в макете зависит от наличия иконки: без неё Medium 500, с ней
    Regular 450. Воспроизведено буквально — разница в полступени переменного Inter
    не стоит того, чтобы спорить с замером. Что это похоже на недосмотр
-   дизайнера — записано в docs/figma-deltas.md. */
+   дизайнера — записано в docs/figma-deltas.md, пункт 9. */
 const WEIGHT_CLASSES = {
   withIcon: "[font-weight:var(--font-weight-book)]",
   textOnly: "[font-weight:var(--font-weight-medium)]",
