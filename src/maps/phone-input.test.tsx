@@ -46,3 +46,11 @@ describe("maps PhoneInput", () => {
     expect(screen.getByRole("button", { name: /Регион: Россия/ })).toBeInTheDocument();
   });
 });
+
+describe("maps PhoneInput focus", () => {
+  it("an invalid field still shows a focus indicator", () => {
+    render(<PhoneInput label="Телефон" onChange={vi.fn()} invalid />);
+    const shell = screen.getByLabelText("Телефон").closest("div.flex");
+    expect(shell?.className).toContain("focus-ring-within");
+  });
+});

@@ -45,3 +45,12 @@ describe("SearchInput", () => {
     expect(onSubmit).toHaveBeenCalledTimes(1);
   });
 });
+
+describe("SearchInput submit button", () => {
+  it("stretches to the field height instead of a percentage of an auto height", () => {
+    render(<SearchInput value="" onChange={vi.fn()} onSubmit={vi.fn()} />);
+    const className = screen.getByRole("button", { name: "Искать" }).className;
+    expect(className).toContain("self-stretch");
+    expect(className).not.toContain("h-[calc(100%");
+  });
+});

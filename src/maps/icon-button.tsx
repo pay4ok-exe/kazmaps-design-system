@@ -37,7 +37,7 @@ export function IconButton({
   label,
   size = "md",
   shape = "square",
-  active = false,
+  active,
   className = "",
   ...rest
 }: ComponentProps<"button"> & {

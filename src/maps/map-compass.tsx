@@ -1,4 +1,7 @@
+"use client";
+
 import type { ComponentProps } from "react";
+import { useState } from "react";
 
 /* Замер макета: Map Compass (109:612), три состояния. Круг 40 с паддингом 12,
    фон background/primary, тень --shadow-hud (на наведении --shadow-hud-hover).
@@ -95,6 +98,12 @@ export function MapCompass({
   aligned?: boolean;
   label: string;
 }) {
+  const [turn, setTurn] = useState({ heading, rotation: -heading });
+  if (turn.heading !== heading) {
+    const delta = ((((heading - turn.heading) % 360) + 540) % 360) - 180;
+    setTurn({ heading, rotation: turn.rotation - delta });
+  }
+
   return (
     <button
       type="button"
@@ -110,20 +119,23 @@ export function MapCompass({
       {/* Циферблат лежит поверх всей кнопки, а не внутри паддинга: в макете он
           40×40, то есть ровно во всю плашку, и паддинг 12 отмеряет место под
           букву N, а не под него. */}
-      <svg
-        viewBox="0 0 40 40"
+      <span
         aria-hidden="true"
-        className="absolute inset-0 size-full transition-[rotate] duration-(--motion-panel) ease-(--ease-standard)"
-        /* Тень с самого глифа макета: в Figma у _Compass Icon свой DROP_SHADOW,
+        className="absolute inset-0"
+        style={{ filter: "drop-shadow(0 4px 8px rgb(0 0 0 / 0.12))" }}
+      >
+        <svg
+          viewBox="0 0 40 40"
+          aria-hidden="true"
+          className="block size-full transition-[rotate] duration-(--motion-panel) ease-(--ease-standard)"
+          /* Тень с самого глифа макета: в Figma у _Compass Icon свой DROP_SHADOW,
            повторяющий --shadow-hud. box-shadow к SVG-фигурам не применяется,
            поэтому drop-shadow. */
-        style={{
-          rotate: `${String(-heading)}deg`,
-          filter: "drop-shadow(0 4px 8px rgb(0 0 0 / 0.12))",
-        }}
-      >
-        {DIAL}
-      </svg>
+          style={{ rotate: `${String(turn.rotation)}deg` }}
+        >
+          {DIAL}
+        </svg>
+      </span>
       <svg viewBox="0 0 16 16" aria-hidden="true" className="relative size-[16px]">
         {LETTER_N}
       </svg>

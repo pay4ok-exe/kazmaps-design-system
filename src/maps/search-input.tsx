@@ -62,7 +62,7 @@ export function SearchInput({
           aria-label={submitLabel}
           title={submitLabel}
           onClick={onSubmit}
-          className="-my-(--spacing-padding-8) -mr-(--spacing-padding-8) flex h-[calc(100%+2*var(--spacing-padding-8))] w-[46px] shrink-0 items-center justify-center bg-(--action-accent-primary) text-(color:--text-white) transition-interactive focus-ring hover:bg-(--action-accent-secondary)"
+          className="-my-(--spacing-padding-8) -mr-(--spacing-padding-8) flex w-[46px] self-stretch shrink-0 items-center justify-center bg-(--action-accent-primary) text-(color:--text-white) transition-interactive focus-ring hover:bg-(--action-accent-secondary)"
         >
           <Search size={20} aria-hidden="true" />
         </button>

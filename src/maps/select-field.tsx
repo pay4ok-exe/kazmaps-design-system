@@ -55,9 +55,11 @@ export function SelectField({
   label,
   bordered = false,
   className = "",
+  id: idProp,
   ...rest
 }: SelectFieldProps) {
-  const id = useId();
+  const generatedId = useId();
+  const id = idProp ?? generatedId;
 
   return (
     <div className={className}>

@@ -66,3 +66,12 @@ describe("SelectField", () => {
     expect(chevron?.getAttribute("class")).toContain("pointer-events-none");
   });
 });
+
+describe("SelectField id", () => {
+  it("keeps the label linked when the caller passes its own id", () => {
+    render(
+      <SelectField id="city" value="almaty" onChange={vi.fn()} options={OPTIONS} label="Город" />,
+    );
+    expect(screen.getByLabelText("Город")).toHaveAttribute("id", "city");
+  });
+});

@@ -21,7 +21,7 @@ export function ProfileButton({
   photoUrl,
   photoAlt = "",
   icon,
-  active = false,
+  active,
   label,
   className = "",
   ...rest

@@ -60,15 +60,24 @@ export function CodeInput({
           }}
           type="text"
           inputMode="numeric"
-          maxLength={1}
           aria-label={digitLabel(i, length)}
           aria-invalid={invalid || undefined}
           autoFocus={autoFocus && i === 0}
           disabled={disabled}
           autoComplete={i === 0 ? "one-time-code" : "off"}
           value={digit}
+          onFocus={(e) => {
+            e.target.select();
+          }}
           onChange={(e) => {
-            const next = e.target.value.replace(/\D/g, "").slice(-1);
+            const typed = e.target.value.replace(/\D/g, "");
+            if (typed.length > 1 && !(digit !== "" && typed.length === 2)) {
+              const spread = typed.slice(0, length - i);
+              for (let k = 0; k < spread.length; k += 1) onChange(i + k, spread.charAt(k));
+              refs.current[Math.min(i + spread.length, length - 1)]?.focus();
+              return;
+            }
+            const next = typed.length === 2 ? typed.charAt(typed.startsWith(digit) ? 1 : 0) : typed;
             onChange(i, next);
             if (next && i < length - 1) refs.current[i + 1]?.focus();
           }}

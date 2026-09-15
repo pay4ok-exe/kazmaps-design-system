@@ -79,3 +79,30 @@ describe("ProfileButton", () => {
     expect(screen.getByRole("button", { name: "Профиль" })).toHaveAttribute("aria-pressed", "true");
   });
 });
+
+describe("MapCompass rotation", () => {
+  it("crosses north by the short way instead of spinning a full turn", () => {
+    const { container, rerender } = render(<MapCompass label="Север" heading={358} />);
+    expect(dial(container)).toHaveStyle({ rotate: "-358deg" });
+    rerender(<MapCompass label="Север" heading={2} />);
+    expect(dial(container)).toHaveStyle({ rotate: "-362deg" });
+  });
+
+  it("keeps the glyph shadow outside the rotating layer", () => {
+    const { container } = render(<MapCompass label="Север" heading={180} />);
+    expect(dial(container)?.style.filter).toBe("");
+    expect(dial(container)?.parentElement?.style.filter).toContain("drop-shadow");
+  });
+});
+
+describe("ProfileButton pressed state", () => {
+  it("announces a pressed state only when active is passed", () => {
+    const { rerender } = render(<ProfileButton label="Профиль" icon={<span />} />);
+    expect(screen.getByRole("button", { name: "Профиль" })).not.toHaveAttribute("aria-pressed");
+    rerender(<ProfileButton label="Профиль" icon={<span />} active={false} />);
+    expect(screen.getByRole("button", { name: "Профиль" })).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    );
+  });
+});

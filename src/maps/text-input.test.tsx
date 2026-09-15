@@ -40,3 +40,17 @@ describe("TextInput", () => {
     expect(shell).toContain("has-[input:focus]:inset-ring-(--border-focus)");
   });
 });
+
+describe("TextInput id and focus", () => {
+  it("keeps the label linked when the caller passes its own id", () => {
+    render(<TextInput id="mail" label="Почта" value="" onChange={vi.fn()} />);
+    expect(screen.getByLabelText("Почта")).toHaveAttribute("id", "mail");
+  });
+
+  it("an invalid field still shows a focus indicator", () => {
+    const { container } = render(<TextInput value="" onChange={vi.fn()} invalid />);
+    expect(container.firstElementChild?.firstElementChild?.className).toContain(
+      "focus-ring-within",
+    );
+  });
+});

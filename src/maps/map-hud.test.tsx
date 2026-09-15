@@ -173,3 +173,19 @@ describe("Dialog close", () => {
     expect(className).not.toContain("shadow-");
   });
 });
+
+describe("IconButton pressed state", () => {
+  it("is a plain action unless active is passed", () => {
+    const { rerender } = render(<IconButton label="Приблизить">+</IconButton>);
+    expect(screen.getByRole("button", { name: "Приблизить" })).not.toHaveAttribute("aria-pressed");
+    rerender(
+      <IconButton label="Приблизить" active={false}>
+        +
+      </IconButton>,
+    );
+    expect(screen.getByRole("button", { name: "Приблизить" })).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    );
+  });
+});

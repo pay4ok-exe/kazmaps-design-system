@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
@@ -53,5 +53,26 @@ describe("CodeInput", () => {
       expect(cell.className).toContain("text-(color:--text-danger)");
       expect(cell).toHaveAttribute("aria-invalid", "true");
     }
+  });
+});
+
+describe("CodeInput input sources", () => {
+  it("spreads a multi-digit value from one-time-code autofill across the cells", () => {
+    const onChange = vi.fn();
+    render(<CodeInput values={["", "", "", ""]} onChange={onChange} />);
+    fireEvent.change(cells()[0], { target: { value: "1234" } });
+    expect(onChange.mock.calls).toEqual([
+      [0, "1"],
+      [1, "2"],
+      [2, "3"],
+      [3, "4"],
+    ]);
+  });
+
+  it("typing into a filled cell replaces its digit", async () => {
+    const onChange = vi.fn();
+    render(<CodeInput values={["3", ""]} onChange={onChange} />);
+    await userEvent.type(cells()[0], "7");
+    expect(onChange).toHaveBeenCalledWith(0, "7");
   });
 });
