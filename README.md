@@ -100,7 +100,7 @@ import { Button, TextInput, PlaceRow, useToast } from "@temirtator/kazmaps-desig
 
 ### 6. Иконки
 
-Набор иконок макета: 96 заливных глифов в поле 24×24, три раздела — Interface, Map UI,
+Набор иконок макета: 101 заливной глиф в поле 24×24, три раздела — Interface, Map UI,
 Weather.
 
 ```tsx

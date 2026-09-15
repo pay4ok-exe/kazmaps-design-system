@@ -145,13 +145,16 @@ export function PhoneInput({
           </button>
 
           <span className="flex min-w-0 flex-1 items-center gap-(--spacing-gap-4)">
-            <label
-              htmlFor={id}
+            <span
               aria-hidden="true"
+              onMouseDown={(event) => {
+                event.preventDefault();
+                inputRef.current?.focus();
+              }}
               className={`shrink-0 cursor-text text-base leading-(--typography-line-height-20) tabular-nums [font-weight:var(--font-weight-regular)] ${hasError ? "text-(color:--text-danger)" : "text-(color:--text-primary)"}`}
             >
               +{region.dial}
-            </label>
+            </span>
             <InputMask
               ref={inputRef}
               mask={mask}

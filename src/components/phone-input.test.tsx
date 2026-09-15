@@ -75,3 +75,10 @@ describe("PhoneInput dial code", () => {
     expect(screen.getByLabelText("Телефон")).toHaveFocus();
   });
 });
+
+describe("PhoneInput field name", () => {
+  it("keeps the dial code out of the field's accessible name", () => {
+    render(<PhoneInput label="Телефон" onChange={vi.fn()} />);
+    expect(screen.getByRole("textbox", { name: "Телефон" })).toBeInTheDocument();
+  });
+});
