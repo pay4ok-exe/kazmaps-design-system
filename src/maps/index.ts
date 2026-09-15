@@ -38,7 +38,7 @@ export type { PasswordInputProps } from "./password-input";
 export { PasswordInput } from "./password-input";
 export type { PhoneInputProps, PhoneValue } from "./phone-input";
 export { PhoneInput } from "./phone-input";
-export type { PlaceRowProps, PlaceRowStatus } from "./place-row";
+export type { PlaceRowProps } from "./place-row";
 export { PlaceRow } from "./place-row";
 export { QrCode } from "./qr-code";
 export type { ScaleBarProps } from "./scale-bar";

@@ -2,7 +2,16 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Text } from "./text";
 
-const meta: Meta<typeof Text> = { title: "Atoms/Text", component: Text };
+/* Бренд закреплён намеренно. Atoms и molecules построены на общем контракте
+   токенов (--brand, --ink, --card, --line и далее), который есть у business и
+   booking. Бренд maps с версии редизайна несёт СВОЙ контракт из Figma, этих
+   ролей у него нет, и под ним витрина рисовалась бы пустыми прямоугольниками.
+   Компоненты maps живут в разделе «Maps kit». */
+const meta: Meta<typeof Text> = {
+  globals: { brand: "business" },
+  title: "Atoms/Text",
+  component: Text,
+};
 export default meta;
 export const Colors: StoryObj<typeof Text> = {
   render: () => (

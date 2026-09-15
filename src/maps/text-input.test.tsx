@@ -4,18 +4,31 @@ import { describe, expect, it, vi } from "vitest";
 import { TextInput } from "./text-input";
 
 describe("TextInput", () => {
-  it("связывает подпись и сообщение об ошибке с полем", () => {
-    render(<TextInput label="Почта" value="" onChange={vi.fn()} error="Неверный адрес" />);
-    const input = screen.getByLabelText("Почта");
-    expect(input).toHaveAttribute("aria-invalid", "true");
-    expect(input).toHaveAccessibleDescription("Неверный адрес");
+  it("связывает подпись с полем", () => {
+    render(<TextInput label="Почта" value="" onChange={vi.fn()} />);
+    expect(screen.getByLabelText("Почта").tagName).toBe("INPUT");
+  });
+
+  /* Текста ошибки у поля нет и не должно появиться: в KazMaps его показывает
+     тост. Поле несёт только визуальное состояние. */
+  it("ошибка не рисует подписи под полем", () => {
+    const { container } = render(
+      <TextInput label="Почта" value="abc" onChange={vi.fn()} invalid />,
+    );
+    expect(container.querySelector("p")).toBeNull();
+    expect(screen.getByLabelText("Почта")).toHaveAttribute("aria-invalid", "true");
   });
 
   /* В состоянии Error макет красит не только рамку, но и сам текст поля в
      text/danger. Это замер, а не вольность — и именно то, что сотрут первым. */
   it("ошибка красит текст поля, а не только рамку", () => {
-    render(<TextInput label="Почта" value="abc" onChange={vi.fn()} error="Неверный адрес" />);
+    const { container } = render(
+      <TextInput label="Почта" value="abc" onChange={vi.fn()} invalid />,
+    );
     expect(screen.getByLabelText("Почта").className).toContain("text-(color:--text-danger)");
+    expect(container.firstElementChild?.querySelector("div")?.className).toContain(
+      "border-(--border-error)",
+    );
   });
 
   it("в покое рамка прозрачна и проявляется на наведении и фокусе", () => {

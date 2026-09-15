@@ -116,7 +116,7 @@ export const KIT_CASES: [string, ReactElement][] = [
   ],
   ["PasswordInput", <PasswordInput key="k" label="Пароль" value="secret" onChange={noop} />],
   ["PhoneInput", <PhoneInput key="k" label="Телефон" hint="Код придёт в WhatsApp" />],
-  ["PhoneInput error", <PhoneInput key="k" label="Телефон" error="Введите номер полностью" />],
+  ["PhoneInput invalid", <PhoneInput key="k" label="Телефон" invalid />],
   [
     "PlaceRow",
     <PlaceRow
@@ -124,7 +124,7 @@ export const KIT_CASES: [string, ReactElement][] = [
       name="Кофейня"
       rating={4.6}
       category="Кафе"
-      status={{ label: "Открыто", tone: "success" }}
+      status="Открыто"
       metaText="300 м"
     />,
   ],
@@ -279,10 +279,7 @@ export const KIT_CASES: [string, ReactElement][] = [
     "TextInput",
     <TextInput key="k" label="Имя" value="" onChange={noop} placeholder="Как вас зовут" />,
   ],
-  [
-    "TextInput error",
-    <TextInput key="k" label="Имя" value="" onChange={noop} error="Обязательное поле" />,
-  ],
+  ["TextInput invalid", <TextInput key="k" label="Имя" value="" onChange={noop} invalid />],
   ["Toggle", <Toggle key="k" checked onChange={noop} label="Уведомления" />],
   [
     "ToggleSwitch",

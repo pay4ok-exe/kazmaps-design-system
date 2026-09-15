@@ -9,13 +9,17 @@ import { useId } from "react";
 
    Состояния меняют рамку: Default — нет, Hover — border/secondary,
    Focus — border/focus, Error — border/error. В ошибке макет красит и САМ ТЕКСТ
-   поля в text/danger, не только рамку — это замер, а не вольность. */
+   поля в text/danger, не только рамку — это замер, а не вольность.
+
+   Сообщения об ошибке у поля нет и не будет: в KazMaps текст ошибки показывает
+   тост. Поле несёт только визуальное состояние, поэтому проп булев. */
 
 export type TextInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> & {
   value: string;
   onChange: (value: string) => void;
   label?: string;
-  error?: string | null;
+  /** Визуальное состояние ошибки. Текст показывает тост, не поле. */
+  invalid?: boolean;
   prefix?: ReactNode;
   trailing?: ReactNode;
   className?: string;
@@ -25,15 +29,13 @@ export function TextInput({
   value,
   onChange,
   label,
-  error = null,
+  invalid = false,
   prefix,
   trailing,
   className = "",
   ...rest
 }: TextInputProps) {
   const id = useId();
-  const errorId = `${id}-error`;
-  const invalid = error !== null;
 
   return (
     <div className={className}>
@@ -66,8 +68,7 @@ export function TextInput({
           onChange={(event) => {
             onChange(event.target.value);
           }}
-          aria-invalid={invalid}
-          aria-describedby={invalid ? errorId : undefined}
+          aria-invalid={invalid || undefined}
           className={`min-w-0 flex-1 bg-transparent text-base leading-(--typography-line-height-20) outline-none [font-weight:var(--font-weight-regular)] placeholder:text-(color:--text-tertiary) ${
             invalid ? "text-(color:--text-danger)" : "text-(color:--text-primary)"
           }`}
@@ -75,14 +76,6 @@ export function TextInput({
         />
         {trailing == null ? null : <span className="shrink-0">{trailing}</span>}
       </div>
-      {invalid ? (
-        <p
-          id={errorId}
-          className="mt-(--spacing-gap-4) text-xs leading-(--typography-line-height-16) text-(color:--text-danger)"
-        >
-          {error}
-        </p>
-      ) : null}
     </div>
   );
 }

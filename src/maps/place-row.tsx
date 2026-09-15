@@ -11,18 +11,14 @@ import { StarRating } from "./star-rating";
 
    Высота 72 складывается из 4 + 64 + 4 и числом не задаётся. */
 
-export interface PlaceRowStatus {
-  label: string;
-  tone?: "success" | "muted";
-}
-
 export interface PlaceRowProps {
   photoUrl?: string;
   photoAlt?: string;
   name: string;
   rating?: number;
   category?: string;
-  status?: PlaceRowStatus;
+  /** Короткая подпись справа от расстояния, например «Открыто». */
+  status?: string;
   metaText?: string;
   /** Слот Additional Info справа от расстояния. */
   additional?: ReactNode;
@@ -68,17 +64,11 @@ export function PlaceRow({
               сюда, а не в строку названия: там в макете только название. */}
           <span className="flex items-center gap-(--spacing-gap-4)">
             {rating !== undefined ? <StarRating value={rating} /> : null}
-            {status ? (
-              <span
-                className={
-                  status.tone === "muted"
-                    ? "text-(color:--text-tertiary)"
-                    : "text-(color:--tag-green)"
-                }
-              >
-                {status.label}
-              </span>
-            ) : null}
+            {/* Цвета у статуса в макете нет: вся мета строки — text/secondary,
+                а «Additional Info» там пустой слот. Зелёный «открыто» был бы
+                выдумкой, поэтому его нет; нужен цветной статус — кладите свой
+                узел в additional. */}
+            {status ? <span className="text-(color:--text-secondary)">{status}</span> : null}
             {additional}
           </span>
         </span>

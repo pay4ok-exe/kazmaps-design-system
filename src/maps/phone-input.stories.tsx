@@ -11,7 +11,7 @@ export const States: StoryObj<typeof PhoneInput> = {
     <div className="flex w-[340px] flex-col gap-4">
       <PhoneInput label="Пусто" hint="Код придёт в WhatsApp" />
       <PhoneInput label="Заполнено" defaultValue="+77012345678" />
-      <PhoneInput label="Ошибка" defaultValue="+7701234" error="Введите номер полностью" />
+      <PhoneInput label="Ошибка" defaultValue="+7701234" invalid />
     </div>
   ),
 };
