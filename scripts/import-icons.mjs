@@ -34,7 +34,7 @@ const page = file.document.children.find((p) => p.name === ICONS_PAGE);
 if (!page) throw new Error(`страница ${ICONS_PAGE} не найдена`);
 
 const wanted = [];
-const walk = (node, setName) => {
+const walk = (node, setName, section) => {
   if (node.name.trimStart().startsWith("_")) return;
 
   if (node.type === "COMPONENT") {
@@ -42,13 +42,16 @@ const walk = (node, setName) => {
     wanted.push({
       id: node.id,
       file: weight ? `${slug(setName)}-${slug(weight)}` : slug(node.name),
+      section: section ?? "Other",
+      weight: weight ?? null,
     });
     return;
   }
+  const nextSection = node.type === "SECTION" ? node.name.trim() : section;
   for (const child of node.children ?? [])
-    walk(child, node.type === "COMPONENT_SET" ? node.name : null);
+    walk(child, node.type === "COMPONENT_SET" ? node.name : null, nextSection);
 };
-walk(page, null);
+walk(page, null, null);
 
 if (wanted.length === 0) throw new Error("на странице Icons не нашлось ни одного компонента");
 
@@ -79,6 +82,14 @@ mkdirSync(OUT, { recursive: true });
 for (const { file, svg } of downloads) {
   writeFileSync(join(OUT, `${file}.svg`), svg.trimEnd() + "\n");
 }
+
+const meta = Object.fromEntries(
+  wanted
+    .slice()
+    .sort((a, b) => a.file.localeCompare(b.file))
+    .map((n) => [n.file, { section: n.section, weight: n.weight }]),
+);
+writeFileSync(join(ROOT, "src/icons/source.json"), JSON.stringify(meta, null, 2) + "\n");
 
 console.log(
   JSON.stringify(

@@ -24,6 +24,28 @@ describe("иконки: генерация", () => {
   });
 });
 
+describe("иконки: разделы макета", () => {
+  it("каждая иконка отнесена к разделу", () => {
+    const sections = new Set(ICON_MANIFEST.map((i) => i.section));
+    expect([...sections].sort()).toEqual(["Interface Icons", "Map UI Icons", "Weather Icons"]);
+    expect(ICON_MANIFEST.every((i) => i.section)).toBe(true);
+  });
+
+  it("вес проставлен только у иконок из наборов", () => {
+    for (const { slug, weight } of ICON_MANIFEST) {
+      const fromSet = /-(bold|light)$/.test(slug);
+      expect(Boolean(weight), slug).toBe(fromSet);
+      if (weight) expect(slug.endsWith(`-${weight}`), slug).toBe(true);
+    }
+  });
+
+  it("многоцветные — только погода", () => {
+    for (const i of ICON_MANIFEST.filter((x) => x.multicolour)) {
+      expect(i.section, i.slug).toBe("Weather Icons");
+    }
+  });
+});
+
 describe("иконки: цвет", () => {
   it("многоцветные ссылаются на роли, а не на литералы", () => {
     for (const { slug, multicolour } of ICON_MANIFEST) {
