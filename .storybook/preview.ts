@@ -1,7 +1,5 @@
 import type { Preview } from "@storybook/react-vite";
 
-import "@fontsource-variable/inter";
-
 import "./preview.css";
 
 const FIGMA_CANVAS = "color-mix(in srgb, #ffffff 25%, #a7a7a7)";

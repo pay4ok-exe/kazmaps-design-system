@@ -8,5 +8,5 @@
 @source "../src";
 
 :root {
-  --font-inter: "Inter Variable", system-ui, sans-serif;
+  --font-inter: "Inter", system-ui, sans-serif;
 }
