@@ -72,7 +72,25 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" });
 ```
 
-### 4. Компоненты
+### 4. Флаги стран
+
+`PhoneInput` показывает флаг региона эмодзи — так он нарисован в макете. macOS, iOS и Android
+рисуют флаги сами; Windows вместо флага показывает две буквы. Для Windows подключите в
+приложении шрифт с флагами один раз при старте:
+
+```bash
+npm i country-flag-emoji-polyfill
+```
+
+```tsx
+import { polyfillCountryFlagEmojis } from "country-flag-emoji-polyfill";
+
+polyfillCountryFlagEmojis(); // регистрирует шрифт «Twemoji Country Flags» только там, где флагов нет
+```
+
+Компонент ставит этот шрифт первым в стеке, поэтому больше ничего настраивать не нужно.
+
+### 5. Компоненты
 
 ```tsx
 import { Button, TextInput, PlaceRow, useToast } from "@temirtator/kazmaps-design-system";
@@ -80,7 +98,7 @@ import { Button, TextInput, PlaceRow, useToast } from "@temirtator/kazmaps-desig
 
 Вход `/maps` оставлен как реэкспорт корня и будет удалён; новые импорты — из корня.
 
-### 5. Иконки
+### 6. Иконки
 
 Набор иконок макета: 96 заливных глифов в поле 24×24, три раздела — Interface, Map UI,
 Weather.

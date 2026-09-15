@@ -141,7 +141,7 @@ export function PhoneInput({
             }}
             className="flex shrink-0 items-center gap-(--spacing-gap-4) rounded-(--dimension-corner-radius-6) bg-(--background-primary) py-(--spacing-padding-6) pr-(--spacing-padding-6) pl-(--spacing-padding-8) text-xs leading-(--typography-line-height-16) text-(color:--text-primary) focus-ring"
           >
-            <RegionFlag iso={region.iso} size={16} />
+            <RegionFlag iso={region.iso} />
             <span className="tabular-nums">+{region.dial}</span>
             <ChevronDown
               size={14}

@@ -38,6 +38,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
 
 ### Added
 
+- Флаги регионов в `PhoneInput` — эмодзи, как в макете: все 198 стран вместо десяти нарисованных
+  прямоугольников и кода ISO для остальных. Для Windows — `country-flag-emoji-polyfill` в
+  приложении (README §4).
 - `npm run tokens:import` — импорт переменных из `tokens/figma/export.json` с последующей
   сборкой CSS; числовые шкалы Figma синхронизируются во все бренды.
 

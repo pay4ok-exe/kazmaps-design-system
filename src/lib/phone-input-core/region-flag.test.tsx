@@ -1,16 +1,25 @@
 import { render } from "@testing-library/react";
 
-import { RegionFlag } from "./region-flag";
+import { flagEmoji, RegionFlag } from "./region-flag";
 
 describe("RegionFlag", () => {
-  it("renders an svg for CIS regions", () => {
-    const { container } = render(<RegionFlag iso="KZ" />);
-    expect(container.querySelector("svg")).not.toBeNull();
-    expect(container.firstElementChild).toHaveAttribute("aria-hidden", "true");
+  it("builds the flag from regional indicator symbols", () => {
+    expect(flagEmoji("KZ")).toBe("🇰🇿");
+    expect(flagEmoji("us")).toBe("🇺🇸");
   });
-  it("falls back to an ISO chip for other regions", () => {
-    const { container, getByText } = render(<RegionFlag iso="US" />);
+
+  it("renders the emoji as decorative text for any region", () => {
+    const { container } = render(<RegionFlag iso="GE" />);
+    const el = container.firstElementChild;
+    expect(el).toHaveAttribute("aria-hidden", "true");
+    expect(el).toHaveTextContent("🇬🇪");
     expect(container.querySelector("svg")).toBeNull();
-    expect(getByText("US")).toBeInTheDocument();
+  });
+
+  it("puts the flag font first so Windows can be polyfilled", () => {
+    const { container } = render(<RegionFlag iso="KZ" size={16} />);
+    const el = container.firstElementChild as HTMLElement;
+    expect(el.style.fontFamily).toContain("Twemoji Country Flags");
+    expect(el.style.fontSize).toBe("16px");
   });
 });
