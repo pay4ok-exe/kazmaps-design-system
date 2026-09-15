@@ -58,7 +58,7 @@
     "build-storybook": "storybook build",
     "prepublishOnly": "npm run lint && npm run typecheck && npm run test && npm run build",
     "prepare": "husky",
-    "icons:import": "node scripts/import-icons.mjs",
+    "icons:import": "node --env-file-if-exists=.env scripts/import-icons.mjs",
     "icons:build": "node scripts/build-icons.mjs",
     "icons:check": "npm run icons:build && git diff --quiet --exit-code -- src/icons/generated"
   },

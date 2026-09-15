@@ -6,3 +6,7 @@ storybook-static/
 .superpowers/
 test-results/
 playwright-report/
+
+# Локальные секреты (FIGMA_TOKEN для icons:import)
+.env
+.env.local

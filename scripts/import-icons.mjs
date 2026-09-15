@@ -50,6 +50,13 @@ if (!page) throw new Error(`страница ${ICONS_PAGE} не найдена`)
 
 const wanted = [];
 const walk = (node, setName) => {
+  /* Подчёркивание в начале имени — принятая в этом макете пометка служебного
+     слоя (_Tab Action, _ Dialog Close). Такие в набор не идут: _Compass Icon
+     нарисован в поле 40 вместо 24 и несёт чистый #FF0000 — стрелку севера,
+     которой нет ни в одной роли. Понадобится — заведём отдельным компонентом
+     со своим замером, как сделали с кнопкой закрытия диалога. */
+  if (node.name.trimStart().startsWith("_")) return;
+
   if (node.type === "COMPONENT") {
     // Внутри COMPONENT_SET имя варианта выглядит как "weight=bold".
     const weight = setName ? node.name.split("=")[1]?.trim() : null;
