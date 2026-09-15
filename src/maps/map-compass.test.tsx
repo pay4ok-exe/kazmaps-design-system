@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { MapCompass } from "./map-compass";
 import { ProfileButton } from "./profile-button";
+import { PROFILE_BUTTON_STATE } from "./profile-button.states";
 
 const dial = (c: HTMLElement) => c.querySelector("svg");
 
@@ -58,6 +59,17 @@ describe("ProfileButton", () => {
     expect(container.querySelector("img")?.className).not.toContain("ring-(--icon-accent)");
     rerender(<ProfileButton label="Профиль" photoUrl="/a.png" active />);
     expect(container.querySelector("img")?.className).toContain("ring-(--icon-accent)");
+  });
+
+  it("витрина состояний берёт те же роли, что и компонент", () => {
+    const { rerender } = render(<ProfileButton label="Профиль" icon={<span />} />);
+    expect(screen.getByRole("button", { name: "Профиль" }).className).toContain(
+      PROFILE_BUTTON_STATE.idle,
+    );
+    rerender(<ProfileButton label="Профиль" icon={<span />} active />);
+    expect(screen.getByRole("button", { name: "Профиль" }).className).toContain(
+      PROFILE_BUTTON_STATE.active,
+    );
   });
 
   it("глиф светлеет на наведении и уходит в акцент при active", () => {

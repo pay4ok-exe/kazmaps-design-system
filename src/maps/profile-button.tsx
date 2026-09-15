@@ -1,5 +1,7 @@
 import type { ComponentProps, ReactNode } from "react";
 
+import { PROFILE_BUTTON_STATE } from "./profile-button.states";
+
 export function ProfileButton({
   photoUrl,
   photoAlt = "",
@@ -25,11 +27,7 @@ export function ProfileButton({
       {...rest}
       className={`flex size-[40px] items-center justify-center overflow-hidden rounded-(--dimension-corner-radius-max) bg-(--background-primary) shadow-(--shadow-hud) transition-interactive focus-ring hover:shadow-(--shadow-hud-hover) ${
         withPhoto ? "p-(--spacing-padding-2)" : "p-(--spacing-padding-8)"
-      } ${
-        active
-          ? "text-(color:--icon-accent)"
-          : "text-(color:--icon-primary) hover:text-(color:--icon-tertiary)"
-      } ${className}`}
+      } ${active ? PROFILE_BUTTON_STATE.active : PROFILE_BUTTON_STATE.idle} ${className}`}
     >
       {withPhoto ? (
         <img
