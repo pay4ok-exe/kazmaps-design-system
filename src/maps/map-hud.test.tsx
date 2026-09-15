@@ -5,6 +5,7 @@ import { CollapseHandle } from "./collapse-handle";
 import { Dialog } from "./dialog";
 import { ForecastCard } from "./forecast-card";
 import { IconButton } from "./icon-button";
+import { ICON_BUTTON_STATE } from "./icon-button.states";
 import { LegalLink } from "./legal-link";
 import { MapTrafficBadge } from "./map-traffic-badge";
 import { WeatherBadge } from "./weather-badge";
@@ -15,6 +16,20 @@ describe("IconButton", () => {
     const className = screen.getByRole("button", { name: "Приблизить" }).className;
     expect(className).toContain("shadow-(--shadow-hud)");
     expect(className).toContain("hover:shadow-(--shadow-hud-hover)");
+  });
+
+  it("витрина состояний берёт те же роли, что и компонент", () => {
+    const { rerender } = render(<IconButton label="Я">+</IconButton>);
+    let className = screen.getByRole("button", { name: "Я" }).className;
+    expect(className).toContain(ICON_BUTTON_STATE.idle);
+
+    rerender(
+      <IconButton label="Я" active>
+        +
+      </IconButton>,
+    );
+    className = screen.getByRole("button", { name: "Я" }).className;
+    expect(className).toContain(ICON_BUTTON_STATE.active);
   });
 
   it("состояния красят иконку тремя ролями макета", () => {
