@@ -7,6 +7,7 @@ const readJson = (p: string): unknown => JSON.parse(read(p));
 
 type Token = { $type: string; $value: string; $description?: string };
 type Brand = {
+  _ownStatics?: string[];
   brand: string;
   defaultTheme: string;
   followsSystem: boolean;
@@ -74,6 +75,10 @@ for (const name of BRANDS) {
         if (role !== "font-sans") expect(brand.static[role].$value, role).not.toMatch(/var\(/);
       }
       expect(Object.keys(brand.static).sort()).toEqual([...schema.static].sort());
+    });
+
+    it("own statics name contract static roles", () => {
+      for (const role of brand._ownStatics ?? []) expect(schema.static).toContain(role);
     });
 
     it("token types agree across brands", () => {

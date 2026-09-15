@@ -194,7 +194,6 @@ const syncRoles = (current, contract, fallback, override) => {
 };
 const themedContract = Object.values(GROUPS).flat();
 const OTHER_BRANDS = ["business", "booking"];
-const BRAND_OWNED_STATICS = new Set(["font-sans"]);
 for (const name of OTHER_BRANDS) {
   const path = `tokens/brands/${name}.json`;
   const brand = read(path);
@@ -206,8 +205,9 @@ for (const name of OTHER_BRANDS) {
       () => undefined,
     );
   }
+  const owned = new Set(["font-sans", ...(brand._ownStatics ?? [])]);
   brand.static = syncRoles(brand.static, staticRoles, statics, (role) =>
-    BRAND_OWNED_STATICS.has(role) ? undefined : statics[role],
+    owned.has(role) ? undefined : statics[role],
   );
   write(path, brand);
   GENERATED.push(path);
