@@ -1,3 +1,4 @@
+@import "./fonts.css";
 @import "tailwindcss";
 @import "../src/styles/core.css";
 @import "../src/styles/brands/business.css";

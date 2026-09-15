@@ -1,12 +1,6 @@
 import type { Preview } from "@storybook/react-vite";
 
 import "@fontsource-variable/inter";
-import "@fontsource/lexend/400.css";
-import "@fontsource/lexend/500.css";
-import "@fontsource/lexend/600.css";
-import "@fontsource/manrope/400.css";
-import "@fontsource/manrope/500.css";
-import "@fontsource/manrope/600.css";
 
 import "./preview.css";
 
