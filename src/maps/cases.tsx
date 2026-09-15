@@ -1,4 +1,4 @@
-import { Layers, MapPin, Route } from "lucide-react";
+import { Coffee, Layers, MapPin, Route } from "lucide-react";
 import { type ReactElement, useEffect } from "react";
 
 import {
@@ -70,6 +70,7 @@ export const KIT_CASES: [string, ReactElement][] = [
   ["AvatarInitial", <AvatarInitial key="k" name="Айгерим" seed="Айгерим" />],
   ["Chip", <Chip key="k" label="Кафе" />],
   ["Chip active", <Chip key="k" label="Кафе" active />],
+  ["Chip с иконкой", <Chip key="k" label="Кафе" icon={<Coffee size={16} aria-hidden="true" />} />],
   ["InDevelopment", <InDevelopment key="k">Скоро</InDevelopment>],
   ["EmptyState", <EmptyState key="k" title="Пусто" description="Здесь пока ничего нет" />],
   [
@@ -116,6 +117,12 @@ export const KIT_CASES: [string, ReactElement][] = [
   ],
   ["SectionError", <SectionError key="k" message="Не удалось загрузить" onRetry={noop} />],
   ["SectionHeader", <SectionHeader key="k">Рядом</SectionHeader>],
+  [
+    "SectionHeader с действием",
+    <SectionHeader key="k" action={<Chip label="Все" />}>
+      Рядом
+    </SectionHeader>,
+  ],
   [
     "SegmentedRow",
     <SegmentedRow

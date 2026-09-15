@@ -842,6 +842,10 @@
     }
   },
   "kit": {
+    "shadow-field": {
+      "$type": "shadow",
+      "$value": "rgba(0, 0, 0, 0.04) 0px 4px 4px 0px"
+    },
     "ease-standard": {
       "$type": "cubicBezier",
       "$value": "cubic-bezier(0.4, 0, 0.2, 1)"

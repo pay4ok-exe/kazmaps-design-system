@@ -170,6 +170,11 @@ const extras = {
    замер. Переносим прежние значения как есть с пометкой ожидания; выбросить их
    нельзя — на них стоят компоненты кита и гвардия globals.test.ts в main-web. */
 const kit = {
+  /* Единственная тень, которая в макете реально измерена: эффект DROP_SHADOW на
+     Search Field (79:157), одинаковый во всех трёх состояниях. Поэтому без
+     пометки ожидания, в отличие от остальных теней ниже. Смещение 4 в шкалу
+     shadow/position (8, 24) не попадает — записано как есть. */
+  "shadow-field": { $type: "shadow", $value: "rgba(0, 0, 0, 0.04) 0px 4px 4px 0px" },
   "ease-standard": { $type: "cubicBezier", $value: "cubic-bezier(0.4, 0, 0.2, 1)" },
   "motion-fast": { $type: "duration", $value: "140ms", $description: WAITING },
   "motion-panel": { $type: "duration", $value: "240ms", $description: WAITING },

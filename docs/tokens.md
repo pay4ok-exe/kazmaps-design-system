@@ -213,6 +213,7 @@
 
 ## Кит бренда
 
+- maps: `--shadow-field` = `rgba(0, 0, 0, 0.04) 0px 4px 4px 0px`
 - maps: `--ease-standard` = `cubic-bezier(0.4, 0, 0.2, 1)`
 - maps: `--motion-fast` = `140ms`
 - maps: `--motion-panel` = `240ms`
