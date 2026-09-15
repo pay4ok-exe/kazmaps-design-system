@@ -1,5 +1,7 @@
 import type { Preview } from "@storybook/react-vite";
 
+import "@fontsource-variable/inter";
+
 import "./preview.css";
 
 const preview: Preview = {
@@ -17,10 +19,12 @@ const preview: Preview = {
   decorators: [
     (Story, ctx) => {
       const root = document.documentElement;
-      root.setAttribute("data-brand", String(ctx.globals.brand));
+      const ownBrand = ctx.title.startsWith("Maps kit") || ctx.title.startsWith("Icons");
+      const brand = String(ctx.globals.brand);
+      root.setAttribute("data-brand", brand === "maps" && !ownBrand ? "business" : brand);
       root.setAttribute("data-theme", String(ctx.globals.theme));
-      document.body.style.background = "var(--bg)";
-      document.body.style.color = "var(--ink)";
+      document.body.style.background = "var(--bg, var(--surface-base))";
+      document.body.style.color = "var(--ink, var(--text-primary))";
       document.body.style.fontFamily = "var(--font-sans)";
       return Story();
     },

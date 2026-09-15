@@ -1,7 +1,7 @@
 {
   "name": "@temirtator/kazmaps-design-system",
   "version": "0.6.0",
-  "description": "KazMaps design system \u2014 multi-brand UI kit (tokens, atoms, molecules) for Tailwind v4 + React 19 apps",
+  "description": "KazMaps design system — multi-brand UI kit (tokens, atoms, molecules) for Tailwind v4 + React 19 apps",
   "type": "module",
   "license": "MIT",
   "author": "Temirlan Shagyrov <sh.temirlan95@gmail.com>",
@@ -93,6 +93,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.5.3",
     "@commitlint/config-conventional": "^20.5.3",
+    "@fontsource-variable/inter": "^5.3.0",
     "@playwright/test": "^1.61.1",
     "@storybook/addon-a11y": "^10.5.3",
     "@storybook/react-vite": "^10.5.0",

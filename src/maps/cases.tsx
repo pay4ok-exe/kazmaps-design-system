@@ -132,6 +132,10 @@ export const KIT_CASES: [string, ReactElement][] = [
   ["ScaleBar", <ScaleBar key="k" label="100 м" widthPx={80} />],
   ["SearchInput", <SearchInput key="k" value="" onChange={noop} placeholder="Поиск" />],
   [
+    "SearchInput submit",
+    <SearchInput key="k" value="кофе" onChange={noop} onSubmit={noop} placeholder="Поиск" />,
+  ],
+  [
     "SearchInput compact",
     <SearchInput key="k" value="кофе" onChange={noop} placeholder="Поиск" compact />,
   ],
