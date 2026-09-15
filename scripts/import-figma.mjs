@@ -2,6 +2,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { ownedStatics } from "./owned-statics.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (p) => JSON.parse(readFileSync(join(ROOT, p), "utf8"));
@@ -172,7 +173,8 @@ for (const [role, def] of Object.entries(kit)) {
   statics[role] = def;
 }
 
-for (const name of ["business", "booking"]) {
+const OTHER_BRANDS = ["business", "booking"];
+for (const name of OTHER_BRANDS) {
   const unknown = (read(`tokens/brands/${name}.json`)._ownStatics ?? []).filter(
     (role) => !staticRoles.includes(role),
   );
@@ -202,7 +204,6 @@ const syncRoles = (current, contract, fallback, override) => {
   return Object.fromEntries([...keep, ...added]);
 };
 const themedContract = Object.values(GROUPS).flat();
-const OTHER_BRANDS = ["business", "booking"];
 for (const name of OTHER_BRANDS) {
   const path = `tokens/brands/${name}.json`;
   const brand = read(path);
@@ -214,7 +215,7 @@ for (const name of OTHER_BRANDS) {
       () => undefined,
     );
   }
-  const owned = new Set(["font-sans", ...(brand._ownStatics ?? [])]);
+  const owned = ownedStatics(brand);
   brand.static = syncRoles(brand.static, staticRoles, statics, (role) =>
     owned.has(role) ? undefined : statics[role],
   );

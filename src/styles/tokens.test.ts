@@ -1,6 +1,8 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
+import { ownedStatics } from "../../scripts/owned-statics.mjs";
+
 const ROOT = join(__dirname, "..", "..");
 const read = (p: string): string => readFileSync(join(ROOT, p), "utf8");
 const readJson = (p: string): unknown => JSON.parse(read(p));
@@ -83,7 +85,7 @@ for (const name of BRANDS) {
 
     it("statics it does not own follow maps", () => {
       const maps = readJson("tokens/brands/maps.json") as Brand;
-      const owned = new Set(["font-sans", ...(brand._ownStatics ?? [])]);
+      const owned = ownedStatics(brand);
       for (const role of schema.static) {
         if (owned.has(role)) continue;
         expect(brand.static[role].$value, role).toBe(maps.static[role].$value);
