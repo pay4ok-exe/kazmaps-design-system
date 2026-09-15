@@ -39,10 +39,23 @@ const EXPECTED: Record<string, Record<string, string>> = {
     "text-xl": "1.25rem",
     "text-2xl": "1.5rem",
     "text-3xl": "1.875rem",
-    "radius-sm": "0.25rem",
-    "radius-md": "0.375rem",
-    "radius-lg": "0.5rem",
+    // Радиусы maps приходят из numerics макета, поэтому здесь не литерал, а
+    // наводка на роль; сами значения проверяет тест ниже.
+    "radius-sm": "var(--dimension-corner-radius-4)",
+    "radius-md": "var(--dimension-corner-radius-6)",
+    "radius-lg": "var(--dimension-corner-radius-8)",
   },
+};
+
+// Шкала радиусов maps должна разрешаться в измеренные числа макета, а не просто
+// куда-то ссылаться: алиас, наведённый на несуществующую роль, тихо даст 0.
+const MAPS_RADIUS_SOURCE: Record<string, string> = {
+  "dimension-corner-radius-4": "4px",
+  "dimension-corner-radius-6": "6px",
+  "dimension-corner-radius-8": "8px",
+  "dimension-corner-radius-12": "12px",
+  "dimension-corner-radius-16": "16px",
+  "dimension-corner-radius-max": "9999px",
 };
 
 const MAPS_KIT_STATIC: Record<string, string> = {
@@ -76,6 +89,13 @@ describe("brand scale", () => {
     }
   });
 
+  it("maps resolves its radius scale to the measured numerics", () => {
+    const block = baseBlock(read("brands/maps.css"), "maps");
+    for (const [role, value] of Object.entries(MAPS_RADIUS_SOURCE)) {
+      expect(block, role).toContain(`--${role}: ${value};`);
+    }
+  });
+
   it("maps declares the kit statics", () => {
     const block = baseBlock(read("brands/maps.css"), "maps");
     for (const [name, value] of Object.entries(MAPS_KIT_STATIC)) {
@@ -101,11 +121,12 @@ describe("brand scale", () => {
   });
 });
 
+// maps здесь нет намеренно: роли highlight в его макете не существует, а ссылок
+// на --highlight/--gold в main-web нет ни одной — роль не переносили.
 describe("highlight roles", () => {
   const VALUES: Record<string, Record<string, [string, string]>> = {
     business: { light: ["#c99a16", "#f9f0d8"], dark: ["#f0bf00", "#241f10"] },
     booking: { light: ["#e8a317", "#fbefd3"], dark: ["#e8a317", "#3a2f1a"] },
-    maps: { light: ["#f2a615", "#fdf3e6"], dark: ["#f2a615", "#141d31"] },
   };
 
   it.each(Object.keys(VALUES))("%s themes highlight and highlight-soft", (brand) => {
@@ -119,7 +140,7 @@ describe("highlight roles", () => {
   });
 
   it("aliases gold to highlight in the base block", () => {
-    for (const brand of ["business", "booking", "maps"]) {
+    for (const brand of ["business", "booking"]) {
       const block = baseBlock(read(`brands/${brand}.css`), brand);
       expect(block).toContain("--gold: var(--highlight);");
       expect(block).toContain("--gold-soft: var(--highlight-soft);");

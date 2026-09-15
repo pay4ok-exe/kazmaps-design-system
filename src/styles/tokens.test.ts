@@ -15,16 +15,29 @@ type Brand = {
   kit?: Record<string, Token>;
   extras?: Record<string, Record<string, Token>>;
 };
+type Contract = {
+  replacesContract?: boolean;
+  themed: Record<string, string[]>;
+  static: string[];
+  aliases: Record<string, string>;
+};
 type Schema = {
   themes: string[];
   themed: Record<string, string[]>;
   static: string[];
   aliases: Record<string, string>;
+  byBrand?: Record<string, Contract>;
 };
 
 const schema = readJson("tokens/schema.json") as Schema;
-const roles = Object.values(schema.themed).flat();
 const BRANDS = ["business", "booking", "maps"];
+
+// Бренд со своим файлом Figma заменяет общий контракт целиком (см. build-tokens.mjs).
+// Проверять его общим списком ролей бессмысленно — списки не пересекаются.
+const contractFor = (name: string): Contract =>
+  schema.byBrand?.[name]?.replacesContract
+    ? schema.byBrand[name]
+    : { themed: schema.themed, static: schema.static, aliases: schema.aliases };
 const core = readJson("tokens/core.json") as Record<string, Token>;
 
 // maps' kit intentionally overrides core's --ease-standard with the kit's own
@@ -50,6 +63,8 @@ for (const name of BRANDS) {
   describe(`brand ${name}`, () => {
     const brand = readJson(`tokens/brands/${name}.json`) as Brand;
     const css = read(`src/styles/brands/${name}.css`);
+    const contract = contractFor(name);
+    const roles = Object.values(contract.themed).flat();
 
     it("declares defaultTheme among themes", () => {
       expect(schema.themes).toContain(brand.defaultTheme);
@@ -67,7 +82,7 @@ for (const name of BRANDS) {
       it(`${theme}: extras do not collide with the contract`, () => {
         for (const extra of Object.keys(brand.extras?.[theme] ?? {})) {
           expect(roles, extra).not.toContain(extra);
-          expect(Object.keys(schema.aliases), extra).not.toContain(extra);
+          expect(Object.keys(contract.aliases), extra).not.toContain(extra);
         }
       });
       it(`${theme}: generated block defines every contract role`, () => {
@@ -77,7 +92,7 @@ for (const name of BRANDS) {
     }
 
     it("static roles are literals", () => {
-      for (const role of schema.static) {
+      for (const role of contract.static) {
         expect(brand.static[role], role).toBeDefined();
         if (role !== "font-sans") expect(brand.static[role].$value, role).not.toMatch(/var\(/);
       }
@@ -111,8 +126,8 @@ for (const name of BRANDS) {
     it("base block defines contract, static and every alias pointing at its canon", () => {
       const base = block(css, `[data-brand="${name}"] {`);
       const vars = definedVars(base);
-      for (const role of [...roles, ...schema.static]) expect(vars).toContain(`--${role}`);
-      for (const [old, canon] of Object.entries(schema.aliases)) {
+      for (const role of [...roles, ...contract.static]) expect(vars).toContain(`--${role}`);
+      for (const [old, canon] of Object.entries(contract.aliases)) {
         expect(base).toContain(`--${old}: var(--${canon});`);
       }
     });
