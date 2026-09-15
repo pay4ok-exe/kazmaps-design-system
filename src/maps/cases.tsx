@@ -24,11 +24,13 @@ import {
   SectionError,
   SectionHeader,
   SegmentedRow,
+  SelectField,
   ShimmerBlock,
   StarRating,
   TextInput,
   ToastProvider,
   Toggle,
+  ToggleSwitch,
   useToast,
 } from "./index";
 
@@ -127,6 +129,32 @@ export const KIT_CASES: [string, ReactElement][] = [
       ]}
     />,
   ],
+  [
+    "SelectField",
+    <SelectField
+      key="k"
+      label="Город"
+      value="almaty"
+      onChange={noop}
+      options={[
+        { value: "almaty", label: "Алматы" },
+        { value: "astana", label: "Астана" },
+      ]}
+    />,
+  ],
+  [
+    "SelectField bordered",
+    // Без видимой подписи имя приходит из aria-label — иначе select остаётся
+    // безымянным для скринридера (axe: select-name).
+    <SelectField
+      key="k"
+      bordered
+      aria-label="Город"
+      value="almaty"
+      onChange={noop}
+      options={[{ value: "almaty", label: "Алматы" }]}
+    />,
+  ],
   ["ShimmerBlock", <ShimmerBlock key="k" className="h-4 w-24" />],
   ["StarRating", <StarRating key="k" value={4.5} />],
   [
@@ -138,6 +166,19 @@ export const KIT_CASES: [string, ReactElement][] = [
     <TextInput key="k" label="Имя" value="" onChange={noop} error="Обязательное поле" />,
   ],
   ["Toggle", <Toggle key="k" checked onChange={noop} label="Уведомления" />],
+  [
+    "ToggleSwitch",
+    <ToggleSwitch
+      key="k"
+      label="Вид"
+      activeId="map"
+      onSelect={noop}
+      options={[
+        { id: "map", label: "Карта" },
+        { id: "list", label: "Список" },
+      ]}
+    />,
+  ],
 ];
 
 function ToastDemo() {

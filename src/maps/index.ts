@@ -37,6 +37,8 @@ export { SectionError } from "./section-error";
 export { SectionHeader } from "./section-header";
 export type { SegmentedRowItem, SegmentedRowProps } from "./segmented-row";
 export { SegmentedRow } from "./segmented-row";
+export type { SelectFieldOption, SelectFieldProps } from "./select-field";
+export { SelectField } from "./select-field";
 export { ShimmerBlock } from "./shimmer-block";
 export type { StarRatingProps } from "./star-rating";
 export { StarRating } from "./star-rating";
@@ -45,6 +47,8 @@ export { TextInput } from "./text-input";
 export type { ShowToast, ToastAction, ToastOptions } from "./toast";
 export { ToastProvider, useToast } from "./toast";
 export { Toggle } from "./toggle";
+export type { ToggleSwitchOption, ToggleSwitchProps } from "./toggle-switch";
+export { ToggleSwitch } from "./toggle-switch";
 export { isTopmostTrap, useFocusTrap } from "./use-focus-trap";
 
 export {
