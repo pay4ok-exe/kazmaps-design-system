@@ -1,10 +1,11 @@
 import { execFileSync } from "node:child_process";
-import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SVG_DIR = join(ROOT, "src/icons/svg");
+const SOURCE = join(ROOT, "src/icons/source.json");
 const OUT_DIR = join(ROOT, "src/icons/generated");
 
 const WEATHER_COLORS = {
@@ -49,6 +50,8 @@ function normalise(svg) {
   return { body, multicolour };
 }
 
+const source = existsSync(SOURCE) ? JSON.parse(readFileSync(SOURCE, "utf8")) : {};
+
 const files = readdirSync(SVG_DIR)
   .filter((f) => f.endsWith(".svg"))
   .sort();
@@ -78,7 +81,14 @@ export function ${name}(props: IconProps) {
 }
 `,
   );
-  index.push({ slug, name, multicolour });
+  const meta = source[slug] ?? {};
+  index.push({
+    slug,
+    name,
+    multicolour,
+    section: meta.section ?? "Other",
+    weight: meta.weight ?? null,
+  });
 }
 
 writeFileSync(
@@ -92,7 +102,12 @@ writeFileSync(
   join(OUT_DIR, "manifest.ts"),
   `/* сгенерировано scripts/build-icons.mjs — не править руками */
 export const ICON_MANIFEST = ${JSON.stringify(
-    index.map(({ slug, multicolour }) => ({ slug, multicolour })),
+    index.map(({ slug, multicolour, section, weight }) => ({
+      slug,
+      multicolour,
+      section,
+      weight,
+    })),
     null,
     2,
   )} as const;
