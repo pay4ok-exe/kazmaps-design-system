@@ -81,6 +81,15 @@ for (const name of BRANDS) {
       for (const role of brand._ownStatics ?? []) expect(schema.static).toContain(role);
     });
 
+    it("statics it does not own follow maps", () => {
+      const maps = readJson("tokens/brands/maps.json") as Brand;
+      const owned = new Set(["font-sans", ...(brand._ownStatics ?? [])]);
+      for (const role of schema.static) {
+        if (owned.has(role)) continue;
+        expect(brand.static[role].$value, role).toBe(maps.static[role].$value);
+      }
+    });
+
     it("token types agree across brands", () => {
       const maps = readJson("tokens/brands/maps.json") as Brand;
       for (const theme of schema.themes)

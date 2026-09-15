@@ -172,6 +172,15 @@ for (const [role, def] of Object.entries(kit)) {
   statics[role] = def;
 }
 
+for (const name of ["business", "booking"]) {
+  const unknown = (read(`tokens/brands/${name}.json`)._ownStatics ?? []).filter(
+    (role) => !staticRoles.includes(role),
+  );
+  if (unknown.length > 0) {
+    throw new Error(`${name}: _ownStatics называет роли вне контракта: ${unknown.join(", ")}`);
+  }
+}
+
 write("tokens/brands/maps.json", {
   brand: "maps",
   defaultTheme: "light",
