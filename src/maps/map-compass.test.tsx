@@ -3,8 +3,8 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { MapCompass } from "./map-compass";
-import { ProfileButton } from "./profile-button";
-import { PROFILE_BUTTON_STATE } from "./profile-button.states";
+import { Avatar } from "./avatar";
+import { AVATAR_STATE } from "./avatar.states";
 
 const dial = (c: HTMLElement) => c.querySelector("svg");
 
@@ -42,43 +42,41 @@ describe("MapCompass", () => {
   });
 });
 
-describe("ProfileButton", () => {
+describe("Avatar", () => {
   it("со снимком берёт паддинг 2, без снимка — 8", () => {
-    const { rerender } = render(<ProfileButton label="Профиль" icon={<span />} />);
+    const { rerender } = render(<Avatar label="Профиль" icon={<span />} />);
     expect(screen.getByRole("button", { name: "Профиль" }).className).toContain(
       "p-(--spacing-padding-8)",
     );
-    rerender(<ProfileButton label="Профиль" photoUrl="/a.png" />);
+    rerender(<Avatar label="Профиль" photoUrl="/a.png" />);
     expect(screen.getByRole("button", { name: "Профиль" }).className).toContain(
       "p-(--spacing-padding-2)",
     );
   });
 
   it("кольцо появляется только на активном снимке", () => {
-    const { container, rerender } = render(<ProfileButton label="Профиль" photoUrl="/a.png" />);
+    const { container, rerender } = render(<Avatar label="Профиль" photoUrl="/a.png" />);
     expect(container.querySelector("img")?.className).not.toContain("ring-(--icon-accent)");
-    rerender(<ProfileButton label="Профиль" photoUrl="/a.png" active />);
+    rerender(<Avatar label="Профиль" photoUrl="/a.png" active />);
     expect(container.querySelector("img")?.className).toContain("ring-(--icon-accent)");
   });
 
   it("витрина состояний берёт те же роли, что и компонент", () => {
-    const { rerender } = render(<ProfileButton label="Профиль" icon={<span />} />);
+    const { rerender } = render(<Avatar label="Профиль" icon={<span />} />);
+    expect(screen.getByRole("button", { name: "Профиль" }).className).toContain(AVATAR_STATE.idle);
+    rerender(<Avatar label="Профиль" icon={<span />} active />);
     expect(screen.getByRole("button", { name: "Профиль" }).className).toContain(
-      PROFILE_BUTTON_STATE.idle,
-    );
-    rerender(<ProfileButton label="Профиль" icon={<span />} active />);
-    expect(screen.getByRole("button", { name: "Профиль" }).className).toContain(
-      PROFILE_BUTTON_STATE.active,
+      AVATAR_STATE.active,
     );
   });
 
   it("глиф светлеет на наведении и уходит в акцент при active", () => {
-    const { rerender } = render(<ProfileButton label="Профиль" icon={<span />} />);
+    const { rerender } = render(<Avatar label="Профиль" icon={<span />} />);
     let className = screen.getByRole("button", { name: "Профиль" }).className;
     expect(className).toContain("text-(color:--icon-primary)");
     expect(className).toContain("hover:text-(color:--icon-tertiary)");
 
-    rerender(<ProfileButton label="Профиль" icon={<span />} active />);
+    rerender(<Avatar label="Профиль" icon={<span />} active />);
     className = screen.getByRole("button", { name: "Профиль" }).className;
     expect(className).toContain("text-(color:--icon-accent)");
     expect(screen.getByRole("button", { name: "Профиль" })).toHaveAttribute("aria-pressed", "true");
@@ -100,11 +98,11 @@ describe("MapCompass rotation", () => {
   });
 });
 
-describe("ProfileButton pressed state", () => {
+describe("Avatar pressed state", () => {
   it("announces a pressed state only when active is passed", () => {
-    const { rerender } = render(<ProfileButton label="Профиль" icon={<span />} />);
+    const { rerender } = render(<Avatar label="Профиль" icon={<span />} />);
     expect(screen.getByRole("button", { name: "Профиль" })).not.toHaveAttribute("aria-pressed");
-    rerender(<ProfileButton label="Профиль" icon={<span />} active={false} />);
+    rerender(<Avatar label="Профиль" icon={<span />} active={false} />);
     expect(screen.getByRole("button", { name: "Профиль" })).toHaveAttribute(
       "aria-pressed",
       "false",

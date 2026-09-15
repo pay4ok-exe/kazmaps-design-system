@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { IconUserLight } from "../icons/generated";
-import { ProfileButton } from "./profile-button";
-import { PROFILE_BUTTON_STATE } from "./profile-button.states";
+import { Avatar } from "./avatar";
+import { AVATAR_STATE } from "./avatar.states";
 
-const meta: Meta<typeof ProfileButton> = {
-  title: "Maps kit/ProfileButton",
-  component: ProfileButton,
+const meta: Meta<typeof Avatar> = {
+  title: "Maps kit/Avatar",
+  component: Avatar,
   globals: { brand: "maps" },
 };
 export default meta;
@@ -49,18 +49,18 @@ function Row({ title, note, photoUrl }: { title: string; note: string; photoUrl?
       </div>
       <div className="flex items-center gap-(--spacing-gap-16)">
         <Cell caption="Default">
-          <ProfileButton label="Профиль" photoUrl={photoUrl} icon={glyph} />
+          <Avatar label="Профиль" photoUrl={photoUrl} icon={glyph} />
         </Cell>
         <Cell caption="Hover">
-          <ProfileButton
+          <Avatar
             label="Профиль"
             photoUrl={photoUrl}
             icon={glyph}
-            className={PROFILE_BUTTON_STATE.hoverPreview}
+            className={AVATAR_STATE.hoverPreview}
           />
         </Cell>
         <Cell caption="Active">
-          <ProfileButton label="Профиль" photoUrl={photoUrl} icon={glyph} active />
+          <Avatar label="Профиль" photoUrl={photoUrl} icon={glyph} active />
         </Cell>
       </div>
     </section>
@@ -87,7 +87,7 @@ export const AllVariants: StoryObj = {
   ),
 };
 
-export const Playground: StoryObj<typeof ProfileButton> = {
+export const Playground: StoryObj<typeof Avatar> = {
   args: { label: "Профиль", active: false, photoUrl: PHOTO },
   argTypes: { photoUrl: { control: "text" } },
 };
