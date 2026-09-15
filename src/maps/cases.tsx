@@ -2,7 +2,6 @@ import { ChevronLeft, Coffee, Layers, MapPin, Minus, Plus, Route, Sun, Users } f
 import { type ReactElement, useEffect } from "react";
 
 import {
-  AvatarInitial,
   BottomSheet,
   Button,
   Chip,
@@ -69,7 +68,6 @@ export const KIT_CASES: [string, ReactElement][] = [
       Удалить
     </Button>,
   ],
-  ["AvatarInitial", <AvatarInitial key="k" name="Айгерим" seed="Айгерим" />],
   ["Chip", <Chip key="k" label="Кафе" />],
   ["Chip active", <Chip key="k" label="Кафе" active />],
   ["Chip с иконкой", <Chip key="k" label="Кафе" icon={<Coffee size={16} aria-hidden="true" />} />],

@@ -5,7 +5,6 @@ const EXPECTED = [
   "IconButton",
   "IconButtonGroup",
   "Avatar",
-  "AvatarInitial",
   "Chip",
   "InDevelopment",
   "EmptyState",

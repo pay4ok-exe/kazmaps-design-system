@@ -1,6 +1,5 @@
+export type { AvatarProps } from "./avatar";
 export { Avatar } from "./avatar";
-export type { AvatarInitialSize } from "./avatar-initial";
-export { AvatarInitial } from "./avatar-initial";
 export type { BottomSheetProps, BottomSheetSnap } from "./bottom-sheet";
 export { BottomSheet } from "./bottom-sheet";
 export type { ButtonVariant } from "./button";

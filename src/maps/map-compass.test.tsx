@@ -109,3 +109,29 @@ describe("Avatar pressed state", () => {
     );
   });
 });
+
+describe("Avatar: запасной вариант с именем", () => {
+  it("без снимка показывает первую букву имени", () => {
+    render(<Avatar label="Профиль" name="айгерим" />);
+    expect(screen.getByText("А")).toBeInTheDocument();
+  });
+
+  /* Цвет выводится из seed, а не из имени: у тёзок аватары должны различаться,
+     а у одного человека — не прыгать при смене отображаемого имени. */
+  it("цвет берётся из seed и устойчив", () => {
+    const { container, rerender } = render(<Avatar label="Профиль" name="Аскар" seed="id-1" />);
+    const first = container.querySelector("span[aria-hidden]")?.className;
+    rerender(<Avatar label="Профиль" name="Аскар Иванов" seed="id-1" />);
+    expect(container.querySelector("span[aria-hidden]")?.className).toBe(first);
+    expect(first).toMatch(/bg-\(--tag-/);
+  });
+
+  it("снимок важнее имени, а глиф — только когда нет ни того ни другого", () => {
+    const { container, rerender } = render(
+      <Avatar label="Профиль" name="Аскар" photoUrl="/a.png" />,
+    );
+    expect(container.querySelector("img")).not.toBeNull();
+    rerender(<Avatar label="Профиль" icon={<span data-testid="glyph" />} />);
+    expect(screen.getByTestId("glyph")).toBeInTheDocument();
+  });
+});
