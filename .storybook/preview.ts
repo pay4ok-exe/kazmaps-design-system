@@ -22,14 +22,14 @@ const preview: Preview = {
       toolbar: {
         title: "Canvas",
         items: [
-          { value: "brand", title: "Brand background" },
           { value: "figma", title: "Figma canvas" },
+          { value: "brand", title: "Brand background" },
         ],
         dynamicTitle: true,
       },
     },
   },
-  initialGlobals: { brand: "maps", theme: "light", canvas: "brand" },
+  initialGlobals: { brand: "maps", theme: "light", canvas: "figma" },
   decorators: [
     (Story, ctx) => {
       const root = document.documentElement;
