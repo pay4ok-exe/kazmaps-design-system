@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { CollapseHandle } from "./collapse-handle";
+import { Dialog } from "./dialog";
 import { ForecastCard } from "./forecast-card";
 import { IconButton } from "./icon-button";
 import { LegalLink } from "./legal-link";
@@ -148,6 +149,25 @@ describe("LegalLink", () => {
     const className = screen.getByRole("link", { name: "Условия" }).className;
     expect(className).toContain("text-(color:--text-primary)");
     expect(className).toContain("hover:text-(color:--text-link)");
+    expect(className).not.toContain("shadow-");
+  });
+});
+
+describe("Dialog close", () => {
+  /* Кнопка закрытия в макете приватная и на IconButton не похожа: тени нет,
+     палитра другая — она лежит на панели, а не поверх карты. */
+  it("без тени, hover и press делят заливку и различаются глифом", () => {
+    render(
+      <Dialog title="Заголовок" onClose={() => undefined}>
+        тело
+      </Dialog>,
+    );
+    const className = screen.getByRole("button", { name: "Закрыть" }).className;
+    expect(className).toContain("bg-(--background-secondary)");
+    expect(className).toContain("hover:bg-(--background-tertiary)");
+    expect(className).toContain("active:bg-(--background-tertiary)");
+    expect(className).toContain("hover:text-(color:--icon-primary)");
+    expect(className).toContain("active:text-(color:--icon-tertiary)");
     expect(className).not.toContain("shadow-");
   });
 });

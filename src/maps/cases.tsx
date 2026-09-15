@@ -19,6 +19,7 @@ import {
   LogoLockup,
   LogoPin,
   MapTrafficBadge,
+  NavRail,
   Panel,
   PasswordInput,
   PhoneInput,
@@ -229,6 +230,36 @@ export const KIT_CASES: [string, ReactElement][] = [
     <LegalLink key="k" href="https://kazmaps.dev">
       Условия
     </LegalLink>,
+  ],
+  [
+    "NavRail",
+    <NavRail
+      key="k"
+      label="Разделы"
+      activeId="search"
+      items={[
+        {
+          id: "search",
+          label: "Поиск",
+          icon: <MapPin size={20} aria-hidden="true" />,
+          onSelect: noop,
+        },
+        {
+          id: "routes",
+          label: "Маршруты",
+          icon: <Route size={20} aria-hidden="true" />,
+          onSelect: noop,
+        },
+      ]}
+      secondaryItems={[
+        {
+          id: "install",
+          label: "Установить",
+          icon: <Plus size={20} aria-hidden="true" />,
+          onSelect: noop,
+        },
+      ]}
+    />,
   ],
   ["ShimmerBlock", <ShimmerBlock key="k" className="h-4 w-24" />],
   ["StarRating", <StarRating key="k" value={4.5} />],

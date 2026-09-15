@@ -218,6 +218,7 @@
 - maps: `--shadow-hud-hover` = `rgba(0, 0, 0, 0.24) 0px 4px 8px 0px`
 - maps: `--shadow-hud-side` = `rgba(0, 0, 0, 0.08) 4px 0px 8px 0px`
 - maps: `--shadow-hud-badge` = `rgba(0, 0, 0, 0.12) 0px 2px 8px 0px`
+- maps: `--shadow-modal` = `rgba(0, 0, 0, 0.08) 0px 4px 8px 0px`
 - maps: `--ease-standard` = `cubic-bezier(0.4, 0, 0.2, 1)`
 - maps: `--motion-fast` = `140ms`
 - maps: `--motion-panel` = `240ms`
@@ -225,7 +226,6 @@
 - maps: `--shadow-column` = `rgba(16, 24, 40, 0.05) 2px 0px 8px 0px`
 - maps: `--shadow-button-sm` = `rgba(16, 24, 40, 0.08) 0px 1px 3px 0px`
 - maps: `--shadow-button-md` = `rgba(16, 24, 40, 0.1) 0px 1px 3px 0px`
-- maps: `--shadow-modal` = `rgba(16, 24, 40, 0.28) 0px 18px 48px 0px`
 - maps: `--shadow-sheet-top` = `rgba(16, 24, 40, 0.14) 0px -4px 20px 0px`
 - maps: `--shadow-dropdown` = `rgba(16, 24, 40, 0.22) 0px 12px 32px 0px`
 

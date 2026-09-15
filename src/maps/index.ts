@@ -28,6 +28,8 @@ export type { LogoPinProps } from "./logo-pin";
 export { LogoPin } from "./logo-pin";
 export type { TrafficLevel } from "./map-traffic-badge";
 export { MapTrafficBadge } from "./map-traffic-badge";
+export type { NavRailItem, NavRailProps } from "./nav-rail";
+export { NavRail } from "./nav-rail";
 export type { PanelVariant } from "./panel";
 export { Panel } from "./panel";
 export type { PasswordInputProps } from "./password-input";

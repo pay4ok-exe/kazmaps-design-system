@@ -182,6 +182,8 @@ const kit = {
   "shadow-hud-side": { $type: "shadow", $value: "rgba(0, 0, 0, 0.08) 4px 0px 8px 0px" },
   // Map Weather — тот же цвет, но смещение меньше.
   "shadow-hud-badge": { $type: "shadow", $value: "rgba(0, 0, 0, 0.12) 0px 2px 8px 0px" },
+  // Dialog (137:440) — самая мягкая из измеренных: та же форма, но 8%.
+  "shadow-modal": { $type: "shadow", $value: "rgba(0, 0, 0, 0.08) 0px 4px 8px 0px" },
   "ease-standard": { $type: "cubicBezier", $value: "cubic-bezier(0.4, 0, 0.2, 1)" },
   "motion-fast": { $type: "duration", $value: "140ms", $description: WAITING },
   "motion-panel": { $type: "duration", $value: "240ms", $description: WAITING },
@@ -199,11 +201,6 @@ const kit = {
   "shadow-button-md": {
     $type: "shadow",
     $value: "rgba(16, 24, 40, 0.1) 0px 1px 3px 0px",
-    $description: WAITING,
-  },
-  "shadow-modal": {
-    $type: "shadow",
-    $value: "rgba(16, 24, 40, 0.28) 0px 18px 48px 0px",
     $description: WAITING,
   },
   "shadow-sheet-top": {

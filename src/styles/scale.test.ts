@@ -66,7 +66,13 @@ const MAPS_KIT_STATIC: Record<string, string> = {
   "shadow-column": "rgba(16, 24, 40, 0.05) 2px 0px 8px 0px",
   "shadow-button-sm": "rgba(16, 24, 40, 0.08) 0px 1px 3px 0px",
   "shadow-button-md": "rgba(16, 24, 40, 0.1) 0px 1px 3px 0px",
-  "shadow-modal": "rgba(16, 24, 40, 0.28) 0px 18px 48px 0px",
+  // Измеренные в макете (эффекты на нодах), в отличие от ожидающих ниже.
+  "shadow-field": "rgba(0, 0, 0, 0.04) 0px 4px 4px 0px",
+  "shadow-hud": "rgba(0, 0, 0, 0.12) 0px 4px 8px 0px",
+  "shadow-hud-hover": "rgba(0, 0, 0, 0.24) 0px 4px 8px 0px",
+  "shadow-hud-side": "rgba(0, 0, 0, 0.08) 4px 0px 8px 0px",
+  "shadow-hud-badge": "rgba(0, 0, 0, 0.12) 0px 2px 8px 0px",
+  "shadow-modal": "rgba(0, 0, 0, 0.08) 0px 4px 8px 0px",
   "shadow-sheet-top": "rgba(16, 24, 40, 0.14) 0px -4px 20px 0px",
   "shadow-dropdown": "rgba(16, 24, 40, 0.22) 0px 12px 32px 0px",
 };
