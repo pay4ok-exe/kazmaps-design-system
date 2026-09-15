@@ -115,6 +115,22 @@ import { Button, PlaceRow } from "@temirtator/kazmaps-design-system/maps";
 используемые в сигнатуре `PhoneInputProps`: `Region`, `RegionCode`, `findRegion`, `REGIONS`,
 `isKazakhstanMobile`, `toE164`.
 
+### 5. Вход `/icons`
+
+Набор иконок макета KazMaps Design System: 96 заливных глифов в поле 24×24.
+
+```tsx
+import { IconSearchBold, IconStarLight } from "@temirtator/kazmaps-design-system/icons";
+
+<IconSearchBold size={20} />
+<IconStarLight title="Рейтинг" />
+```
+
+Одноцветные иконки залиты `currentColor` и берут цвет текста родителя. Многоцветные иконки погоды
+читают роли `--weather-*` бренда `maps` и на `currentColor` не реагируют. Без `title` иконка
+считается декоративной и скрыта от скринридера. `ICON_MANIFEST` перечисляет весь набор и отмечает
+многоцветные иконки.
+
 ## Компоненты
 
 ### Атомы (16 компонентов)
@@ -314,6 +330,21 @@ npm run test:watch
 # Сборка
 npm run build
 ```
+
+### Иконки из Figma
+
+Набор `/icons` выгружается из файла Figma «KazMaps Design System», страница Icons. Нужен
+персональный токен Figma с областью `file_read` (Settings → Security → Personal access tokens) в
+переменной `FIGMA_TOKEN` или в локальном `.env`:
+
+```bash
+npm run icons:import
+npm run icons:build
+```
+
+Импорт заменяет `src/icons/svg` только после того, как все глифы скачаны. Служебные слои с
+подчёркиванием в начале имени в набор не входят. `npm run icons:check` падает, если
+сгенерированные компоненты разошлись с исходными SVG.
 
 ## Релизы
 
