@@ -26,7 +26,7 @@ export function IconButtonGroup({
     <div
       role="group"
       aria-label={label}
-      className={`inline-flex w-fit rounded-(--dimension-corner-radius-10) shadow-(--shadow-hud) [&>button:hover]:shadow-none [&>button]:rounded-none [&>button]:shadow-none ${DIRECTION_CLASSES[direction]} ${className}`}
+      className={`inline-flex w-fit rounded-(--dimension-corner-radius-10) shadow-(--shadow-hud) [&>button:focus-visible]:z-10 [&>button:hover]:shadow-none [&>button]:relative [&>button]:rounded-none [&>button]:shadow-none ${DIRECTION_CLASSES[direction]} ${className}`}
     >
       {children}
     </div>

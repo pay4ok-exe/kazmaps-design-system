@@ -35,6 +35,8 @@ describe("IconButtonGroup", () => {
     expect(className).toContain("w-fit");
     expect(className).toContain("[&>button:first-child]:rounded-t-(--dimension-corner-radius-10)");
     expect(className).toContain("[&>button:last-child]:rounded-b-(--dimension-corner-radius-10)");
+    expect(className).toContain("[&>button]:relative");
+    expect(className).toContain("[&>button:focus-visible]:z-10");
     rerender(
       <IconButtonGroup label="Масштаб" direction="horizontal">
         <IconButton label="Приблизить">+</IconButton>
