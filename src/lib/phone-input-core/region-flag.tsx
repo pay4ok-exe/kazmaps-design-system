@@ -44,8 +44,8 @@ export function RegionFlag({
       <span
         aria-hidden="true"
         className={cn(
-          "inline-flex items-center justify-center rounded-[var(--radius-sm)] bg-[var(--bg-2)] px-1",
-          "text-[length:var(--text-xs)] font-medium leading-none text-[var(--ink-2)]",
+          "inline-flex items-center justify-center rounded-[var(--dimension-corner-radius-4)] bg-[var(--background-secondary)] px-1",
+          "text-[length:var(--text-xs)] font-medium leading-none text-[var(--text-secondary)]",
           className,
         )}
         style={{ height: size }}

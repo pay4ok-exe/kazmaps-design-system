@@ -25,7 +25,6 @@ const GLYPHS: Record<string, IconComponent> = Object.fromEntries(
 const glyph = (slug: string, key?: string) =>
   GLYPHS[slug] ? createElement(GLYPHS[slug], { key }) : null;
 
-const MAPS = { brand: "maps" };
 
 type Entry = (typeof ICON_MANIFEST)[number];
 
@@ -80,19 +79,16 @@ function Section({ name, note }: { name: string; note?: string }) {
 
 export const InterfaceIcons: StoryObj = {
   name: "Interface Icons",
-  globals: MAPS,
   render: () => <Section name="Interface Icons" />,
 };
 
 export const MapUiIcons: StoryObj = {
   name: "Map UI Icons",
-  globals: MAPS,
   render: () => <Section name="Map UI Icons" />,
 };
 
 export const WeatherIcons: StoryObj = {
   name: "Weather Icons",
-  globals: MAPS,
   render: () => (
     <Section
       name="Weather Icons"

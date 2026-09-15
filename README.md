@@ -1,8 +1,8 @@
 # @temirtator/kazmaps-design-system
 
-Мульти-брендовая дизайн-система KazMaps: токены, атомы и молекулы для любого приложения на React 19 и Tailwind CSS v4.
-
-Тёмная и светлая темы из коробки, полная типизация TypeScript, компоненты с автоматическим переключением бренда.
+Дизайн-система KazMaps: один UI-кит для всех продуктов — KazMaps, KazMaps Business, KazMaps
+Booking. Компоненты сняты с макета Figma «KazMaps Design System» пиксель в пиксель; бренд
+меняет только значения токенов, не компоненты. React 19, Tailwind CSS v4, TypeScript.
 
 ## Установка
 
@@ -10,114 +10,80 @@
 npm i @temirtator/kazmaps-design-system lucide-react
 ```
 
-Требования по peer-зависимостям:
+Peer-зависимости:
 
 - `react` ^19.0.0
 - `react-dom` ^19.0.0
 - `lucide-react` ^1.0.0
-- `qrcode` ^1.5.4 — необязательный, нужен только `QrCode` из `/maps`
+- `qrcode` ^1.5.4 — необязательный, нужен только `QrCode`
 
 ## Подключение в Next.js или Tailwind v4 приложение
 
-### 1. Подключение стилей в `globals.css`
-
-Если ваш файл находится в `app/globals.css`:
+### 1. Стили в `globals.css`
 
 ```css
 @import "tailwindcss";
 @import "@temirtator/kazmaps-design-system/styles/core.css";
 @import "@temirtator/kazmaps-design-system/styles/theme.css";
-@import "@temirtator/kazmaps-design-system/styles/brands/business.css";
-
-@source "../node_modules/@temirtator/kazmaps-design-system/dist";
-```
-
-Если ваш файл находится в `src/app/globals.css`:
-
-```css
-@import "tailwindcss";
-@import "@temirtator/kazmaps-design-system/styles/core.css";
-@import "@temirtator/kazmaps-design-system/styles/theme.css";
-@import "@temirtator/kazmaps-design-system/styles/brands/business.css";
+@import "@temirtator/kazmaps-design-system/styles/brands/maps.css";
+@import "@temirtator/kazmaps-design-system/styles/kit.css";
 
 @source "../../node_modules/@temirtator/kazmaps-design-system/dist";
 ```
 
-**Примечание:** выберите один файл бренда: `business.css`, `booking.css` или `maps.css`. `theme.css` даёт утилиты Tailwind `bg-surface-panel`, `text-text-muted`, `border-border-input` для всех цветовых ролей контракта; подключение необязательно, если вы пишете `bg-(--surface-panel)`.
+Файл бренда — один из `brands/maps.css`, `brands/business.css`, `brands/booking.css`.
+Порядок менять нельзя: `--ease-standard` объявлен и в `core.css`, и в файле бренда с одной
+специфичностью — побеждает тот, что подключён позже, то есть бренд.
 
-### 2. Установка атрибутов на корневой элемент
+`theme.css` даёт утилиты Tailwind вида `bg-background-primary`, `text-text-secondary`,
+`border-border-primary` для всех цветовых ролей; можно писать и напрямую —
+`bg-(--background-primary)`.
 
-В `app/layout.tsx`:
+`kit.css` — утилиты и keyframes, которые читают компоненты (`transition-interactive`,
+`focus-ring`, `gradient-ring`, `animate-modal-in`, `animate-shimmer-placeholder`).
+
+### 2. Атрибуты на корневом элементе
 
 ```tsx
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html data-brand="business" data-theme="light" lang="ru">
+    <html data-brand="maps" data-theme="light" lang="ru">
       <body>{children}</body>
     </html>
   );
 }
 ```
 
-**Атрибуты:**
+- `data-brand`: `maps` | `business` | `booking`.
+- `data-theme`: `light` | `dark`. Без атрибута `maps` показывает светлую тему и следует
+  `prefers-color-scheme`; `business` и `booking` — тёмную.
 
-- `data-brand`: `business` | `booking` | `maps`.
-- `data-theme`: `light` | `dark`. Без атрибута business и booking показывают тёмную тему; maps — светлую и следует `prefers-color-scheme`.
+Оба атрибута ставятся на `<html>`: `theme.css` объявляет `--color-*` на `:root`, и при атрибуте
+на другом элементе утилиты `bg-background-primary` перестанут находить значения.
 
-### 3. Импорт компонентов
+### 3. Шрифт
 
-```tsx
-import { Button, Input, Select } from "@temirtator/kazmaps-design-system";
-
-export default function MyComponent() {
-  return (
-    <div>
-      <Button variant="primary">Нажми меня</Button>
-      <Input placeholder="Введите текст..." />
-      <Select options={[{ value: "1", label: "Вариант 1" }]} />
-    </div>
-  );
-}
-```
-
-### 4. Вход `/maps` (main-web)
-
-Второй вход пакета — примитивы main-web с родными именами. Он не пересекается с корневым:
-`Button` из `@temirtator/kazmaps-design-system/maps` и `Button` из корня — разные компоненты
-для разных брендов, слияние — после прихода дизайна.
+Бренд `maps` использует переменный Inter с весами 400, 450, 500 и 550 через `--font-inter`.
+В Next.js — `next/font` без списка `weight`, иначе 450 и 550 не загрузятся:
 
 ```tsx
-import { Button, PlaceRow } from "@temirtator/kazmaps-design-system/maps";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" });
 ```
 
-Кит читает утилиты и keyframes из `styles/kits/maps.css` — подключите его после файла бренда.
-Сниппет ниже — это продолжение §1, а не полный набор импортов: `core.css` и `theme.css` должны
-быть подключены раньше `brands/maps.css` и `kits/maps.css`.
+### 4. Компоненты
 
-```css
-@import "@temirtator/kazmaps-design-system/styles/brands/maps.css";
-@import "@temirtator/kazmaps-design-system/styles/kits/maps.css";
-@source "../../node_modules/@temirtator/kazmaps-design-system/dist";
+```tsx
+import { Button, TextInput, PlaceRow, useToast } from "@temirtator/kazmaps-design-system";
 ```
 
-Компоненты `/maps` работают только под `data-brand="maps"`: их тени, тайминги и `--ease-standard`
-объявлены как кит-статики этого бренда (`tokens/brands/maps.json`, блок `kit`). `--ease-standard`
-у кита и у `core.css` объявлены с одинаковой специфичностью — кит побеждает только за счёт
-порядка импорта (`core.css` раньше `brands/maps.css`), поэтому порядок из §1 и этого раздела
-менять нельзя.
+Вход `/maps` оставлен как реэкспорт корня и будет удалён; новые импорты — из корня.
 
-`QrCode` рендерит настоящий QR-код через `qrcode` — необязательный peer-пакет кита, установите
-его в приложении-потребителе (`npm i qrcode`); main-web уже это делает.
+### 5. Иконки
 
-Кит также включает оверлеи — `Dialog`, `BottomSheet`, `ToastProvider`/`useToast` — и
-`PhoneInput`: телефон с выбором региона, маской и E.164 наружу на безголовом ядре
-`useRegionPicker`/`usePhoneMask`. `/maps` также экспортирует типы и хелперы региона/телефона,
-используемые в сигнатуре `PhoneInputProps`: `Region`, `RegionCode`, `findRegion`, `REGIONS`,
-`isKazakhstanMobile`, `toE164`.
-
-### 5. Вход `/icons`
-
-Набор иконок макета KazMaps Design System: 96 заливных глифов в поле 24×24.
+Набор иконок макета: 96 заливных глифов в поле 24×24, три раздела — Interface, Map UI,
+Weather.
 
 ```tsx
 import { IconSearchBold, IconStarLight } from "@temirtator/kazmaps-design-system/icons";
@@ -126,261 +92,157 @@ import { IconSearchBold, IconStarLight } from "@temirtator/kazmaps-design-system
 <IconStarLight title="Рейтинг" />
 ```
 
-Одноцветные иконки залиты `currentColor` и берут цвет текста родителя. Многоцветные иконки погоды
-читают роли `--weather-*` бренда `maps` и на `currentColor` не реагируют. Без `title` иконка
-считается декоративной и скрыта от скринридера. `ICON_MANIFEST` перечисляет весь набор и отмечает
-многоцветные иконки.
+Одноцветные иконки залиты `currentColor`. Иконки погоды многоцветные: читают роли
+`--weather-*` и на `currentColor` не реагируют. Без `title` иконка декоративная и скрыта от
+скринридера. `ICON_MANIFEST` перечисляет набор, раздел и начертание каждой иконки.
 
 ## Компоненты
 
-### Атомы (16 компонентов)
+Действия: `Button` (`accent` | `neutral` | `danger`, плюс `outline` | `outline-accent` — их в
+макете нет), `IconButton` (Map Action, 36), `IconButtonGroup` (зум), `Chip`, `Toggle`,
+`ToggleSwitch`, `SegmentedRow`, `Avatar`.
 
-Базовые, переиспользуемые элементы управления и отображения:
+Поля: `TextInput`, `PasswordInput`, `SearchInput`, `PhoneInput`, `CodeInput`, `SelectField`,
+`DayPicker`.
 
-- **Button** — кнопка с вариантами (primary, secondary, ghost) и размерами.
-- **Input** — текстовое поле ввода.
-- **Textarea** — многострочное поле для текста.
-- **Select** — выпадающий список.
-- **Checkbox** — флажок.
-- **Toggle** — переключатель вкл/выкл.
-- **Badge** — этикетка для статусов и тегов.
-- **Chip** — компактная кнопка-тег.
-- **ChipPill** — закругленный chip.
-- **Avatar** — аватар пользователя.
-- **Spinner** — индикатор загрузки.
-- **Skeleton** — плейсхолдер для загружаемого контента.
-- **Divider** — горизонтальный разделитель.
-- **Heading** — заголовок (уровни h1–h4).
-- **Text** — основной текст.
-- **Caption** — подписи и вспомогательный текст.
+Оверлеи: `Dialog`, `BottomSheet`, `ToastProvider` + `useToast`.
 
-### Молекулы (8 компонентов)
+Карта: `MapCompass`, `MapTrafficBadge`, `WeatherBadge`, `ForecastCard`, `ScaleBar`, `NavRail`,
+`CollapseHandle`, `Panel`.
 
-Комбинации атомов для решения типичных задач:
+Содержимое: `PlaceRow`, `ListRow`, `SectionHeader`, `SectionError`, `EmptyState`,
+`ShimmerBlock`, `StarRating`, `LogoLockup`, `LegalLink`, `InDevelopment`, `QrCode`.
 
-- **FormField** — поле формы с label и error message.
-- **SearchInput** — поле поиска с иконкой.
-- **SegmentedControl** — сегментированный выбор (радио в виде кнопок).
-- **StarRating** — рейтинг звёздами.
-- **ThemeToggle** — переключатель светлой/тёмной темы.
-- **Tabs** — вкладки.
-- **ErrorBoundary** — граница для перехвата React ошибок.
-- **PhoneInput** — телефон с выбором региона, маской и E.164 наружу.
+Хелперы: `cn`, `useFocusTrap`, `isTopmostTrap`, `REGIONS`, `findRegion`, `parseE164`,
+`formatE164`, `toE164`, `isKazakhstanMobile`.
+
+### Ошибки — только тостом
+
+Ни одно поле не рисует текст ошибки под собой: поля принимают булев `invalid`, а текст
+показывает `useToast`. Так во всех продуктах KazMaps.
+
+```tsx
+const show = useToast();
+<TextInput value={v} onChange={setV} invalid={!valid} />;
+if (!valid) show("Введите номер полностью");
+```
 
 ### PhoneInput
 
 ```tsx
-import { PhoneInput } from "@temirtator/kazmaps-design-system";
-
-<PhoneInput
-  label="Номер телефона"
-  size="lg"
-  onChange={({ e164, complete }) => complete && send(e164)}
-/>;
+<PhoneInput label="Номер телефона" onChange={({ e164, complete }) => complete && send(e164)} />
 ```
 
-| Проп             | Тип                                         | Описание                                                                                                                                |
-| ---------------- | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `value`          | `string`                                    | Значение E.164 (`"+77012345678"`) или `""` — включает контролируемый режим.                                                             |
-| `defaultValue`   | `string`                                    | Начальное значение E.164 для неконтролируемого режима.                                                                                  |
-| `defaultRegion`  | `RegionCode`                                | Регион по умолчанию, когда `value`/`defaultValue` не заданы или пусты; по умолчанию `"KZ"`.                                             |
-| `onChange`       | `(value: PhoneValue) => void`               | Вызывается на каждое изменение; `value.e164` пуст, пока номер не введён полностью.                                                      |
-| `onRegionChange` | `(region: RegionCode) => void`              | Вызывается только когда меняется сам регион — выбор в пикере или вставка номера с другим кодом страны.                                  |
-| `onFocus`        | `React.FocusEventHandler<HTMLInputElement>` | Проксируется на внутренний `<input>`; вызывается по фокусу.                                                                             |
-| `onBlur`         | `React.FocusEventHandler<HTMLInputElement>` | Проксируется на внутренний `<input>`; вызывается по потере фокуса — на нём строится `touched`-логика `Controller` (см. пример ниже).    |
-| `regions`        | `RegionCode[]`                              | Ограничивает список регионов в пикере; по умолчанию доступны все поддерживаемые страны.                                                 |
-| `locale`         | `"ru" \| "en"`                              | Язык названий стран в пикере; по умолчанию `"ru"`.                                                                                      |
-| `size`           | `"md" \| "lg"`                              | Высота поля; по умолчанию `"md"`.                                                                                                       |
-| `label`          | `string`                                    | Текст `<label>` над полем.                                                                                                              |
-| `hint`           | `string`                                    | Подсказка под полем, показывается, пока нет `error`.                                                                                    |
-| `error`          | `string`                                    | Текст ошибки под полем; заменяет `hint` и включает `aria-invalid`.                                                                      |
-| `required`       | `boolean`                                   | Помечает поле обязательным — звёздочка у `label` и атрибут `required` на инпуте.                                                        |
-| `disabled`       | `boolean`                                   | Отключает поле и кнопку выбора региона.                                                                                                 |
-| `readOnly`       | `boolean`                                   | Поле только для чтения; кнопка выбора региона тоже блокируется.                                                                         |
-| `id`             | `string`                                    | `id` внутреннего `<input>`; по умолчанию генерируется через `useId()`. Также используется для связи `label`/`aria-describedby`.         |
-| `name`           | `string`                                    | Имя поля для обычных (не React Hook Form) форм.                                                                                         |
-| `autoFocus`      | `boolean`                                   | Автофокус внутреннего `<input>` при монтировании.                                                                                       |
-| `autoComplete`   | `string`                                    | Атрибут `autoComplete` на инпуте; по умолчанию `"tel-national"`.                                                                        |
-| `labels`         | `Partial<PhoneInputLabels>`                 | Частичное переопределение текстов пикера (доступное имя кнопки региона, плейсхолдер поиска, заголовки групп, текст пустого результата). |
-| `className`      | `string`                                    | Класс на корневой обёртке компонента (`<div>` с label, полем и hint/error).                                                             |
+| Проп                                      | Тип                            | Описание                                                                                  |
+| ----------------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------- |
+| `value`                                   | `string`                       | E.164 (`"+77012345678"`) или `""` — контролируемый режим.                                 |
+| `defaultValue`                            | `string`                       | Начальное E.164 для неконтролируемого режима.                                             |
+| `defaultRegion`                           | `RegionCode`                   | Регион, когда `value`/`defaultValue` пусты; по умолчанию `"KZ"`.                          |
+| `onChange`                                | `(value: PhoneValue) => void`  | На каждое изменение; `value.e164` пуст, пока номер не введён полностью.                   |
+| `onRegionChange`                          | `(region: RegionCode) => void` | Только при смене региона — выбор в пикере или вставка номера с другим кодом страны.       |
+| `onFocus`, `onBlur`                       | `FocusEventHandler`            | Проксируются на внутренний `<input>`.                                                     |
+| `regions`                                 | `RegionCode[]`                 | Ограничивает список регионов.                                                             |
+| `locale`                                  | `"ru" \| "en"`                 | Язык названий стран; по умолчанию `"ru"`.                                                 |
+| `label`, `hint`                           | `string`                       | Подпись над полем и подсказка под ним.                                                    |
+| `invalid`                                 | `boolean`                      | Красная обводка и `aria-invalid`; текст ошибки — тостом.                                  |
+| `required`, `disabled`, `readOnly`        | `boolean`                      |                                                                                           |
+| `id`, `name`, `autoFocus`, `autoComplete` |                                | Как у обычного `<input>`; `autoComplete` по умолчанию `"tel-national"`.                   |
+| `labels`                                  | `Partial<PhoneInputLabels>`    | Тексты пикера: имя кнопки региона, плейсхолдер поиска, заголовки групп, пустой результат. |
+| `className`                               | `string`                       | Класс корневой обёртки.                                                                   |
 
-- `value` — E.164 (`"+77012345678"`) или `""`; `onChange` отдаёт `{ e164, region, national, complete }`, где `e164` пуст, пока номер не полный.
-- Регион по умолчанию `KZ`; пикер — все страны с поиском, точные маски для СНГ, остальным цифры группами и проверка длины E.164. Вставка `+998…` переключает регион сама.
-- Код `+1` (NANP) общий для нескольких стран — США, Канада, Пуэрто-Рико, Доминиканская Республика, Ямайка, Тринидад и Тобаго, Гренада. `parseE164` и вставленный `+1…` по умолчанию определяют регион как `US`; пользователь может поправить страну в пикере вручную.
-- React Hook Form — только через `Controller` (`onChange={(v) => field.onChange(v.e164)}`); `register()` не поддерживается:
+- Пикер — все страны с поиском, точные маски для СНГ, остальным цифры группами и проверка длины
+  E.164. Вставка `+998…` переключает регион сама; `8 701…` нормализуется в KZ.
+- Код `+1` общий для нескольких стран; `parseE164` и вставленный `+1…` по умолчанию дают `US`.
+- React Hook Form — только через `Controller` (`onChange={(v) => field.onChange(v.e164)}`).
+- Контролируемый `value=""` не очищает частично введённое поле: компонент пересинхронизируется
+  только когда внешний `value` отличается от последнего отправленного E.164 — иначе поле дёргалось
+  бы во время набора.
+- `locale` переключает только названия стран; остальные тексты пикера — из `labels`, дефолты
+  русские.
 
-  ```tsx
-  import { Controller, useForm } from "react-hook-form";
-  import { PhoneInput } from "@temirtator/kazmaps-design-system";
+## Токены
 
-  function Form() {
-    const { control, handleSubmit } = useForm({ defaultValues: { phone: "" } });
+Контракт один на все бренды: имена ролей — имена Figma Variables (`группа/роль` →
+`--группа-роль`).
 
-    return (
-      <Controller
-        name="phone"
-        control={control}
-        rules={{ validate: (v) => Boolean(v) || "Введите номер полностью" }}
-        render={({ field, fieldState }) => (
-          <PhoneInput
-            label="Номер телефона"
-            value={field.value}
-            onChange={(v) => field.onChange(v.e164)}
-            onBlur={field.onBlur}
-            error={fieldState.error?.message}
-          />
-        )}
-      />
-    );
-  }
-  ```
+- Цвета по темам: `action/*`, `background/*`, `overlay/*`, `border/*`, `text/*`, `icon/*`,
+  `tag/*`, `traffic/*`, `weather/*`, `map/*`; `effect/shimmer-peak`.
+- Статические: `dimension/corner-radius/*`, `dimension/height|width/*`, `spacing/gap|padding/*`,
+  `stroke/*`, `shadow/blur|position/*`, `typography/font-size|line-height/*`, `font-sans`,
+  `font-weight-*`, `text-xs…3xl`, тени и тайминги кита (`shadow-hud`, `motion-panel`,
+  `ease-standard` и другие).
 
-- Контролируемый `value=""` не очищает частично введённое поле: компонент пересинхронизируется со внешним `value` только тогда, когда тот отличается от последнего E.164, который сам же отправил через `onChange`, — поэтому `reset()` формы очистит поле только если до этого был отправлен полный номер; это осознанное решение, оно же не даёт полю дёргаться во время набора.
-- `locale="ru" | "en"` переключает только названия стран в списке пикера. Остальной интерфейс пикера — доступное имя кнопки региона, плейсхолдер поля поиска, оба заголовка групп, текст пустого результата — всегда берётся из `labels`, дефолты которого русские. Англоязычному потребителю нужно передать `labels` вместе с `locale`.
-- Плейсхолдеры маски остаются видны по мере ввода (`+7 (7__) ___-__-__`), поле намеренно пустое при фокусе — чтобы срабатывал автозаполнитель браузера.
-- Хелперы: `parseE164`, `formatE164` («+7 701 234-56-78» для подписей), `isKazakhstanMobile` (белый список операторов identity — только такие номера достижимы по SMS).
-- `Input mask` принимает `email | bin | url`. Телефон — только `PhoneInput` (корневой и `/maps`); `mask="phone"` удалён в 0.6.0.
+Источник истины — `tokens/schema.json` и `tokens/brands/*.json`; CSS и `docs/tokens.md`
+генерирует `npm run tokens:build`. Бренд `maps` импортируется из `tokens/figma/export.json`
+командой `npm run tokens:import`; `business` и `booking` пока переходные — `docs/brands.md`.
+Чего не хватает в макете — `docs/figma-deltas.md`.
 
-## Темизация
-
-### Токены
-
-Система использует CSS переменные (tokens) для всех параметров дизайна: цвета, типографика, отступы, радиусы скругления.
-
-**Контракт токенов:**
-
-- В установленном пакете: `dist/styles/core.css` (тип-шкала, spacing, motion), `dist/styles/theme.css` (Tailwind `@theme`, утилиты `bg-surface-panel`, `text-text-muted`, `border-border-input`), `dist/styles/brands/{business,booking,maps}.css` (палитра, радиусы, тени, шрифт по бренду и теме).
-- В репозитории DS источник истины — `tokens/schema.json`, `tokens/core.json`, `tokens/brands/*.json`; CSS генерируется `npm run tokens:build`, таблица значений — `docs/tokens.md` (в пакет не входит).
-- Канон имён v2: `--surface-*`, `--text-*`, `--border*`, `--accent*`, `--success|warning|danger|info` и `*-soft-bg`, `--radius-*`, `--shadow-*`, `--font-sans`. Старые имена (`--ink`, `--bg`, `--line`, `--brand`, `--warn`, `*-soft`) — алиасы, удаляются в 1.0.0.
-
-Полный список токенов и их значения также доступны в Storybook на странице **Foundations → Tokens**.
-
-### Переключение темы
-
-Тема контролируется атрибутом `data-theme` на элементе `<html>`:
-
-```tsx
-<html data-theme="light">
-<html data-theme="dark">
-<html> {/* business, booking: тёмная; maps: светлая или системная */}
-```
-
-### Переключение бренда
-
-Бренд установлен один раз на запуск приложения через `data-brand`:
-
-```tsx
-<html data-brand="business" data-theme="light">
-```
-
-Значения: `business`, `booking` или `maps`.
-
-`data-brand` и `data-theme` ставятся на `<html>`: `theme.css` объявляет `--color-*` на `:root`, поэтому при атрибуте на любом другом элементе утилиты `bg-surface-panel` перестанут находить значения, а `bg-(--surface-panel)` продолжит работать.
+Обводки повторяют `strokeAlign` макета и места не занимают: внутренние рисуются `inset-ring`,
+градиентное кольцо `Button` — отдельным слоем `gradient-ring`, внешние — `ring`. Высоты
+совпадают с макетом: `Chip` и `SelectField` 28, `IconButton` 36, `TextInput`, `PhoneInput` и
+`SearchInput` 36, `Button`, `Avatar` и `MapCompass` 40, ячейка `CodeInput` 48, `PlaceRow` 72.
 
 ### Переопределение токенов в приложении
 
-Если вашему приложению нужны дополнительные цвета, типографика или другие переменные, вы можете добавить их в CSS. **Важно:** селектор должен иметь специфичность НЕ СЛАБЕЕ, чем селектор бренда `[data-brand="..."]` (0,1,0), иначе бренд-токены будут игнорироваться. Порядок импорта решает сам специфичность только при равной специфичности.
+Селектор должен быть не слабее селектора бренда `[data-brand="…"]` (0,1,0), иначе значения
+бренда победят:
 
 ```css
-/* приложение может переопределить любой токен — селектор должен быть
-   НЕ СЛАБЕЕ бренд-селектора [data-brand="..."] (порядок импорта решает
-   только при равной специфичности). Пример business-client: подключить
-   Inter из next/font (variable: --font-inter) и вернуть его в стек.
-   ВАЖНО: --font-inter должен быть определён вашим загрузчиком шрифтов —
-   голый var() на несуществующую переменную инвалидирует весь --font-sans. */
 :root[data-brand] {
-  --font-sans: var(--font-inter, "Inter"), "SF Pro Display", system-ui, sans-serif;
+  --font-sans: var(--font-inter, "Inter"), system-ui, sans-serif;
 }
 ```
 
-Все компоненты используют CSS переменные, поэтому изменения немедленно применяются ко всему интерфейсу.
+`--font-inter` должен быть объявлен загрузчиком шрифтов — голый `var()` на несуществующую
+переменную инвалидирует весь `--font-sans`.
 
 ## Разработка
 
 ### Storybook
 
-Витрина компонентов с интерактивными примерами и переключателями бренда × темы:
+Витрина с переключателями бренда × темы в тулбаре — каждая история показывается под любым
+брендом:
 
 ```bash
 npm run storybook
 ```
 
-Откроется на `http://localhost:6006`.
-
 Опубликованная версия: https://temirtator.github.io/kazmaps-design-system/
 
-### Проверка кода
+### Проверки
 
 ```bash
-# Линтинг
 npm run lint
-
-# Автоисправление
-npm run lint:fix
-
-# Проверка типов
 npm run typecheck
-
-# Тесты
-npm run test
-
-# Тесты в режиме просмотра
-npm run test:watch
-
-# Сборка
+npm run test          # tokens:check + vitest
+npm run test:vrt      # скриншоты Storybook, Playwright
+npm run test:e2e      # взаимодействия PhoneInput
 npm run build
 ```
 
 ### Иконки из Figma
 
-Набор `/icons` выгружается из файла Figma «KazMaps Design System», страница Icons. Нужен
-персональный токен Figma с областью `file_read` (Settings → Security → Personal access tokens) в
-переменной `FIGMA_TOKEN` или в локальном `.env`:
+Нужен персональный токен Figma с областью `file_read` в переменной `FIGMA_TOKEN` или в
+локальном `.env`:
 
 ```bash
 npm run icons:import
 npm run icons:build
 ```
 
-Импорт заменяет `src/icons/svg` только после того, как все глифы скачаны. Служебные слои с
+Импорт заменяет `src/icons/svg` только после того, как все глифы скачаны. Слои с
 подчёркиванием в начале имени в набор не входят. `npm run icons:check` падает, если
 сгенерированные компоненты разошлись с исходными SVG.
 
 ## Релизы
 
-### Runbook для публикации новой версии
+1. Секция `## [X.Y.Z] — YYYY-MM-DD` в `CHANGELOG.md`.
+2. `npm version patch|minor|major -m "chore: release X.Y.Z"`.
+3. `git push --follow-tags`.
+4. `npm publish`.
 
-1. **Обновите CHANGELOG.md**
-
-   Добавьте секцию `## [X.Y.Z] — YYYY-MM-DD` с категориями `Added`, `Changed`, `Fixed`, `Breaking Changes` (если применимо).
-
-2. **Запустите bumping версии**
-
-   ```bash
-   npm version patch|minor|major -m "chore: release X.Y.Z"
-   ```
-
-   Это:
-   - Обновляет версию в `package.json`
-   - Создаёт git commit
-   - Создаёт git tag `vX.Y.Z`
-
-3. **Запушьте в репозиторий**
-
-   ```bash
-   git push --follow-tags
-   ```
-
-4. **Опубликуйте на npm**
-
-   ```bash
-   npm publish
-   ```
-
-### Версионирование
-
-- **0.x версии** — используются во время интеграции в business-client и booking-client.
-- **1.0.0** — выпускается после того, как оба клиента полностью мигрировали на пакет.
+`1.0.0` — один кит на все бренды; `business-client` и `booking-client` переезжают с `0.3.0` по
+`docs/brands.md`.
 
 ## Лицензия
 

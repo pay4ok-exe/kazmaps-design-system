@@ -3,6 +3,42 @@
 All notable changes to `@temirtator/kazmaps-design-system` are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: semver.
 
+## [1.0.0] — 2026-09-15
+
+### Changed
+
+- **Ломающее.** Один кит на все бренды. Корневой вход теперь отдаёт компоненты, снятые с
+  макета KazMaps; `atoms` и `molecules` (`Input`, `Select`, `Badge`, `Tabs`, `FormField`,
+  `ErrorBoundary`, `ThemeToggle`, `SegmentedControl`, `Spinner`, `Skeleton`, `Heading`, `Text`,
+  `Caption`, `Checkbox`, `Textarea`, `Divider`, `ChipPill` и корневые `Button`, `Avatar`, `Chip`,
+  `Toggle`, `PhoneInput`, `SearchInput`, `StarRating`) удалены. Таблица замен —
+  `docs/brands.md`.
+- **Ломающее.** Контракт токенов один — имена переменных Figma (`action/*`, `background/*`,
+  `border/*`, `text/*`, `icon/*`, `tag/*`, `traffic/*`, `weather/*`, `map/*`, `effect/*`,
+  шкалы `dimension/*`, `spacing/*`, `stroke/*`, `shadow/*`, `typography/*`). Прежний контракт
+  (`--surface-*`, `--text-muted`, `--accent*`, `--radius-*`, `--brand`, `--ink`, `--card`,
+  `--line`, `--muted`, `--bg`, `--gold`, `--highlight*`, `--shadow-sm/md/lg`) и все алиасы
+  удалены; `schema.byBrand` и `replacesContract` больше не нужны. Тени и тайминги кита
+  (`--shadow-hud`, `--motion-panel`, `--ease-standard` и остальные) стали статическими ролями
+  контракта и объявлены у каждого бренда; `--shimmer-peak`, `--surface-map`, `--text-on-map`,
+  `--rating-star` — темизируемые роли контракта. `--marker-primary` и `--map-tile-style` удалены:
+  их никто не читал.
+- **Ломающее.** `business` и `booking` переведены на контракт Figma переходным набором: где у
+  роли есть прямой аналог в прежней палитре — взято оттуда, остальное — из `maps`
+  (`docs/brands.md`). Шрифты брендов сохранены. Значения ждут макетов дизайнера — пометка
+  `_pending` в файле бренда.
+- **Ломающее.** `styles/kits/maps.css` → `styles/kit.css`: утилиты и keyframes нужны любому бренду.
+- Вход `/maps` оставлен как реэкспорт корня для main-web; новые импорты — из корня.
+- `theme.css` объявляет `--color-*` только для ролей типа `color` — по `$type` токена, а не по
+  имени группы.
+- Storybook: витрина — раздел Components, переключатель бренда действует на каждую историю;
+  Foundations → Tokens показывает палитру, статические роли и ожидания от дизайнера.
+
+### Added
+
+- `npm run tokens:import` — импорт переменных из `tokens/figma/export.json` с последующей
+  сборкой CSS; числовые шкалы Figma синхронизируются во все бренды.
+
 ## [0.7.0] — 2026-09-15
 
 ### Changed

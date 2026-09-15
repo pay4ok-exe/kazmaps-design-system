@@ -31,44 +31,21 @@ const line = (name, value) => `  --${name}: ${value};`;
 const block = (selector, lines) => `${selector} {\n${lines.join("\n")}\n}\n`;
 const entries = (group) => Object.entries(group ?? {}).map(([k, v]) => line(k, v.$value));
 
-const override = (schema, brandName) =>
-  schema.byBrand?.[brandName]?.replacesContract ? schema.byBrand[brandName] : null;
-
-const themedGroups = (schema, brandName) => override(schema, brandName)?.themed ?? schema.themed;
-
-export function themedRoles(schema, brandName) {
-  return Object.values(themedGroups(schema, brandName)).flat();
-}
-
-export function staticRoles(schema, brandName) {
-  return override(schema, brandName)?.static ?? schema.static;
-}
-
-export function aliasesFor(schema, brandName) {
-  return override(schema, brandName)?.aliases ?? schema.aliases;
-}
+export const themedRoles = (schema) => Object.values(schema.themed).flat();
 
 function themeLines(schema, brand, theme) {
   const vars = brand.themes[theme];
-  return [
-    ...themedRoles(schema, brand.brand).map((r) => line(r, vars[r].$value)),
-    ...entries(brand.extras?.[theme]),
-  ];
+  return themedRoles(schema).map((r) => line(r, vars[r].$value));
 }
 
 function baseLines(schema, brand) {
-  const vars = brand.themes[brand.defaultTheme];
-  const canonLines = themedRoles(schema, brand.brand).map((r) => line(r, vars[r].$value));
-  const aliasLines = Object.entries(aliasesFor(schema, brand.brand)).map(([old, canon]) =>
+  const aliasLines = Object.entries(schema.aliases).map(([old, canon]) =>
     line(old, `var(--${canon})`),
   );
-  const extraLines = entries(brand.extras?.[brand.defaultTheme]);
   return [
-    ...canonLines,
+    ...themeLines(schema, brand, brand.defaultTheme),
     ...aliasLines,
-    ...extraLines,
     ...entries(brand.static),
-    ...entries(brand.kit),
   ];
 }
 
@@ -93,88 +70,61 @@ export function coreCss(core) {
   return HEADER + block(":root", entries(core)) + "\n" + readText("tokens/core.static.css");
 }
 
+export function colorRoles(schema, brands) {
+  const [sample] = brands;
+  return themedRoles(schema).filter(
+    (r) => sample.themes[sample.defaultTheme][r].$type === "color",
+  );
+}
+
 export function themeCss(schema, brands) {
-  const roles = new Set();
-  for (const brand of brands)
-    for (const [group, list] of Object.entries(themedGroups(schema, brand.brand)))
-      if (group !== "shadow") for (const role of list) roles.add(role);
   return (
     HEADER +
     block(
       "@theme",
-      [...roles].map((r) => line(`color-${r}`, `var(--${r})`)),
+      colorRoles(schema, brands).map((r) => line(`color-${r}`, `var(--${r})`)),
     )
   );
 }
 
 export function tokensMd({ schema, brands }) {
   const row = (cells) => `| ${cells.join(" | ")} |`;
-  const shared = brands.filter((b) => !override(schema, b.brand));
-  const own = brands.filter((b) => override(schema, b.brand));
   const lines = [
-    "# Токены контракта v2",
+    "# Токены контракта",
     "",
     "Источник истины — `tokens/brands/*.json`. Имена ролей = имена Figma Variables (`группа/роль` → `--группа-роль`).",
-    "",
-    "Бренд с собственным контрактом (`schema.byBrand.<brand>.replacesContract`) вынесен",
-    "в отдельные таблицы: его роли приходят из своего файла Figma и с общим списком не пересекаются.",
+    "Контракт один на все бренды: бренд меняет значения, не имена.",
   ];
 
-  const themedTable = (title, group) => {
-    if (!group.length) return;
-    const heads = group.flatMap((b) => schema.themes.map((t) => `${b.brand} ${t}`));
-    lines.push("", title, "", row(["Роль", ...heads]), row(["---", ...heads.map(() => "---")]));
-    for (const role of themedRoles(schema, group[0].brand))
-      lines.push(
-        row([
-          `\`--${role}\``,
-          ...group.flatMap((b) => schema.themes.map((t) => `\`${b.themes[t][role].$value}\``)),
-        ]),
-      );
-  };
-
-  const staticTable = (title, group) => {
-    if (!group.length) return;
+  const heads = brands.flatMap((b) => schema.themes.map((t) => `${b.brand} ${t}`));
+  lines.push("", "## Роли по темам", "", row(["Роль", ...heads]), row(["---", ...heads.map(() => "---")]));
+  for (const role of themedRoles(schema))
     lines.push(
-      "",
-      title,
-      "",
-      row(["Роль", ...group.map((b) => b.brand)]),
-      row(["---", ...group.map(() => "---")]),
+      row([
+        `\`--${role}\``,
+        ...brands.flatMap((b) => schema.themes.map((t) => `\`${b.themes[t][role].$value}\``)),
+      ]),
     );
-    for (const role of staticRoles(schema, group[0].brand))
-      lines.push(row([`\`--${role}\``, ...group.map((b) => `\`${b.static[role].$value}\``)]));
-  };
 
-  themedTable("## Роли по темам — общий контракт", shared);
-  for (const b of own) themedTable(`## Роли по темам — ${b.brand}`, [b]);
-  staticTable("## Статические роли — общий контракт", shared);
-  for (const b of own) staticTable(`## Статические роли — ${b.brand}`, [b]);
+  lines.push(
+    "",
+    "## Статические роли",
+    "",
+    row(["Роль", ...brands.map((b) => b.brand)]),
+    row(["---", ...brands.map(() => "---")]),
+  );
+  for (const role of schema.static)
+    lines.push(row([`\`--${role}\``, ...brands.map((b) => `\`${b.static[role].$value}\``)]));
 
-  lines.push("", "## Кит бренда", "");
-  for (const b of brands) {
-    if (!b.kit) continue;
-    for (const [role, def] of Object.entries(b.kit))
-      lines.push(`- ${b.brand}: \`--${role}\` = \`${def.$value}\``);
-  }
-  lines.push("", "## Алиасы (deprecated, удаление в 1.0.0)", "");
-  if (shared.length) {
-    lines.push(`- общий контракт (${shared.map((b) => b.brand).join(", ")}):`);
+  if (Object.keys(schema.aliases).length) {
+    lines.push("", "## Алиасы (deprecated)", "");
     for (const [old, canon] of Object.entries(schema.aliases))
-      lines.push(`  - \`--${old}\` → \`--${canon}\``);
+      lines.push(`- \`--${old}\` → \`--${canon}\``);
   }
-  for (const b of own) {
-    lines.push(`- ${b.brand}:`);
-    for (const [old, canon] of Object.entries(aliasesFor(schema, b.brand)))
-      lines.push(`  - \`--${old}\` → \`--${canon}\``);
-  }
-  lines.push("", "## Расширения брендов", "");
-  for (const b of brands) {
-    const names = new Set(schema.themes.flatMap((t) => Object.keys(b.extras?.[t] ?? {})));
-    lines.push(`- ${b.brand}: ${[...names].map((n) => `\`--${n}\``).join(", ") || "нет"}`);
-  }
+
   lines.push("", "## Ожидает значения от дизайнера", "");
   for (const b of brands) {
+    if (b._pending) lines.push(`- ${b.brand}: ${b._pending}`);
     for (const t of schema.themes) {
       for (const [role, def] of Object.entries(b.themes[t])) {
         if (def.$description)
@@ -184,12 +134,6 @@ export function tokensMd({ schema, brands }) {
     for (const [role, def] of Object.entries(b.static)) {
       if (def.$description)
         lines.push(`- ${b.brand} \`--${role}\` = \`${def.$value}\` — ${def.$description}`);
-    }
-    for (const t of schema.themes) {
-      for (const [role, def] of Object.entries(b.extras?.[t] ?? {})) {
-        if (def.$description)
-          lines.push(`- ${b.brand} ${t} \`--${role}\` = \`${def.$value}\` — ${def.$description}`);
-      }
     }
   }
   lines.push(

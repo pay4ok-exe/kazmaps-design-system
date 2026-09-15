@@ -12,38 +12,24 @@ type Brand = {
   followsSystem: boolean;
   themes: Record<string, Record<string, Token>>;
   static: Record<string, Token>;
-  kit?: Record<string, Token>;
-  extras?: Record<string, Record<string, Token>>;
-};
-type Contract = {
-  replacesContract?: boolean;
-  themed: Record<string, string[]>;
-  static: string[];
-  aliases: Record<string, string>;
 };
 type Schema = {
   themes: string[];
   themed: Record<string, string[]>;
   static: string[];
   aliases: Record<string, string>;
-  byBrand?: Record<string, Contract>;
 };
 
 const schema = readJson("tokens/schema.json") as Schema;
-const BRANDS = ["business", "booking", "maps"];
-
-const contractFor = (name: string): Contract =>
-  schema.byBrand?.[name]?.replacesContract
-    ? schema.byBrand[name]
-    : { themed: schema.themed, static: schema.static, aliases: schema.aliases };
 const core = readJson("tokens/core.json") as Record<string, Token>;
+const BRANDS = ["business", "booking", "maps"];
+const roles = Object.values(schema.themed).flat();
 
-// maps' kit intentionally overrides core's --ease-standard with the kit's own
-// easing curve; the two declarations share specificity and maps wins only
-// because core.css is imported before the brand file (see README §4). Any
-// other kit key colliding with a core key would be a silent, order-dependent
-// override we did not intend, so only this one name is allow-listed.
-const KIT_CORE_COLLISION_ALLOWLIST = ["ease-standard"];
+// The brand's --ease-standard deliberately shadows core's: both sit at the same
+// specificity and the brand wins only because core.css is imported first (README §1).
+// Any other static colliding with a core key would be an unintended, order-dependent
+// override, so only this one name is allow-listed.
+const STATIC_CORE_COLLISION_ALLOWLIST = ["ease-standard"];
 
 function definedVars(cssBlock: string): Set<string> {
   return new Set(Array.from(cssBlock.matchAll(/(--[\w-]+)\s*:/g)).map((m) => m[1]));
@@ -61,8 +47,6 @@ for (const name of BRANDS) {
   describe(`brand ${name}`, () => {
     const brand = readJson(`tokens/brands/${name}.json`) as Brand;
     const css = read(`src/styles/brands/${name}.css`);
-    const contract = contractFor(name);
-    const roles = Object.values(contract.themed).flat();
 
     it("declares defaultTheme among themes", () => {
       expect(schema.themes).toContain(brand.defaultTheme);
@@ -70,18 +54,13 @@ for (const name of BRANDS) {
     });
 
     for (const theme of schema.themes) {
-      it(`${theme}: every contract role is a literal`, () => {
+      it(`${theme}: every contract role is a literal and nothing else is declared`, () => {
         for (const role of roles) {
           const token = brand.themes[theme][role];
           expect(token, role).toBeDefined();
           expect(token.$value, role).not.toMatch(/var\(/);
         }
-      });
-      it(`${theme}: extras do not collide with the contract`, () => {
-        for (const extra of Object.keys(brand.extras?.[theme] ?? {})) {
-          expect(roles, extra).not.toContain(extra);
-          expect(Object.keys(contract.aliases), extra).not.toContain(extra);
-        }
+        expect(Object.keys(brand.themes[theme]).sort()).toEqual([...roles].sort());
       });
       it(`${theme}: generated block defines every contract role`, () => {
         const vars = definedVars(block(css, `[data-brand="${name}"][data-theme="${theme}"]`));
@@ -89,16 +68,26 @@ for (const name of BRANDS) {
       });
     }
 
-    it("static roles are literals", () => {
-      for (const role of contract.static) {
+    it("static roles are literals and match the contract exactly", () => {
+      for (const role of schema.static) {
         expect(brand.static[role], role).toBeDefined();
         if (role !== "font-sans") expect(brand.static[role].$value, role).not.toMatch(/var\(/);
       }
+      expect(Object.keys(brand.static).sort()).toEqual([...schema.static].sort());
     });
 
-    it("kit keys do not collide with core, except the allow-listed override", () => {
-      for (const key of Object.keys(brand.kit ?? {})) {
-        if (KIT_CORE_COLLISION_ALLOWLIST.includes(key)) continue;
+    it("token types agree across brands", () => {
+      const maps = readJson("tokens/brands/maps.json") as Brand;
+      for (const theme of schema.themes)
+        for (const role of roles)
+          expect(brand.themes[theme][role].$type, role).toBe(maps.themes[theme][role].$type);
+      for (const role of schema.static)
+        expect(brand.static[role].$type, role).toBe(maps.static[role].$type);
+    });
+
+    it("statics do not collide with core, except the allow-listed override", () => {
+      for (const key of Object.keys(brand.static)) {
+        if (STATIC_CORE_COLLISION_ALLOWLIST.includes(key)) continue;
         expect(Object.keys(core), key).not.toContain(key);
       }
     });
@@ -124,8 +113,8 @@ for (const name of BRANDS) {
     it("base block defines contract, static and every alias pointing at its canon", () => {
       const base = block(css, `[data-brand="${name}"] {`);
       const vars = definedVars(base);
-      for (const role of [...roles, ...contract.static]) expect(vars).toContain(`--${role}`);
-      for (const [old, canon] of Object.entries(contract.aliases)) {
+      for (const role of [...roles, ...schema.static]) expect(vars).toContain(`--${role}`);
+      for (const [old, canon] of Object.entries(schema.aliases)) {
         expect(base).toContain(`--${old}: var(--${canon});`);
       }
     });

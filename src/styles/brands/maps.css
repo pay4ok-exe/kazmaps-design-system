@@ -64,44 +64,10 @@
   --weather-cloud: #82cfff;
   --weather-raindrop: #4589ff;
   --weather-snow: #c1c5c9;
-  --radius-sm: var(--dimension-corner-radius-4);
-  --radius-md: var(--dimension-corner-radius-6);
-  --radius-lg: var(--dimension-corner-radius-8);
-  --radius-xl: var(--dimension-corner-radius-12);
-  --radius-2xl: var(--dimension-corner-radius-16);
-  --radius-full: var(--dimension-corner-radius-max);
-  --surface-base: var(--background-secondary);
-  --surface-panel: var(--background-primary);
-  --surface-raised: var(--background-secondary);
-  --surface-subtle: var(--background-secondary);
-  --backdrop-scrim: var(--overlay-modal-dialog);
-  --text-muted: var(--text-secondary);
-  --text-faint: var(--text-tertiary);
-  --text-on-accent: var(--text-white);
-  --border: var(--border-primary);
-  --border-subtle: var(--border-secondary);
-  --border-hairline: var(--border-secondary);
-  --border-input: var(--border-primary);
-  --accent: var(--action-accent-primary);
-  --accent-press: var(--action-accent-secondary);
-  --accent-soft-bg: var(--background-secondary);
-  --accent-soft-border: var(--action-accent-subtle);
-  --success: var(--tag-green);
-  --success-soft-bg: var(--traffic-fill-green);
-  --warning: var(--tag-orange);
-  --warning-soft-bg: var(--traffic-fill-orange);
-  --danger: var(--action-danger-primary);
-  --danger-soft-bg: var(--action-danger-subtle);
-  --info: var(--action-accent-primary);
-  --info-soft-bg: var(--background-secondary);
-  --bg-2: var(--background-secondary);
-  --ink-2: var(--text-secondary);
-  --map-tile-style: Light;
-  --shimmer-peak: 0.94;
   --surface-map: #e9ece4;
   --text-on-map: #22272e;
   --rating-star: #f2a615;
-  --marker-primary: #e0442f;
+  --shimmer-peak: 0.94;
   --dimension-corner-radius-2: 2px;
   --dimension-corner-radius-4: 4px;
   --dimension-corner-radius-6: 6px;
@@ -262,12 +228,10 @@
   --weather-cloud: #82cfff;
   --weather-raindrop: #4589ff;
   --weather-snow: #c1c5c9;
-  --map-tile-style: Light;
-  --shimmer-peak: 0.94;
   --surface-map: #e9ece4;
   --text-on-map: #22272e;
   --rating-star: #f2a615;
-  --marker-primary: #e0442f;
+  --shimmer-peak: 0.94;
 }
 
 [data-brand="maps"][data-theme="dark"] {
@@ -335,12 +299,10 @@
   --weather-cloud: #0072c3;
   --weather-raindrop: #78a9ff;
   --weather-snow: #d0e2ff;
-  --map-tile-style: Dark;
-  --shimmer-peak: 1.12;
   --surface-map: #0a0e18;
   --text-on-map: #22272e;
   --rating-star: #f2a615;
-  --marker-primary: #e0442f;
+  --shimmer-peak: 1.12;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -409,11 +371,9 @@
     --weather-cloud: #0072c3;
     --weather-raindrop: #78a9ff;
     --weather-snow: #d0e2ff;
-    --map-tile-style: Dark;
-    --shimmer-peak: 1.12;
     --surface-map: #0a0e18;
     --text-on-map: #22272e;
     --rating-star: #f2a615;
-    --marker-primary: #e0442f;
+    --shimmer-peak: 1.12;
   }
 }

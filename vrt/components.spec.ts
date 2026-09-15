@@ -1,102 +1,94 @@
-import { expect, test, type Page } from "@playwright/test";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
-const STORIES = [
-  { id: "atoms-checkbox--states", name: "checkbox-states" },
-  { id: "atoms-input--states", name: "input-states" },
-  { id: "atoms-select--interactive", name: "select" },
-  { id: "atoms-select--with-error", name: "select-error" },
-  { id: "atoms-toggle--interactive", name: "toggle-off" },
-  { id: "molecules-errorboundary--caught", name: "error-boundary-fallback" },
-  { id: "molecules-formfield--with-error", name: "form-field-error" },
-  { id: "molecules-phoneinput--states", name: "phone-input-states" },
-  { id: "molecules-phoneinput--sizes", name: "phone-input-sizes" },
-  { id: "molecules-searchinput--interactive", name: "search-input" },
-  { id: "molecules-segmentedcontrol--interactive", name: "segmented-control" },
-  { id: "molecules-starrating--display", name: "star-rating-display" },
-  { id: "molecules-starrating--interactive", name: "star-rating-interactive" },
-  { id: "molecules-tabs--interactive", name: "tabs" },
-];
+import { expect, test } from "@playwright/test";
 
-const THEMES = ["dark", "light"] as const;
-const MAPS_STORY = "maps-kit--toggle";
+const THEMES = ["light", "dark"] as const;
+// Полный прогон — под maps, откуда сняты компоненты; другие бренды меняют только значения
+// токенов, их проверяет короткий срез.
+const BRANDS = ["maps", "business", "booking"] as const;
+const BRAND_SLICE = new Set([
+  "components-button--all-variants",
+  "components--place-row",
+  "components--text-input",
+]);
+const INTERACTIVE = /--(песочница|live)$/;
 
-async function openStory(page: Page, id: string, theme: string, brand = "business"): Promise<void> {
-  await page.goto(`/iframe.html?viewMode=story&id=${id}&globals=brand:${brand};theme:${theme}`);
-  await expect(page.locator("#storybook-root > *").first()).toBeVisible();
-}
+type IndexEntry = { id: string; type: string };
+const index = JSON.parse(
+  readFileSync(join(process.cwd(), "storybook-static", "index.json"), "utf8"),
+) as { entries: Record<string, IndexEntry> };
 
-for (const story of STORIES) {
-  for (const theme of THEMES) {
-    test(`${story.name} — ${theme}`, async ({ page }) => {
-      await openStory(page, story.id, theme);
-      await expect(page).toHaveScreenshot(`${story.name}-${theme}.png`, { fullPage: true });
-    });
-  }
-}
+const STORIES = Object.values(index.entries)
+  .filter((e) => e.type === "story" && /^(components|icons)/.test(e.id) && !INTERACTIVE.test(e.id))
+  .map((e) => e.id);
 
-// State shots for the visual fixes on this branch: the toggle thumb is only
-// distinguishable from the track when on, and the select listbox only renders
-// while open (ArrowDown exercises the restored keyboard-open path).
-for (const theme of THEMES) {
-  test(`toggle-on — ${theme}`, async ({ page }) => {
-    await openStory(page, "atoms-toggle--interactive", theme);
-    await page.getByRole("switch").click();
-    await expect(page.getByRole("switch")).toHaveAttribute("aria-checked", "true");
-    await expect(page).toHaveScreenshot(`toggle-on-${theme}.png`, { fullPage: true });
-  });
-
-  test(`select-open — ${theme}`, async ({ page }) => {
-    await openStory(page, "atoms-select--interactive", theme);
-    await page.getByRole("button", { name: "Город" }).focus();
-    await page.keyboard.press("ArrowDown");
-    await expect(page.getByRole("listbox")).toBeVisible();
-    await expect(page).toHaveScreenshot(`select-open-${theme}.png`, { fullPage: true });
-  });
-
-  test(`phone-input-picker-open — ${theme}`, async ({ page }) => {
-    await openStory(page, "molecules-phoneinput--states", theme);
-    await page
-      .getByRole("button", { name: /Регион/ })
-      .first()
-      .click();
-    await expect(page.getByRole("listbox")).toBeVisible();
-    await expect(page).toHaveScreenshot(`phone-input-picker-open-${theme}.png`, { fullPage: true });
-  });
-}
-
-for (const story of STORIES) {
-  for (const theme of THEMES) {
-    test(`booking ${story.name} — ${theme}`, async ({ page }) => {
-      await openStory(page, story.id, theme, "booking");
-      await expect(page).toHaveScreenshot(`booking-${story.name}-${theme}.png`, {
-        fullPage: true,
+for (const id of STORIES) {
+  for (const brand of BRANDS) {
+    if (brand !== "maps" && !BRAND_SLICE.has(id)) continue;
+    for (const theme of THEMES) {
+      test(`${id} — ${brand} ${theme}`, async ({ page }) => {
+        if (id === "components--bottom-sheet") {
+          await page.setViewportSize({ width: 390, height: 700 });
+        }
+        await page.goto(
+          `/iframe.html?viewMode=story&id=${id}&globals=brand:${brand};theme:${theme}`,
+        );
+        if (id === "components--dialog") {
+          await expect(page.getByRole("dialog").first()).toBeVisible();
+        } else {
+          await expect(page.locator("#storybook-root > *").first()).toBeVisible();
+        }
+        if (id === "components--toast") {
+          await page.getByRole("status").waitFor();
+        }
+        await expect(page).toHaveScreenshot(`${brand}-${id.replace("--", "-")}-${theme}.png`, {
+          fullPage: true,
+        });
       });
-    });
+    }
   }
 }
 
-async function readSurfacePanel(page: Page): Promise<string> {
-  return page.evaluate(() =>
-    getComputedStyle(document.documentElement).getPropertyValue("--surface-panel").trim(),
-  );
+for (const theme of THEMES) {
+  test(`phone-input-picker — ${theme}`, async ({ page }) => {
+    await page.goto(
+      `/iframe.html?viewMode=story&id=components-phoneinput--live&globals=brand:maps;theme:${theme}`,
+    );
+    await expect(page.getByLabel("Номер телефона")).toBeVisible();
+    await page.getByRole("button", { name: /Регион/ }).click();
+    await expect(page.getByRole("listbox")).toBeVisible();
+    await expect(page).toHaveScreenshot(`phone-input-picker-${theme}.png`, {
+      fullPage: true,
+    });
+  });
 }
 
-test.describe("maps follows the system theme", () => {
-  test.use({ colorScheme: "dark" });
-
-  test("no data-theme falls back to the system dark scheme", async ({ page }) => {
-    await page.goto(`/iframe.html?viewMode=story&id=${MAPS_STORY}&globals=brand:maps`);
+test("inside strokes do not add to the measured heights", async ({ page }) => {
+  const heights = async (id: string, selector: string) => {
+    await page.goto(`/iframe.html?viewMode=story&id=${id}&globals=brand:maps;theme:light`);
     await expect(page.locator("#storybook-root > *").first()).toBeVisible();
-    await page.evaluate(() => document.documentElement.removeAttribute("data-theme"));
-    await page.waitForTimeout(50);
-    expect(await readSurfacePanel(page)).toBe("#222528");
-  });
-
-  test("explicit data-theme=light overrides the system dark scheme", async ({ page }) => {
-    await page.goto(`/iframe.html?viewMode=story&id=${MAPS_STORY}&globals=brand:maps`);
-    await expect(page.locator("#storybook-root > *").first()).toBeVisible();
-    await page.evaluate(() => document.documentElement.setAttribute("data-theme", "light"));
-    await page.waitForTimeout(50);
-    expect(await readSurfacePanel(page)).toBe("#fff");
-  });
+    return page
+      .locator(selector)
+      .evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().height)));
+  };
+  expect(new Set(await heights("components--chip", "#storybook-root button"))).toEqual(
+    new Set([28]),
+  );
+  expect(new Set(await heights("components--text-input", "#storybook-root input"))).toEqual(
+    new Set([20]),
+  );
+  expect(
+    new Set(await heights("components--text-input", "#storybook-root div:has(> input)")),
+  ).toEqual(new Set([36]));
+  expect(
+    new Set(await heights("components--search-input", "#storybook-root div:has(> input)")),
+  ).toEqual(new Set([36]));
+  expect(
+    await heights("components--search-input", "#storybook-root div:has(> input) > button"),
+  ).toEqual([34]);
+  expect(await heights("components--place-row", "#storybook-root button")).toEqual([72]);
+  expect(new Set(await heights("components--code-input", "#storybook-root input"))).toEqual(
+    new Set([48]),
+  );
 });

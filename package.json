@@ -1,7 +1,7 @@
 {
   "name": "@temirtator/kazmaps-design-system",
-  "version": "0.7.0",
-  "description": "KazMaps design system — multi-brand UI kit (tokens, atoms, molecules) for Tailwind v4 + React 19 apps",
+  "version": "1.0.0",
+  "description": "KazMaps design system — one UI kit for every KazMaps brand (Figma tokens, components, icons) for Tailwind v4 + React 19 apps",
   "type": "module",
   "license": "MIT",
   "author": "Temirlan Shagyrov <sh.temirlan95@gmail.com>",
@@ -37,7 +37,7 @@
     "./styles/brands/business.css": "./dist/styles/brands/business.css",
     "./styles/brands/booking.css": "./dist/styles/brands/booking.css",
     "./styles/brands/maps.css": "./dist/styles/brands/maps.css",
-    "./styles/kits/maps.css": "./dist/styles/kits/maps.css"
+    "./styles/kit.css": "./dist/styles/kit.css"
   },
   "scripts": {
     "build": "tsup",
@@ -48,6 +48,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "tokens:build": "node scripts/build-tokens.mjs",
+    "tokens:import": "node scripts/import-figma.mjs && npm run tokens:build",
     "tokens:check": "npm run tokens:build && git diff --quiet --exit-code -- src/styles docs/tokens.md",
     "test": "npm run tokens:check && vitest run --passWithNoTests",
     "test:watch": "vitest",
