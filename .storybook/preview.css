@@ -1,3 +1,8 @@
+/* Бренд maps ждёт --font-inter от приложения (в main-web его даёт next/font).
+   В Storybook приложения нет, поэтому переменный Inter подключается здесь —
+   иначе кегли и веса 450/550 из макета не увидеть, всё свалится в системный. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
 @import "tailwindcss";
 @import "../src/styles/core.css";
 @import "../src/styles/brands/business.css";
@@ -5,3 +10,7 @@
 @import "../src/styles/brands/maps.css";
 @import "../src/styles/kits/maps.css";
 @source "../src";
+
+:root {
+  --font-inter: "Inter", system-ui, sans-serif;
+}
