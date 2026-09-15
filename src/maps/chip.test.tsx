@@ -31,11 +31,14 @@ describe("Chip", () => {
     expect(className).not.toContain("pl-(--spacing-padding-2)");
   });
 
-  it("рамка в покое прозрачна и проявляется на наведении", () => {
+  /* Обводка макета выровнена внутрь и места не занимает: inset-ring вместо
+     border, иначе появление рамки на наведении сдвигало бы подпись. */
+  it("обводка внутренняя и проявляется только на наведении", () => {
     render(<Chip label="Кафе" />);
     const className = screen.getByRole("button", { name: "Кафе" }).className;
-    expect(className).toContain("border-transparent");
-    expect(className).toContain("hover:border-(--border-secondary)");
+    expect(className).toContain("inset-ring-[length:var(--stroke-border-1)]");
+    expect(className).toContain("hover:inset-ring-(--border-secondary)");
+    expect(className).not.toContain("border-transparent");
   });
 });
 

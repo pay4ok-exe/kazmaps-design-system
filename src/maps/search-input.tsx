@@ -34,7 +34,7 @@ export function SearchInput({
 }: SearchInputProps) {
   return (
     <div
-      className={`group flex items-center gap-(--spacing-gap-8) overflow-hidden rounded-(--dimension-corner-radius-10) border-(length:--stroke-border-1) border-solid border-(--border-secondary) bg-(--background-primary) p-(--spacing-padding-8) transition-surface focus-ring-within hover:border-(--border-primary) has-[input:focus]:border-(--border-focus) ${
+      className={`group flex items-center gap-(--spacing-gap-8) overflow-hidden rounded-(--dimension-corner-radius-10) inset-ring-[length:var(--stroke-border-1)] inset-ring-(--border-secondary) bg-(--background-primary) p-(--spacing-padding-8) transition-surface focus-ring-within hover:inset-ring-(--border-primary) has-[input:focus]:inset-ring-(--border-focus) ${
         compact ? "" : "shadow-(--shadow-field)"
       } ${className}`}
     >

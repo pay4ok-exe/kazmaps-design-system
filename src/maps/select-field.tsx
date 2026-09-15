@@ -40,12 +40,12 @@ export type SelectFieldProps = Omit<
 const TRAILING_SPACE =
   "pr-[calc(var(--spacing-padding-6)+var(--dimension-width-16)+var(--spacing-gap-4))]";
 
-const BORDER_CLASSES = {
-  /* Прозрачная рамка вместо её отсутствия: в макете обводка внутренняя и высота
-     остаётся 28 во всех состояниях, а в CSS появление рамки на наведении сдвинуло
-     бы текст на пиксель. */
-  quiet: "border-transparent hover:border-(--border-secondary)",
-  bordered: "border-(--border-secondary) hover:border-(--border-primary)",
+/* Обводка в макете выровнена ВНУТРЬ и места не занимает, поэтому inset-ring, а
+   не border: прозрачная рамка была костылём под то, что border съедает у
+   содержимого свою толщину. */
+const RING_CLASSES = {
+  quiet: "hover:inset-ring-(--border-secondary)",
+  bordered: "inset-ring-(--border-secondary) hover:inset-ring-(--border-primary)",
 };
 
 export function SelectField({
@@ -76,7 +76,7 @@ export function SelectField({
           onChange={(event) => {
             onChange(event.target.value);
           }}
-          className={`peer h-(--dimension-height-28) w-full appearance-none rounded-(--dimension-corner-radius-6) border-(length:--stroke-border-1) border-solid bg-(--background-primary) pl-(--spacing-padding-8) text-xs leading-(--typography-line-height-16) text-(color:--text-secondary) transition-interactive [font-weight:var(--font-weight-regular)] focus:border-(--border-focus) focus:text-(color:--text-primary) focus-ring ${TRAILING_SPACE} ${bordered ? BORDER_CLASSES.bordered : BORDER_CLASSES.quiet}`}
+          className={`peer h-(--dimension-height-28) w-full appearance-none rounded-(--dimension-corner-radius-6) inset-ring-[length:var(--stroke-border-1)] bg-(--background-primary) pl-(--spacing-padding-8) text-xs leading-(--typography-line-height-16) text-(color:--text-secondary) transition-interactive [font-weight:var(--font-weight-regular)] focus:inset-ring-(--border-focus) focus:text-(color:--text-primary) focus-ring ${TRAILING_SPACE} ${bordered ? RING_CLASSES.bordered : RING_CLASSES.quiet}`}
           {...rest}
         >
           {options.map((option) => (

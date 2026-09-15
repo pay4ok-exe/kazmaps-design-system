@@ -60,9 +60,9 @@ describe("ProfileButton", () => {
   // Кольцо есть только у снимка и только в active — это вариант Image=True.
   it("кольцо появляется только на активном снимке", () => {
     const { container, rerender } = render(<ProfileButton label="Профиль" photoUrl="/a.png" />);
-    expect(container.querySelector("img")?.className).not.toContain("border-(--icon-accent)");
+    expect(container.querySelector("img")?.className).not.toContain("ring-(--icon-accent)");
     rerender(<ProfileButton label="Профиль" photoUrl="/a.png" active />);
-    expect(container.querySelector("img")?.className).toContain("border-(--icon-accent)");
+    expect(container.querySelector("img")?.className).toContain("ring-(--icon-accent)");
   });
 
   /* На наведении глиф СВЕТЛЕЕТ — так в макете, как и у Map Action типа

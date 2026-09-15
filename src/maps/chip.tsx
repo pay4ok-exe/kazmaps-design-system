@@ -42,8 +42,8 @@ const PADDING = {
    Вариант оставлен от кита и переведён на новые роли — на него опираются
    фильтры в main-web. */
 const STATE = {
-  active: "border-(--action-accent-primary) text-(color:--text-accent)",
-  idle: "border-transparent text-(color:--text-primary) hover:border-(--border-secondary)",
+  active: "inset-ring-(--action-accent-primary) text-(color:--text-accent)",
+  idle: "text-(color:--text-primary) hover:inset-ring-(--border-secondary)",
 };
 
 export function Chip({
@@ -60,7 +60,7 @@ export function Chip({
       type="button"
       aria-pressed={active}
       onClick={onClick}
-      className={`inline-flex items-center gap-(--spacing-gap-6) rounded-(--dimension-corner-radius-10) border-(length:--stroke-border-1) border-solid text-xs leading-(--typography-line-height-16) transition-interactive [font-weight:var(--font-weight-book)] focus-ring ${palette.surface} ${
+      className={`inline-flex items-center gap-(--spacing-gap-6) rounded-(--dimension-corner-radius-10) inset-ring-[length:var(--stroke-border-1)] text-xs leading-(--typography-line-height-16) transition-interactive [font-weight:var(--font-weight-book)] focus-ring ${palette.surface} ${
         icon ? PADDING.withIcon : PADDING.textOnly
       } ${active ? STATE.active : STATE.idle} ${className}`}
     >

@@ -7,7 +7,12 @@ import { useRef } from "react";
    весом 400. Обводка здесь ПОЛУТОРНАЯ — единственное место, где используется
    роль stroke/border/1_5.
 
-   Состояния: Default — рамки нет, Filled — border/primary, Focus — border/focus
+   Обводка выровнена ВНУТРЬ: в макете ячейка 40×48 Hug складывается из паддинга
+   12, строки 24 и паддинга 12, а полуторная обводка лежит ПОВЕРХ паддинга и
+   места не занимает. CSS-border так не умеет — он съел бы три пикселя и подрезал
+   строку, поэтому здесь inset-ring, а высота остаётся производной, как в макете.
+
+   Состояния: Default — обводки нет, Filled — border/primary, Focus — border/focus
    и каретка цветом text/accent, Error — border/error и цифра text/danger.
 
    Кегль 20 и интерлиньяж 24 в коллекцию numerics не входят (там 10/12/14/16 и
@@ -84,16 +89,14 @@ export function CodeInput({
           /* Каретка макета — text/accent. Свойством caret-color это делается
              надёжнее, чем отрисовкой своей палочки поверх поля. */
           style={{ caretColor: "var(--text-accent)" }}
-          /* Ширина 40 — роль макета; высота 48 и интерлиньяж 24 ролей не имеют
-             (dimension/height идёт 40 → 64, line-height обрывается на 20).
-             Вертикальный паддинг 12 из макета здесь не нужен: при border-box он
-             съел бы 3 пикселя под обводку и подрезал строку — фиксированная
-             высота даёт ровно те же 48. */
-          className={`h-[48px] w-(--dimension-width-40) rounded-(--dimension-corner-radius-10) border-(length:--stroke-border-1_5) border-solid bg-(--background-secondary) text-center text-[20px] leading-[24px] transition-interactive outline-none [font-weight:var(--font-weight-regular)] ${
+          /* Ширина 40 — роль макета. Высоты нет: 12 + 24 + 12 даёт те же 48, и
+             это Hug из макета, а не число. Кегль 20 и интерлиньяж 24 ролей не
+             имеют — font-size обрывается на 16, line-height на 20. */
+          className={`w-(--dimension-width-40) rounded-(--dimension-corner-radius-10) inset-ring-[length:var(--stroke-border-1_5)] bg-(--background-secondary) py-(--spacing-padding-12) text-center text-[20px] leading-[24px] transition-interactive outline-none [font-weight:var(--font-weight-regular)] ${
             invalid
-              ? "border-(--border-error) text-(color:--text-danger)"
-              : `text-(color:--text-primary) focus:border-(--border-focus) ${
-                  digit ? "border-(--border-primary)" : "border-transparent"
+              ? "inset-ring-(--border-error) text-(color:--text-danger)"
+              : `text-(color:--text-primary) focus:inset-ring-(--border-focus) ${
+                  digit ? "inset-ring-(--border-primary)" : ""
                 }`
           }`}
         />

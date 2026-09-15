@@ -27,16 +27,16 @@ describe("TextInput", () => {
     );
     expect(screen.getByLabelText("Почта").className).toContain("text-(color:--text-danger)");
     expect(container.firstElementChild?.querySelector("div")?.className).toContain(
-      "border-(--border-error)",
+      "inset-ring-(--border-error)",
     );
   });
 
-  it("в покое рамка прозрачна и проявляется на наведении и фокусе", () => {
+  it("обводка внутренняя и проявляется на наведении и фокусе", () => {
     const { container } = render(<TextInput value="" onChange={vi.fn()} />);
     // Обёртка → оболочка поля; querySelector("div > div") цепляет саму обёртку.
     const shell = container.firstElementChild?.firstElementChild?.className ?? "";
-    expect(shell).toContain("border-transparent");
-    expect(shell).toContain("hover:border-(--border-secondary)");
-    expect(shell).toContain("has-[input:focus]:border-(--border-focus)");
+    expect(shell).toContain("inset-ring-[length:var(--stroke-border-1)]");
+    expect(shell).toContain("hover:inset-ring-(--border-secondary)");
+    expect(shell).toContain("has-[input:focus]:inset-ring-(--border-focus)");
   });
 });

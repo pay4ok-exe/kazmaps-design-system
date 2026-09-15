@@ -9,7 +9,9 @@ import type { ComponentProps, ReactNode } from "react";
    получает кольцо, которого у IconButton нет вовсе.
 
    Со снимком: паддинг 2, картинка 36 кругом, в Active обводка 1 цветом
-   icon/accent. Без снимка: паддинг 8, глиф 24 цветом icon/primary, на
+   icon/accent — и она единственная в макете выровнена НАРУЖУ (strokeAlign
+   OUTSIDE): кольцо ложится снаружи снимка, не сжимая его. Поэтому ring, а не
+   border и не inset-ring. Без снимка: паддинг 8, глиф 24 цветом icon/primary, на
    наведении icon/tertiary, в Active icon/accent.
 
    Внимание: на наведении глиф СВЕТЛЕЕТ, как и у Map Action типа Default.
@@ -54,7 +56,7 @@ export function ProfileButton({
           src={photoUrl}
           alt={photoAlt}
           className={`size-full rounded-(--dimension-corner-radius-max) object-cover ${
-            active ? "border-(length:--stroke-border-1) border-solid border-(--icon-accent)" : ""
+            active ? "ring-[length:var(--stroke-border-1)] ring-(--icon-accent)" : ""
           }`}
         />
       ) : (

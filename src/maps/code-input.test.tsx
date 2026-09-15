@@ -30,22 +30,26 @@ describe("CodeInput", () => {
   });
 
   /* Обводка ячейки — единственное место во всём ките, где используется
-     полуторная роль. Потерять её при рефакторинге легко, увидеть — трудно. */
+     полуторная роль, и она ВНУТРЕННЯЯ: высота 48 складывается из паддинга 12,
+     строки 24 и паддинга 12, а обводка лежит поверх паддинга. border здесь
+     подрезал бы строку на три пикселя. */
   it("обводка полуторная, как в макете", () => {
     render(<CodeInput values={[""]} onChange={vi.fn()} />);
-    expect(cells()[0].className).toContain("border-(length:--stroke-border-1_5)");
+    expect(cells()[0].className).toContain("inset-ring-[length:var(--stroke-border-1_5)]");
+    expect(cells()[0].className).toContain("py-(--spacing-padding-12)");
+    expect(cells()[0].className).not.toMatch(/\bh-\[/);
   });
 
   it("пустая ячейка без рамки, заполненная — с border/primary", () => {
     render(<CodeInput values={["", "5"]} onChange={vi.fn()} />);
-    expect(cells()[0].className).toContain("border-transparent");
-    expect(cells()[1].className).toContain("border-(--border-primary)");
+    expect(cells()[0].className).not.toContain("inset-ring-(--border-primary)");
+    expect(cells()[1].className).toContain("inset-ring-(--border-primary)");
   });
 
   it("invalid красит рамку и цифру ошибкой во всех ячейках", () => {
     render(<CodeInput values={["1", "2"]} onChange={vi.fn()} invalid />);
     for (const cell of cells()) {
-      expect(cell.className).toContain("border-(--border-error)");
+      expect(cell.className).toContain("inset-ring-(--border-error)");
       expect(cell.className).toContain("text-(color:--text-danger)");
       expect(cell).toHaveAttribute("aria-invalid", "true");
     }

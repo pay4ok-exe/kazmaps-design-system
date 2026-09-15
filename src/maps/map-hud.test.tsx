@@ -57,15 +57,17 @@ describe("MapTrafficBadge", () => {
     render(<MapTrafficBadge level="red" value={7} label="Пробки" />);
     const ring = screen.getByText("7").className;
     expect(ring).toContain("bg-(--traffic-fill-red)");
-    expect(ring).toContain("border-(--traffic-border-red)");
+    expect(ring).toContain("outline-(--traffic-border-red)");
     expect(ring).toContain("text-(color:--traffic-text-red)");
-    expect(ring).toContain("border-(length:--stroke-border-1_5)");
+    expect(ring).toContain("outline-[length:var(--stroke-border-1_5)]");
+    // Обводка кружка выровнена по центру: половина толщины уходит наружу.
+    expect(ring).toContain("-outline-offset-[0.75px]");
   });
 
   it("без уровня заливки нет, а обводка и цифра уходят в icon/secondary", () => {
     render(<MapTrafficBadge level={null} value={3} label="Пробки" />);
     const ring = screen.getByText("3").className;
-    expect(ring).toContain("border-(--icon-secondary)");
+    expect(ring).toContain("outline-(--icon-secondary)");
     expect(ring).not.toMatch(/bg-\(--traffic/);
     expect(screen.getByRole("button", { name: "Пробки" })).toHaveAttribute("aria-pressed", "false");
   });
@@ -139,7 +141,7 @@ describe("CollapseHandle", () => {
     render(<CollapseHandle label="Развернуть">›</CollapseHandle>);
     const className = screen.getByRole("button", { name: "Развернуть" }).className;
     expect(className).toContain("bg-(--background-secondary)");
-    expect(className).toContain("border-(--background-primary)");
+    expect(className).toContain("inset-ring-(--background-primary)");
   });
 });
 

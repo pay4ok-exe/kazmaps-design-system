@@ -27,13 +27,13 @@ describe("SelectField", () => {
   /* Stroke в макете меняет не наличие рамки, а её заметность в покое: при
      Stroke=False рамка прозрачна и проявляется на наведении. Прозрачная, а не
      отсутствующая — иначе текст сдвинется на пиксель в момент наведения. */
-  it("bordered=false держит рамку прозрачной и проявляет её на наведении", () => {
+  it("bordered=false держит обводку невидимой и проявляет её на наведении", () => {
     const { container } = render(
       <SelectField value="almaty" onChange={vi.fn()} options={OPTIONS} />,
     );
     const className = container.querySelector("select")?.className ?? "";
-    expect(className).toContain("border-transparent");
-    expect(className).toContain("hover:border-(--border-secondary)");
+    expect(className).toContain("inset-ring-[length:var(--stroke-border-1)]");
+    expect(className).toContain("hover:inset-ring-(--border-secondary)");
   });
 
   it("bordered=true показывает рамку сразу и темнит её на наведении", () => {
@@ -41,9 +41,8 @@ describe("SelectField", () => {
       <SelectField value="almaty" onChange={vi.fn()} options={OPTIONS} bordered />,
     );
     const className = container.querySelector("select")?.className ?? "";
-    expect(className).toContain("border-(--border-secondary)");
-    expect(className).toContain("hover:border-(--border-primary)");
-    expect(className).not.toContain("border-transparent");
+    expect(className).toContain("inset-ring-(--border-secondary)");
+    expect(className).toContain("hover:inset-ring-(--border-primary)");
   });
 
   it("на фокусе меняет рамку, текст и цвет шеврона", () => {
@@ -51,7 +50,7 @@ describe("SelectField", () => {
       <SelectField value="almaty" onChange={vi.fn()} options={OPTIONS} />,
     );
     const select = container.querySelector("select")?.className ?? "";
-    expect(select).toContain("focus:border-(--border-focus)");
+    expect(select).toContain("focus:inset-ring-(--border-focus)");
     expect(select).toContain("focus:text-(color:--text-primary)");
 
     const chevron = container.querySelector("svg")?.getAttribute("class") ?? "";

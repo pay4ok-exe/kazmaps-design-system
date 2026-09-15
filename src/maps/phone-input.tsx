@@ -117,10 +117,10 @@ export function PhoneInput({
 
       <div ref={containerRef} className="relative">
         <div
-          className={`flex items-center gap-(--spacing-gap-8) overflow-hidden rounded-(--dimension-corner-radius-10) border-(length:--stroke-border-1) border-solid bg-(--background-secondary) py-(--spacing-padding-4) pr-(--spacing-padding-8) pl-(--spacing-padding-4) transition-surface ${
+          className={`flex items-center gap-(--spacing-gap-8) overflow-hidden rounded-(--dimension-corner-radius-10) inset-ring-[length:var(--stroke-border-1)] bg-(--background-secondary) py-(--spacing-padding-4) pr-(--spacing-padding-8) pl-(--spacing-padding-4) transition-surface ${
             hasError
-              ? "border-(--border-error)"
-              : "border-transparent hover:border-(--border-secondary) has-[input:focus]:border-(--border-focus)"
+              ? "inset-ring-(--border-error)"
+              : "hover:inset-ring-(--border-secondary) has-[input:focus]:inset-ring-(--border-focus)"
           } ${disabled ? "opacity-50" : ""}`}
         >
           <button

@@ -48,12 +48,12 @@ export function TextInput({
         </label>
       )}
       <div
-        /* Рамка прозрачна, а не отсутствует: в макете она появляется только с
-           наведением, а при border-box её появление сдвинуло бы текст. */
-        className={`flex items-center gap-(--spacing-gap-8) overflow-hidden rounded-(--dimension-corner-radius-10) border-(length:--stroke-border-1) border-solid bg-(--background-secondary) px-(--spacing-padding-12) py-(--spacing-padding-8) transition-surface ${
+        /* Обводка макета выровнена внутрь и места не занимает — inset-ring, а
+           не border: тот съел бы у содержимого свою толщину. */
+        className={`flex items-center gap-(--spacing-gap-8) overflow-hidden rounded-(--dimension-corner-radius-10) inset-ring-[length:var(--stroke-border-1)] bg-(--background-secondary) px-(--spacing-padding-12) py-(--spacing-padding-8) transition-surface ${
           invalid
-            ? "border-(--border-error)"
-            : "border-transparent hover:border-(--border-secondary) has-[input:focus]:border-(--border-focus)"
+            ? "inset-ring-(--border-error)"
+            : "hover:inset-ring-(--border-secondary) has-[input:focus]:inset-ring-(--border-focus)"
         }`}
       >
         {prefix == null ? null : (

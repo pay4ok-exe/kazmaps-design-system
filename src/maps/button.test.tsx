@@ -4,6 +4,11 @@ import { describe, expect, it, vi } from "vitest";
 
 import { Button, type ButtonSize } from "./button";
 
+/* Именно утилита border-*, а не подстрока: inset-ring-(--border-primary) тоже
+   содержит «border-», но раскладку не трогает. */
+const usesBorderUtility = (className: string) =>
+  className.split(" ").some((c) => c === "border" || /^(\w+:)?border-/.test(c));
+
 describe("Button", () => {
   it("рендерит подпись и зовёт onClick", async () => {
     const onClick = vi.fn();
@@ -77,11 +82,30 @@ describe("Button", () => {
     ["accent", "--action-accent-primary"],
     ["neutral", "--action-neutral-primary"],
     ["danger", "--action-danger-primary"],
-  ])("variant=%s заливается ролью %s поверх градиентной обводки", (variant, fill) => {
+  ])("variant=%s заливается ролью %s", (variant, fill) => {
     render(<Button variant={variant}>{variant}</Button>);
-    const className = screen.getByRole("button", { name: variant }).className;
-    expect(className).toContain("btn-surface");
-    expect(className).toContain(`[--btn-fill:var(${fill})]`);
+    expect(screen.getByRole("button", { name: variant }).className).toContain(`bg-(${fill})`);
+  });
+
+  /* Обводка в макете выровнена ВНУТРЬ и места не занимает. CSS-border так не
+     умеет — он съел бы у содержимого свою толщину и сдвинул текст с измеренных
+     12 на 13. Поэтому кольцо рисует отдельный слой поверх кнопки. */
+  it("градиентное кольцо — отдельный слой, а не border", () => {
+    const { container } = render(<Button variant="accent">accent</Button>);
+    const button = screen.getByRole("button", { name: "accent" });
+    expect(usesBorderUtility(button.className)).toBe(false);
+    const ring = container.querySelector(".gradient-ring");
+    expect(ring).not.toBeNull();
+    expect(ring?.className).toContain("absolute");
+    expect(ring?.className).toContain("pointer-events-none");
+  });
+
+  it("у outline кольцо сплошное и тоже внутреннее", () => {
+    const { container } = render(<Button variant="outline">outline</Button>);
+    const className = screen.getByRole("button", { name: "outline" }).className;
+    expect(className).toContain("inset-ring-(--border-primary)");
+    expect(usesBorderUtility(className)).toBe(false);
+    expect(container.querySelector(".gradient-ring")).toBeNull();
   });
 
   it("fullWidth растягивает кнопку, type=submit пробрасывается", () => {

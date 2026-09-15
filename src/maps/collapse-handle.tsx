@@ -6,7 +6,8 @@ import type { ComponentProps, ReactNode } from "react";
 
    Действия различаются поверхностью: Close идёт на background/primary без
    обводки, Open — на background/secondary с обводкой цветом background/primary.
-   Радиуса у полоски в макете нет. */
+   Обводка выровнена внутрь, поэтому inset-ring: border сжал бы полоску, а она
+   всего 24 шириной. Радиуса у полоски в макете нет. */
 
 export function CollapseHandle({
   children,
@@ -30,7 +31,7 @@ export function CollapseHandle({
       className={`flex h-[36px] w-(--dimension-width-24) items-center justify-center px-(--spacing-padding-2) py-(--spacing-padding-8) text-(color:--icon-primary) shadow-(--shadow-hud-side) transition-interactive focus-ring ${
         open
           ? "bg-(--background-primary)"
-          : "border-(length:--stroke-border-1) border-solid border-(--background-primary) bg-(--background-secondary)"
+          : "inset-ring-[length:var(--stroke-border-1)] inset-ring-(--background-primary) bg-(--background-secondary)"
       } ${className}`}
     >
       {children}

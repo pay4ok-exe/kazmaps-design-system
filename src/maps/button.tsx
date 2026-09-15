@@ -5,6 +5,11 @@ import type { ComponentProps, ReactNode } from "react";
    высота 40, радиус 10, обводка 1, кегль 16/20. Различаются только заливка,
    стопы градиентной обводки и — при Icon=True — правый паддинг и gap.
 
+   Обводка в макете выровнена ВНУТРЬ: она лежит поверх паддинга и места не
+   занимает. CSS-border так не умеет, поэтому градиентное кольцо рисует
+   отдельный слой .gradient-ring поверх кнопки — иначе текст уезжал бы на
+   пиксель от измеренных 12.
+
    Расхождения макета с самим собой — identical hover и отсутствие outline —
    записаны в docs/figma-deltas.md, пункты 1 и 2. */
 
@@ -17,31 +22,28 @@ export type ButtonSize = "sm" | "md" | "lg";
    нажатии. Как только дизайнер разведёт состояния, hover добавляется сюда. */
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   accent: [
-    "btn-surface text-(color:--text-white)",
-    "[--btn-fill:var(--action-accent-primary)]",
+    "text-(color:--text-white) bg-(--action-accent-primary)",
     "[--btn-ring-from:var(--action-accent-subtle)]",
     "[--btn-ring-to:var(--action-accent-secondary)]",
-    "active:[--btn-fill:var(--action-accent-secondary)]",
+    "active:bg-(--action-accent-secondary)",
     "active:[--btn-ring-from:var(--action-accent-secondary)]",
     "active:[--btn-ring-to:var(--action-accent-secondary)]",
   ].join(" "),
   neutral: [
-    "btn-surface text-(color:--text-white)",
-    "[--btn-fill:var(--action-neutral-primary)]",
+    "text-(color:--text-white) bg-(--action-neutral-primary)",
     "[--btn-ring-from:var(--action-neutral-subtle)]",
     "[--btn-ring-to:var(--action-neutral-secondary)]",
-    "active:[--btn-fill:var(--action-neutral-secondary)]",
+    "active:bg-(--action-neutral-secondary)",
     "active:[--btn-ring-from:var(--action-neutral-secondary)]",
     "active:[--btn-ring-to:var(--action-neutral-secondary)]",
   ].join(" "),
   danger: [
-    "btn-surface text-(color:--text-white)",
-    "[--btn-fill:var(--action-danger-primary)]",
+    "text-(color:--text-white) bg-(--action-danger-primary)",
     "[--btn-ring-from:var(--action-danger-subtle)]",
     // Нижний стоп у danger — action/danger/hover (та же #da1e28, но 50% альфы),
     // тогда как у accent и neutral там secondary. Так в макете; замер, не описка.
     "[--btn-ring-to:var(--action-danger-hover)]",
-    "active:[--btn-fill:var(--action-danger-secondary)]",
+    "active:bg-(--action-danger-secondary)",
     "active:[--btn-ring-from:var(--action-danger-secondary)]",
     "active:[--btn-ring-to:var(--action-danger-secondary)]",
   ].join(" "),
@@ -50,12 +52,12 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
      вызовов Button. Оставлены как есть по геометрии и переведены на новые роли —
      до появления макета это единственный вариант, не ломающий экраны. */
   outline: [
-    "border-(length:--stroke-border-1) border-solid border-(--border-primary)",
+    "inset-ring-[length:var(--stroke-border-1)] inset-ring-(--border-primary)",
     "bg-(--background-primary) text-(color:--text-secondary)",
     "active:bg-(--background-secondary) active:text-(color:--text-primary)",
   ].join(" "),
   "outline-accent": [
-    "border-(length:--stroke-border-1) border-solid border-(--border-primary)",
+    "inset-ring-[length:var(--stroke-border-1)] inset-ring-(--border-primary)",
     "bg-(--background-primary) text-(color:--text-accent)",
     "active:bg-(--background-secondary)",
   ].join(" "),
@@ -63,12 +65,16 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
 
 /* disabled в макете снят только для Accent, но заливка action/disabled и текст
    text/tertiary — роли не типовые, поэтому применяются ко всем вариантам. */
+/* Градиентное кольцо есть только у типов из макета. */
+const GRADIENT_RING = new Set<ButtonVariant>(["accent", "neutral", "danger"]);
+
 const DISABLED_CLASSES = [
   "disabled:cursor-not-allowed",
-  "disabled:[--btn-fill:var(--action-disabled)]",
+  "disabled:bg-(--action-disabled)",
+  "disabled:inset-ring-(--action-disabled)",
+  // Кольцо гасится вместе с заливкой: в макете у Disabled обводки нет.
   "disabled:[--btn-ring-from:var(--action-disabled)]",
   "disabled:[--btn-ring-to:var(--action-disabled)]",
-  "disabled:border-(--action-disabled) disabled:bg-(--action-disabled)",
   "disabled:text-(color:--text-tertiary)",
 ].join(" ");
 
@@ -122,8 +128,16 @@ export function Button({
     <button
       type="button"
       {...rest}
-      className={`inline-flex items-center justify-center rounded-(--dimension-corner-radius-10) whitespace-nowrap transition-interactive focus-ring ${sizing.base} ${icon ? `${sizing.withIcon} ${WEIGHT_CLASSES.withIcon}` : `${sizing.textOnly} ${WEIGHT_CLASSES.textOnly}`} ${VARIANT_CLASSES[variant]} ${DISABLED_CLASSES} ${fullWidth ? "w-full" : ""} ${className}`}
+      className={`relative inline-flex items-center justify-center rounded-(--dimension-corner-radius-10) whitespace-nowrap transition-interactive focus-ring ${sizing.base} ${icon ? `${sizing.withIcon} ${WEIGHT_CLASSES.withIcon}` : `${sizing.textOnly} ${WEIGHT_CLASSES.textOnly}`} ${VARIANT_CLASSES[variant]} ${DISABLED_CLASSES} ${fullWidth ? "w-full" : ""} ${className}`}
     >
+      {/* Градиентное кольцо только у вариантов из макета: у outline обводка
+          сплошная и рисуется inset-ring. */}
+      {GRADIENT_RING.has(variant) ? (
+        <span
+          aria-hidden="true"
+          className="gradient-ring pointer-events-none absolute inset-0 rounded-[inherit]"
+        />
+      ) : null}
       {children}
       {icon}
     </button>

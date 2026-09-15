@@ -21,12 +21,12 @@ describe("SearchInput", () => {
     expect(className).not.toMatch(/\bh-(\[|\()/);
   });
 
-  it("рамка проходит три состояния макета", () => {
+  it("обводка внутренняя и проходит три состояния макета", () => {
     const { container } = render(<SearchInput value="" onChange={vi.fn()} />);
     const className = container.firstElementChild?.className ?? "";
-    expect(className).toContain("border-(--border-secondary)");
-    expect(className).toContain("hover:border-(--border-primary)");
-    expect(className).toContain("has-[input:focus]:border-(--border-focus)");
+    expect(className).toContain("inset-ring-(--border-secondary)");
+    expect(className).toContain("hover:inset-ring-(--border-primary)");
+    expect(className).toContain("has-[input:focus]:inset-ring-(--border-focus)");
   });
 
   it("тень есть в обычном виде и снята в плотном", () => {
