@@ -19,6 +19,8 @@ export { Dialog } from "./dialog";
 export { EmptyState } from "./empty-state";
 export type { IconButtonShape, IconButtonSize } from "./icon-button";
 export { IconButton } from "./icon-button";
+export type { IconButtonGroupDirection, IconButtonGroupProps } from "./icon-button-group";
+export { IconButtonGroup } from "./icon-button-group";
 export { LegalLink } from "./legal-link";
 export type { ListRowProps } from "./list-row";
 export { ListRow } from "./list-row";

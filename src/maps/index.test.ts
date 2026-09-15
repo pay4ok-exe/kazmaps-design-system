@@ -3,6 +3,7 @@ import * as kit from "./index";
 const EXPECTED = [
   "Button",
   "IconButton",
+  "IconButtonGroup",
   "AvatarInitial",
   "Chip",
   "InDevelopment",

@@ -1,4 +1,4 @@
-import { ChevronLeft, Coffee, Layers, MapPin, Plus, Route, Sun, Users } from "lucide-react";
+import { ChevronLeft, Coffee, Layers, MapPin, Minus, Plus, Route, Sun, Users } from "lucide-react";
 import { type ReactElement, useEffect } from "react";
 
 import {
@@ -13,6 +13,7 @@ import {
   EmptyState,
   ForecastCard,
   IconButton,
+  IconButtonGroup,
   InDevelopment,
   LegalLink,
   ListRow,
@@ -197,6 +198,17 @@ export const KIT_CASES: [string, ReactElement][] = [
   [
     "ProfileButton active",
     <ProfileButton key="k" active label="Профиль" icon={<Users size={24} aria-hidden="true" />} />,
+  ],
+  [
+    "IconButtonGroup",
+    <IconButtonGroup key="k" label="Масштаб">
+      <IconButton label="Приблизить">
+        <Plus size={24} aria-hidden="true" />
+      </IconButton>
+      <IconButton label="Отдалить">
+        <Minus size={24} aria-hidden="true" />
+      </IconButton>
+    </IconButtonGroup>,
   ],
   ["MapTrafficBadge", <MapTrafficBadge key="k" level="orange" value={6} label="Пробки" />],
   ["MapTrafficBadge off", <MapTrafficBadge key="k" level={null} value={3} label="Пробки" />],
