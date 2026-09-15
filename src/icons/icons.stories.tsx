@@ -25,7 +25,6 @@ const GLYPHS: Record<string, IconComponent> = Object.fromEntries(
 const glyph = (slug: string, key?: string) =>
   GLYPHS[slug] ? createElement(GLYPHS[slug], { key }) : null;
 
-
 type Entry = (typeof ICON_MANIFEST)[number];
 
 const inSection = (section: string) => ICON_MANIFEST.filter((i) => i.section === section);

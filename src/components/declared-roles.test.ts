@@ -3,12 +3,7 @@ import { dirname, join, relative } from "node:path";
 
 const SRC = join(__dirname, "..");
 const ENTRY = join(SRC, "index.ts");
-const STYLES = [
-  "styles/core.css",
-  "styles/theme.css",
-  "styles/brands/maps.css",
-  "styles/kit.css",
-];
+const STYLES = ["styles/core.css", "styles/theme.css", "styles/brands/maps.css", "styles/kit.css"];
 const IMPORT = /(?:from\s+|import\s*\(?\s*)"(\.[^"]+)"/g;
 const REFERENCE = /(?:var\(|\(|\(\w+:)--([a-z0-9][a-z0-9_-]*)/g;
 const CSS_DECLARATION = /--([a-z0-9][a-z0-9_-]*)\s*:/g;
