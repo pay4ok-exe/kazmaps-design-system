@@ -91,11 +91,21 @@ describe("PhoneInput ref and aria", () => {
     expect(ref.current).toBe(screen.getByLabelText("Телефон"));
   });
 
-  it("links the field to error text rendered outside it", () => {
+  it("describes the field with error text rendered outside it", () => {
     render(
-      <PhoneInput label="Телефон" aria-describedby="phone-error" invalid onChange={vi.fn()} />,
+      <>
+        <PhoneInput label="Телефон" aria-describedby="phone-error" invalid onChange={vi.fn()} />
+        <p id="phone-error">Неверный номер</p>
+      </>,
     );
-    expect(screen.getByLabelText("Телефон")).toHaveAttribute("aria-describedby", "phone-error");
+    expect(screen.getByRole("textbox", { name: "Телефон" })).toHaveAccessibleDescription(
+      "Неверный номер",
+    );
+  });
+
+  it("keeps the visible label as the name when aria-label is also passed", () => {
+    render(<PhoneInput label="Номер телефона" aria-label="Телефон" onChange={vi.fn()} />);
+    expect(screen.getByRole("textbox", { name: "Номер телефона" })).toBeInTheDocument();
   });
 
   it("can be named without a visible label", () => {

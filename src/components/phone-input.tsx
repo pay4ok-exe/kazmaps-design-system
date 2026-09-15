@@ -96,7 +96,7 @@ export function PhoneInput({
     onRegionChange,
   });
 
-  useImperativeHandle(ref, () => inputRef.current!, [inputRef]);
+  useImperativeHandle(ref, () => inputRef.current!);
 
   const hasError = invalid;
 
@@ -188,7 +188,7 @@ export function PhoneInput({
                 placeholder={region.mask ? region.mask.replace(/\d/g, "0") : undefined}
                 aria-invalid={hasError || undefined}
                 aria-describedby={ariaDescribedBy}
-                aria-label={ariaLabel}
+                aria-label={label == null ? ariaLabel : undefined}
                 aria-labelledby={ariaLabelledBy}
                 className={`min-w-0 flex-1 bg-transparent text-base leading-(--typography-line-height-20) outline-none [font-weight:var(--font-weight-regular)] placeholder:text-(color:--text-tertiary) ${hasError ? "text-(color:--text-danger)" : "text-(color:--text-primary)"}`}
               />
