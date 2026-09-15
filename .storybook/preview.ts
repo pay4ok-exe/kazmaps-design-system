@@ -4,6 +4,9 @@ import "@fontsource-variable/inter";
 
 import "./preview.css";
 
+// Страница «Components - Web» в Figma: фон #a7a7a7, секции залиты белым на 25 %.
+const FIGMA_CANVAS = "color-mix(in srgb, #ffffff 25%, #a7a7a7)";
+
 const preview: Preview = {
   globalTypes: {
     brand: {
@@ -14,14 +17,26 @@ const preview: Preview = {
       description: "Color theme",
       toolbar: { title: "Theme", items: ["light", "dark"], dynamicTitle: true },
     },
+    canvas: {
+      description: "Canvas background",
+      toolbar: {
+        title: "Canvas",
+        items: [
+          { value: "brand", title: "Brand background" },
+          { value: "figma", title: "Figma canvas" },
+        ],
+        dynamicTitle: true,
+      },
+    },
   },
-  initialGlobals: { brand: "maps", theme: "light" },
+  initialGlobals: { brand: "maps", theme: "light", canvas: "brand" },
   decorators: [
     (Story, ctx) => {
       const root = document.documentElement;
       root.setAttribute("data-brand", String(ctx.globals.brand));
       root.setAttribute("data-theme", String(ctx.globals.theme));
-      document.body.style.background = "var(--background-secondary)";
+      document.body.style.background =
+        ctx.globals.canvas === "figma" ? FIGMA_CANVAS : "var(--background-secondary)";
       document.body.style.color = "var(--text-primary)";
       document.body.style.fontFamily = "var(--font-sans)";
       return Story();
