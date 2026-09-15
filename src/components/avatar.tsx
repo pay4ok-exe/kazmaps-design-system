@@ -42,8 +42,8 @@ export function Avatar({
   className = "",
   ...rest
 }: ComponentProps<"button"> & AvatarProps) {
-  const [photoFailed, setPhotoFailed] = useState(false);
-  const withPhoto = Boolean(photoUrl) && !photoFailed;
+  const [failedUrl, setFailedUrl] = useState<string | null>(null);
+  const withPhoto = Boolean(photoUrl) && failedUrl !== photoUrl;
   const initial = name?.trim().charAt(0).toUpperCase();
   const withInitial = !withPhoto && Boolean(initial);
 
@@ -63,7 +63,7 @@ export function Avatar({
           src={photoUrl ?? undefined}
           alt={photoAlt}
           onError={() => {
-            setPhotoFailed(true);
+            setFailedUrl(photoUrl ?? null);
           }}
           className={`size-full rounded-(--dimension-corner-radius-max) object-cover ${
             active ? "ring-[length:var(--stroke-border-1)] ring-(--icon-accent)" : ""
@@ -72,7 +72,7 @@ export function Avatar({
       ) : withInitial ? (
         <span
           aria-hidden="true"
-          className={`flex size-full items-center justify-center rounded-(--dimension-corner-radius-max) text-base leading-(--typography-line-height-20) text-(color:--text-primary) [font-weight:var(--font-weight-medium)] ${paletteFor(seed ?? name ?? "")} ${
+          className={`flex size-full items-center justify-center rounded-(--dimension-corner-radius-max) text-base leading-(--typography-line-height-20) text-[#0f1214] [font-weight:var(--font-weight-medium)] ${paletteFor(seed ?? name ?? "")} ${
             active ? "ring-[length:var(--stroke-border-1)] ring-(--icon-accent)" : ""
           }`}
         >

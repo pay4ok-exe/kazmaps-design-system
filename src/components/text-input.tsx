@@ -48,7 +48,7 @@ export function TextInput({
         }`}
       >
         {prefix == null ? null : (
-          <span className="shrink-0 text-base leading-(--typography-line-height-20) text-(color:--text-tertiary)">
+          <span className="flex shrink-0 items-center text-base leading-(--typography-line-height-20) text-(color:--text-tertiary)">
             {prefix}
           </span>
         )}
@@ -64,7 +64,7 @@ export function TextInput({
           }`}
           {...rest}
         />
-        {trailing == null ? null : <span className="shrink-0">{trailing}</span>}
+        {trailing == null ? null : <span className="flex shrink-0 items-center">{trailing}</span>}
       </div>
     </div>
   );

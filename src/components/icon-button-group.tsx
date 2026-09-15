@@ -3,8 +3,10 @@ import type { ReactNode } from "react";
 export type IconButtonGroupDirection = "vertical" | "horizontal";
 
 const DIRECTION_CLASSES: Record<IconButtonGroupDirection, string> = {
-  vertical: "flex-col",
-  horizontal: "flex-row",
+  vertical:
+    "flex-col [&>button:first-child]:rounded-t-(--dimension-corner-radius-10) [&>button:last-child]:rounded-b-(--dimension-corner-radius-10)",
+  horizontal:
+    "flex-row [&>button:first-child]:rounded-l-(--dimension-corner-radius-10) [&>button:last-child]:rounded-r-(--dimension-corner-radius-10)",
 };
 
 export interface IconButtonGroupProps {
@@ -24,7 +26,7 @@ export function IconButtonGroup({
     <div
       role="group"
       aria-label={label}
-      className={`inline-flex w-fit overflow-hidden rounded-(--dimension-corner-radius-10) shadow-(--shadow-hud) [&>button:hover]:shadow-none [&>button]:rounded-none [&>button]:shadow-none ${DIRECTION_CLASSES[direction]} ${className}`}
+      className={`inline-flex w-fit rounded-(--dimension-corner-radius-10) shadow-(--shadow-hud) [&>button:hover]:shadow-none [&>button]:rounded-none [&>button]:shadow-none ${DIRECTION_CLASSES[direction]} ${className}`}
     >
       {children}
     </div>

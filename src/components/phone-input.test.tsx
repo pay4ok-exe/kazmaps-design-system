@@ -62,3 +62,16 @@ describe("maps PhoneInput idle ring", () => {
     expect(shell?.className).toContain("inset-ring-transparent");
   });
 });
+
+describe("PhoneInput dial code", () => {
+  it("names the dial code on the region button", () => {
+    render(<PhoneInput label="Телефон" onChange={vi.fn()} />);
+    expect(screen.getByRole("button", { name: /Регион: Казахстан, \+7/ })).toBeInTheDocument();
+  });
+
+  it("clicking the dial code moves focus into the field", async () => {
+    render(<PhoneInput label="Телефон" onChange={vi.fn()} />);
+    await userEvent.click(screen.getByText("+7"));
+    expect(screen.getByLabelText("Телефон")).toHaveFocus();
+  });
+});

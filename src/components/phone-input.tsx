@@ -120,7 +120,7 @@ export function PhoneInput({
             aria-haspopup="listbox"
             aria-expanded={open}
             aria-controls={open ? `${pickerId}-list` : undefined}
-            aria-label={`${labels.region}: ${locale === "en" ? region.nameEn : region.name}`}
+            aria-label={`${labels.region}: ${locale === "en" ? region.nameEn : region.name}, +${region.dial}`}
             title={locale === "en" ? region.nameEn : region.name}
             onMouseDown={(event) => {
               if (open) event.preventDefault();
@@ -145,12 +145,13 @@ export function PhoneInput({
           </button>
 
           <span className="flex min-w-0 flex-1 items-center gap-(--spacing-gap-4)">
-            <span
+            <label
+              htmlFor={id}
               aria-hidden="true"
-              className={`shrink-0 text-base leading-(--typography-line-height-20) tabular-nums [font-weight:var(--font-weight-regular)] ${hasError ? "text-(color:--text-danger)" : "text-(color:--text-primary)"}`}
+              className={`shrink-0 cursor-text text-base leading-(--typography-line-height-20) tabular-nums [font-weight:var(--font-weight-regular)] ${hasError ? "text-(color:--text-danger)" : "text-(color:--text-primary)"}`}
             >
               +{region.dial}
-            </span>
+            </label>
             <InputMask
               ref={inputRef}
               mask={mask}

@@ -28,11 +28,21 @@ describe("IconButtonGroup", () => {
     expect(group.className).toContain("[&>button:hover]:shadow-none");
   });
 
-  it("обрезает углы кнопок собственной рамкой и не растягивается", () => {
-    render(zoom);
-    const className = screen.getByRole("group", { name: "Масштаб" }).className;
-    expect(className).toContain("overflow-hidden");
+  it("does not clip the focus outline of its buttons and rounds the outer corners instead", () => {
+    const { rerender } = render(zoom);
+    let className = screen.getByRole("group", { name: "Масштаб" }).className;
+    expect(className).not.toContain("overflow-hidden");
     expect(className).toContain("w-fit");
+    expect(className).toContain("[&>button:first-child]:rounded-t-(--dimension-corner-radius-10)");
+    expect(className).toContain("[&>button:last-child]:rounded-b-(--dimension-corner-radius-10)");
+    rerender(
+      <IconButtonGroup label="Масштаб" direction="horizontal">
+        <IconButton label="Приблизить">+</IconButton>
+      </IconButtonGroup>,
+    );
+    className = screen.getByRole("group", { name: "Масштаб" }).className;
+    expect(className).toContain("[&>button:first-child]:rounded-l-(--dimension-corner-radius-10)");
+    expect(className).toContain("[&>button:last-child]:rounded-r-(--dimension-corner-radius-10)");
   });
 
   it("направление переключается", () => {
