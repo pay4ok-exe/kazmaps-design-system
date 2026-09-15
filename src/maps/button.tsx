@@ -1,7 +1,6 @@
 import type { ComponentProps, ReactNode } from "react";
 
 export type ButtonVariant = "accent" | "neutral" | "danger" | "outline" | "outline-accent";
-export type ButtonSize = "sm" | "md" | "lg";
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   accent: [
@@ -52,28 +51,18 @@ const DISABLED_CLASSES = [
   "disabled:text-(color:--text-tertiary)",
 ].join(" ");
 
-type SizeSpec = { base: string; textOnly: string; withIcon: string };
+const BASE_CLASSES = "h-(--dimension-height-40) text-base leading-(--typography-line-height-20)";
 
-const SIZE_CLASSES: Record<ButtonSize, SizeSpec> = {
-  sm: { base: "h-[34px] text-[12.5px]", textOnly: "px-3.5", withIcon: "px-3.5 gap-1.5" },
-  md: {
-    base: "h-(--dimension-height-40) text-base leading-(--typography-line-height-20)",
-    textOnly: "px-(--spacing-padding-12)",
-    withIcon: "pl-(--spacing-padding-12) pr-(--spacing-padding-10) gap-(--spacing-gap-6)",
-  },
-  lg: { base: "h-11 text-[13.5px]", textOnly: "px-4", withIcon: "px-4 gap-2" },
-};
-
-const WEIGHT_CLASSES = {
-  withIcon: "[font-weight:var(--font-weight-book)]",
-  textOnly: "[font-weight:var(--font-weight-medium)]",
+const CONTENT_CLASSES = {
+  withIcon:
+    "pl-(--spacing-padding-12) pr-(--spacing-padding-10) gap-(--spacing-gap-6) [font-weight:var(--font-weight-book)]",
+  textOnly: "px-(--spacing-padding-12) [font-weight:var(--font-weight-medium)]",
 };
 
 export function Button({
   children,
   icon,
   variant = "accent",
-  size = "md",
   fullWidth = false,
   className = "",
   ...rest
@@ -81,15 +70,13 @@ export function Button({
   children: ReactNode;
   icon?: ReactNode;
   variant?: ButtonVariant;
-  size?: ButtonSize;
   fullWidth?: boolean;
 }) {
-  const sizing = SIZE_CLASSES[size];
   return (
     <button
       type="button"
       {...rest}
-      className={`relative inline-flex items-center justify-center rounded-(--dimension-corner-radius-10) whitespace-nowrap transition-interactive focus-ring ${sizing.base} ${icon ? `${sizing.withIcon} ${WEIGHT_CLASSES.withIcon}` : `${sizing.textOnly} ${WEIGHT_CLASSES.textOnly}`} ${VARIANT_CLASSES[variant]} ${DISABLED_CLASSES} ${fullWidth ? "w-full" : ""} ${className}`}
+      className={`relative inline-flex items-center justify-center rounded-(--dimension-corner-radius-10) whitespace-nowrap transition-interactive focus-ring ${BASE_CLASSES} ${icon ? CONTENT_CLASSES.withIcon : CONTENT_CLASSES.textOnly} ${VARIANT_CLASSES[variant]} ${DISABLED_CLASSES} ${fullWidth ? "w-full" : ""} ${className}`}
     >
       {GRADIENT_RING.has(variant) ? (
         <span

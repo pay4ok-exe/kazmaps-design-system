@@ -130,7 +130,7 @@ export function BottomSheet({
             <h2 className="flex-1 text-[15px] font-bold text-(color:--text-primary)">{title}</h2>
           ) : null}
           {onClose !== undefined ? (
-            <IconButton label="Закрыть" size="sm" className="ml-auto" onClick={onClose}>
+            <IconButton label="Закрыть" className="ml-auto" onClick={onClose}>
               <X size={14} aria-hidden="true" />
             </IconButton>
           ) : null}

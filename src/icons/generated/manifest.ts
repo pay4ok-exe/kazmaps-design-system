@@ -141,6 +141,10 @@ export const ICON_MANIFEST = [
     multicolour: false,
   },
   {
+    slug: "edit",
+    multicolour: false,
+  },
+  {
     slug: "error-bold",
     multicolour: false,
   },
@@ -217,6 +221,10 @@ export const ICON_MANIFEST = [
     multicolour: false,
   },
   {
+    slug: "map-error",
+    multicolour: false,
+  },
+  {
     slug: "map-light",
     multicolour: false,
   },
@@ -254,6 +262,14 @@ export const ICON_MANIFEST = [
   },
   {
     slug: "navigate-right-light",
+    multicolour: false,
+  },
+  {
+    slug: "notification-bold",
+    multicolour: false,
+  },
+  {
+    slug: "notification-light",
     multicolour: false,
   },
   {
@@ -335,6 +351,10 @@ export const ICON_MANIFEST = [
   {
     slug: "sun",
     multicolour: true,
+  },
+  {
+    slug: "support",
+    multicolour: false,
   },
   {
     slug: "terminal-bold",
