@@ -70,12 +70,6 @@ export const KIT_CASES: [string, ReactElement][] = [
       Удалить
     </Button>,
   ],
-  [
-    "IconButton",
-    <IconButton key="k" label="Моё местоположение">
-      <Plus size={24} aria-hidden="true" />
-    </IconButton>,
-  ],
   ["AvatarInitial", <AvatarInitial key="k" name="Айгерим" seed="Айгерим" />],
   ["Chip", <Chip key="k" label="Кафе" />],
   ["Chip active", <Chip key="k" label="Кафе" active />],

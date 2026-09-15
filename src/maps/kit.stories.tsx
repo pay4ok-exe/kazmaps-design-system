@@ -26,7 +26,6 @@ const cases = (component: string): StoryObj => ({
   render: () => <Cases component={component} />,
 });
 
-export const IconButton: StoryObj = cases("IconButton");
 export const IconButtonGroup: StoryObj = cases("IconButtonGroup");
 export const AvatarInitial: StoryObj = cases("AvatarInitial");
 export const Chip: StoryObj = cases("Chip");
