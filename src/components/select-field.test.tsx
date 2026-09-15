@@ -81,3 +81,19 @@ describe("SelectField idle ring", () => {
     expect(container.querySelector("select")?.className).toContain("inset-ring-transparent");
   });
 });
+
+describe("SelectField empty label", () => {
+  it("renders no label element for an empty or blank label", () => {
+    const { container } = render(
+      <SelectField
+        label=""
+        aria-label="Город"
+        value="almaty"
+        onChange={vi.fn()}
+        options={OPTIONS}
+      />,
+    );
+    expect(container.querySelector("label")).toBeNull();
+    expect(screen.getByRole("combobox", { name: "Город" })).toBeInTheDocument();
+  });
+});

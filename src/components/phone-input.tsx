@@ -99,11 +99,13 @@ export function PhoneInput({
   useImperativeHandle(ref, () => inputRef.current!, [inputRef]);
 
   const hasError = invalid;
+  const hasVisibleLabel = Boolean(label?.trim());
 
   return (
     <div className={className}>
-      {!label ? null : (
+      {!hasVisibleLabel ? null : (
         <label
+          id={`${id}-label`}
           htmlFor={id}
           className="mb-(--spacing-gap-4) block text-xs leading-(--typography-line-height-16) text-(color:--text-secondary) [font-weight:var(--font-weight-medium)]"
         >
@@ -188,8 +190,8 @@ export function PhoneInput({
                 placeholder={region.mask ? region.mask.replace(/\d/g, "0") : undefined}
                 aria-invalid={hasError || undefined}
                 aria-describedby={ariaDescribedBy}
-                aria-label={label ? undefined : ariaLabel}
-                aria-labelledby={label ? undefined : ariaLabelledBy}
+                aria-label={hasVisibleLabel ? undefined : ariaLabel}
+                aria-labelledby={ariaLabelledBy}
                 className={`min-w-0 flex-1 bg-transparent text-base leading-(--typography-line-height-20) outline-none [font-weight:var(--font-weight-regular)] placeholder:text-(color:--text-tertiary) ${hasError ? "text-(color:--text-danger)" : "text-(color:--text-primary)"}`}
               />
             </InputMask>

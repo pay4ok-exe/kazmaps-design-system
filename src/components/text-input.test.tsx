@@ -58,3 +58,13 @@ describe("TextInput idle ring", () => {
     );
   });
 });
+
+describe("TextInput empty label", () => {
+  it("renders no label element for an empty or blank label", () => {
+    const { container } = render(
+      <TextInput label=" " aria-label="Почта" value="" onChange={vi.fn()} />,
+    );
+    expect(container.querySelector("label")).toBeNull();
+    expect(screen.getByRole("textbox", { name: "Почта" })).toBeInTheDocument();
+  });
+});

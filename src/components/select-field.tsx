@@ -41,7 +41,7 @@ export function SelectField({
 
   return (
     <div className={className}>
-      {label == null ? null : (
+      {!label?.trim() ? null : (
         <label
           htmlFor={id}
           className="mb-(--spacing-gap-4) block text-xs leading-(--typography-line-height-16) text-(color:--text-secondary) [font-weight:var(--font-weight-medium)]"

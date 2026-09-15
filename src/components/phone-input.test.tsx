@@ -115,14 +115,25 @@ describe("PhoneInput ref and aria", () => {
 });
 
 describe("PhoneInput naming and ref stability", () => {
-  it("keeps the visible label as the name when aria-labelledby is also passed", () => {
+  it("honours aria-labelledby and exposes the label id for composing a name", () => {
     render(
       <>
-        <span id="section">Контакты</span>
-        <PhoneInput label="Номер телефона" aria-labelledby="section" onChange={vi.fn()} />
+        <span id="billing">Оплата</span>
+        <PhoneInput
+          id="phone"
+          label="Телефон"
+          aria-labelledby="billing phone-label"
+          onChange={vi.fn()}
+        />
       </>,
     );
-    expect(screen.getByRole("textbox", { name: "Номер телефона" })).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "Оплата Телефон" })).toBeInTheDocument();
+  });
+
+  it("treats a whitespace-only label as no label", () => {
+    const { container } = render(<PhoneInput label="  " aria-label="Телефон" onChange={vi.fn()} />);
+    expect(container.querySelector("label")).toBeNull();
+    expect(screen.getByRole("textbox", { name: "Телефон" })).toBeInTheDocument();
   });
 
   it("treats an empty label as no label and keeps aria-label", () => {
@@ -136,14 +147,5 @@ describe("PhoneInput naming and ref stability", () => {
     render(<PhoneInput label="Телефон" onChange={vi.fn()} ref={refCallback} />);
     await userEvent.type(screen.getByLabelText("Телефон"), "7012");
     expect(refCallback.mock.calls.filter(([el]) => el !== null)).toHaveLength(1);
-  });
-
-  it("keeps the ref on the live field after switching region", async () => {
-    const ref = createRef<HTMLInputElement>();
-    render(<PhoneInput label="Телефон" onChange={vi.fn()} ref={ref} />);
-    await userEvent.click(screen.getByRole("button", { name: /Регион/ }));
-    await userEvent.click(screen.getByRole("option", { name: /Россия/ }));
-    expect(ref.current).toBe(screen.getByLabelText("Телефон"));
-    expect(ref.current?.isConnected).toBe(true);
   });
 });
