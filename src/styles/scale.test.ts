@@ -39,10 +39,19 @@ const EXPECTED: Record<string, Record<string, string>> = {
     "text-xl": "1.25rem",
     "text-2xl": "1.5rem",
     "text-3xl": "1.875rem",
-    "radius-sm": "0.25rem",
-    "radius-md": "0.375rem",
-    "radius-lg": "0.5rem",
+    "radius-sm": "var(--dimension-corner-radius-4)",
+    "radius-md": "var(--dimension-corner-radius-6)",
+    "radius-lg": "var(--dimension-corner-radius-8)",
   },
+};
+
+const MAPS_RADIUS_SOURCE: Record<string, string> = {
+  "dimension-corner-radius-4": "4px",
+  "dimension-corner-radius-6": "6px",
+  "dimension-corner-radius-8": "8px",
+  "dimension-corner-radius-12": "12px",
+  "dimension-corner-radius-16": "16px",
+  "dimension-corner-radius-max": "9999px",
 };
 
 const MAPS_KIT_STATIC: Record<string, string> = {
@@ -53,7 +62,12 @@ const MAPS_KIT_STATIC: Record<string, string> = {
   "shadow-column": "rgba(16, 24, 40, 0.05) 2px 0px 8px 0px",
   "shadow-button-sm": "rgba(16, 24, 40, 0.08) 0px 1px 3px 0px",
   "shadow-button-md": "rgba(16, 24, 40, 0.1) 0px 1px 3px 0px",
-  "shadow-modal": "rgba(16, 24, 40, 0.28) 0px 18px 48px 0px",
+  "shadow-field": "rgba(0, 0, 0, 0.04) 0px 4px 4px 0px",
+  "shadow-hud": "rgba(0, 0, 0, 0.12) 0px 4px 8px 0px",
+  "shadow-hud-hover": "rgba(0, 0, 0, 0.24) 0px 4px 8px 0px",
+  "shadow-hud-side": "rgba(0, 0, 0, 0.08) 4px 0px 8px 0px",
+  "shadow-hud-badge": "rgba(0, 0, 0, 0.12) 0px 2px 8px 0px",
+  "shadow-modal": "rgba(0, 0, 0, 0.08) 0px 4px 8px 0px",
   "shadow-sheet-top": "rgba(16, 24, 40, 0.14) 0px -4px 20px 0px",
   "shadow-dropdown": "rgba(16, 24, 40, 0.22) 0px 12px 32px 0px",
 };
@@ -73,6 +87,13 @@ describe("brand scale", () => {
     const block = baseBlock(read(`brands/${brand}.css`), brand);
     for (const [name, value] of Object.entries(EXPECTED[brand])) {
       expect(block, name).toContain(`--${name}: ${value};`);
+    }
+  });
+
+  it("maps resolves its radius scale to the measured numerics", () => {
+    const block = baseBlock(read("brands/maps.css"), "maps");
+    for (const [role, value] of Object.entries(MAPS_RADIUS_SOURCE)) {
+      expect(block, role).toContain(`--${role}: ${value};`);
     }
   });
 
@@ -105,7 +126,6 @@ describe("highlight roles", () => {
   const VALUES: Record<string, Record<string, [string, string]>> = {
     business: { light: ["#c99a16", "#f9f0d8"], dark: ["#f0bf00", "#241f10"] },
     booking: { light: ["#e8a317", "#fbefd3"], dark: ["#e8a317", "#3a2f1a"] },
-    maps: { light: ["#f2a615", "#fdf3e6"], dark: ["#f2a615", "#141d31"] },
   };
 
   it.each(Object.keys(VALUES))("%s themes highlight and highlight-soft", (brand) => {
@@ -119,7 +139,7 @@ describe("highlight roles", () => {
   });
 
   it("aliases gold to highlight in the base block", () => {
-    for (const brand of ["business", "booking", "maps"]) {
+    for (const brand of ["business", "booking"]) {
       const block = baseBlock(read(`brands/${brand}.css`), brand);
       expect(block).toContain("--gold: var(--highlight);");
       expect(block).toContain("--gold-soft: var(--highlight-soft);");

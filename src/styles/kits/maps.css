@@ -8,7 +8,7 @@
     transition-timing-function: var(--ease-standard);
   }
   .transition-surface {
-    transition-property: background-color, color, border-color;
+    transition-property: background-color, color, border-color, box-shadow;
     transition-duration: var(--motion-panel);
     transition-timing-function: var(--ease-standard);
   }
@@ -18,18 +18,27 @@
   .animate-shimmer-placeholder {
     animation: shimmer-placeholder var(--motion-shimmer) var(--ease-standard) infinite;
   }
+  .gradient-ring {
+    padding: var(--stroke-border-1);
+    background: linear-gradient(180deg, var(--btn-ring-from), var(--btn-ring-to));
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
   .focus-ring {
     outline: none;
   }
   .focus-ring:focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--border-focus);
     outline-offset: 2px;
   }
   .focus-ring-within {
     outline: none;
   }
   .focus-ring-within:focus-within {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--border-focus);
     outline-offset: 2px;
   }
 }

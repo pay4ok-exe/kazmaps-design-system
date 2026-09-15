@@ -3,6 +3,48 @@
 All notable changes to `@temirtator/kazmaps-design-system` are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: semver.
 
+## [0.7.0] — 2026-09-15
+
+### Changed
+
+- **Ломающее для `/maps`.** Бренд `maps` переведён на переменные файла Figma «KazMaps Design System»:
+  собственный контракт ролей (`action/*`, `background/*`, `border/*`, `text/*`, `icon/*`,
+  `tag/*`, `traffic/*`, `weather/*`, шкалы `numerics`) описан в `schema.byBrand.maps` с
+  `replacesContract`. Прежние имена кита (`--surface-*`, `--text-muted`, `--border-*`,
+  `--accent*`, `--radius-*` и другие) остаются `var()`-алиасами. Роли общего контракта (`--bg`,
+  `--ink`, `--brand`, `--card`, `--line`, `--muted`, `--warn`, `--gold`, `--highlight`,
+  `--shadow-sm/md/lg`) под `data-brand="maps"` больше не объявлены: корневые атомы и молекулы
+  под этим брендом не поддерживаются. Бренды `business` и `booking` не изменились.
+- **Ломающее для `/maps`.** Гарнитура бренда — переменный Inter через `--font-inter`, веса 400,
+  450, 500 и 550. Шрифт в приложении подключается без списка `weight`.
+- **Ломающее для `/maps`.** Компоненты перемерены по макету:
+  - `Button`: `variant="filled-accent"` → `accent`, добавлены `neutral`, `danger` и проп `icon`.
+    Обводка — градиент, отдельного hover-стиля нет.
+  - `TextInput` и `PhoneInput`: текстовый проп `error` заменён на булев `invalid`, текст ошибки
+    показывает тост.
+  - `PlaceRow`: `status` — строка без цвета, тип `PlaceRowStatus` удалён, добавлен слот
+    `additional`.
+  - `IconButton`: размер по умолчанию `md` (36px) вместо `lg` (40px), добавлен `shape`.
+    `aria-pressed` ставится только при переданном `active`.
+  - `SectionHeader` крупнее и принимает `action`; `SegmentedRow` отмечает активный пункт
+    заливкой чипа; `Chip` получил `icon` и `tone`; `Dialog` — `closeLabel`.
+- Тени `--shadow-field`, `--shadow-hud`, `--shadow-hud-hover`, `--shadow-hud-side`,
+  `--shadow-hud-badge` и `--shadow-modal` сняты с макета. Обводки повторяют `strokeAlign` макета и
+  места не занимают: внутренние рисуются кольцом `inset`, градиентное кольцо `Button` лежит
+  отдельным слоем, у `MapTrafficBadge` обводка по центру, у `ProfileButton` — снаружи снимка.
+  Высоты совпадают с макетом: `Chip` и `SelectField` 28, `TextInput`, `PhoneInput` и
+  `SearchInput` 36, `Button` 40, ячейка `CodeInput` 48, `PlaceRow` 72.
+- Значения, которых в макете нет, перенесены из 0.6.0 с пометкой ожидания дизайнера; сводный
+  список — `docs/tokens.md` и `docs/figma-deltas.md`.
+
+### Added
+
+- Вход `@temirtator/kazmaps-design-system/icons`: 96 иконок макета (`IconSearchBold` и другие),
+  обёртка `Icon` и `ICON_MANIFEST`. Многоцветные иконки погоды читают роли `--weather-*`.
+- В `/maps`: `CodeInput`, `CollapseHandle`, `ForecastCard`, `LegalLink`, `MapCompass`,
+  `MapTrafficBadge`, `NavRail`, `ProfileButton`, `SelectField`, `ToggleSwitch`, `WeatherBadge`.
+- Скрипты `icons:import` (нужен `FIGMA_TOKEN`), `icons:build` и `icons:check`.
+
 ## [0.6.0] — 2026-09-14
 
 ### Removed

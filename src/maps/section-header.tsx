@@ -2,16 +2,21 @@ import type { ReactNode } from "react";
 
 export function SectionHeader({
   children,
+  action,
   className = "",
 }: {
   children: ReactNode;
+  action?: ReactNode;
   className?: string;
 }) {
   return (
-    <p
-      className={`text-[11px] font-semibold tracking-[0.6px] text-(color:--text-tertiary) uppercase ${className}`}
-    >
-      {children}
-    </p>
+    <div className={`flex items-center ${className}`}>
+      <p className="min-w-0 flex-1 p-(--spacing-padding-4) text-base leading-(--typography-line-height-20) text-(color:--text-primary) [font-weight:var(--font-weight-medium)]">
+        {children}
+      </p>
+      {action == null ? null : (
+        <span className="flex shrink-0 items-center gap-(--spacing-gap-4)">{action}</span>
+      )}
+    </div>
   );
 }

@@ -1,0 +1,317 @@
+{
+  "_source": {
+    "file": "KazMaps Design System",
+    "fileKey": "eI51Nnu0d74Y5xdO3XIZ30",
+    "extractedAt": "2026-09-15",
+    "how": "Figma Plugin API через MCP use_figma: getLocalVariableCollectionsAsync + getLocalVariablesAsync, алиасы резолвлены до литералов primitives",
+    "collections": {
+      "primitives": { "id": "24:373", "vars": 112, "modes": ["Mode 1"] },
+      "semantics": { "id": "29:743", "vars": 65, "modes": ["Light (29:3)", "Dark (29:2)"] },
+      "numerics": { "id": "40:2", "vars": 66, "modes": ["Mode 1"] }
+    },
+    "_notes": [
+      "primitives здесь не дублируется: это палитра IBM Carbon (Default/Blue/50 и т.п.), semantics ссылается на неё алиасами. Поле ref у каждой роли хранит имя примитива — этого достаточно для обратной трассировки.",
+      "Роли с alpha (action/*/hover, background/toggle-2, overlay/modal-dialog) в Figma заданы как алиас + opacity, а не литералом. Здесь развёрнуты в base+opacity; opacity в процентах, как отдаёт Plugin API.",
+      "Выгрузка плагином сверена с этим файлом 2026-09-15 и совпадает полностью: 65 из 65 semantics в обеих темах и 66 из 66 numerics. Ранняя версия выгрузки отдавала эти 10 alpha-ролей как \"#NaNNaNNaNNaN\" — её починили. При следующей сверке начинайте именно с них: разворот алиаса с прозрачностью ломается первым, а невалидный цвет CSS проглатывает молча, унося с собой подложку диалога и все состояния наведения.",
+      "icon/dander — опечатка в макете (должно быть danger). Имя сохранено как в источнике; исправлять молча нельзя, иначе трассировка разойдётся."
+    ]
+  },
+
+  "semantics": {
+    "action/accent/primary": {
+      "light": "#4589ff",
+      "dark": "#0f62fe",
+      "ref": ["Blue/50", "Blue/60"]
+    },
+    "action/accent/secondary": {
+      "light": "#0f62fe",
+      "dark": "#0043ce",
+      "ref": ["Blue/60", "Blue/70"]
+    },
+    "action/accent/subtle": {
+      "light": "#a6c8ff",
+      "dark": "#4589ff",
+      "ref": ["Blue/30", "Blue/50"]
+    },
+    "action/accent/hover": {
+      "light": { "base": "#0f62fe", "opacity": 50 },
+      "dark": { "base": "#0043ce", "opacity": 50 },
+      "ref": ["Blue/60", "Blue/70"]
+    },
+    "action/danger/primary": { "light": "#fa4d56", "dark": "#da1e28", "ref": ["Red/50", "Red/60"] },
+    "action/danger/secondary": {
+      "light": "#da1e28",
+      "dark": "#a2191f",
+      "ref": ["Red/60", "Red/70"]
+    },
+    "action/danger/subtle": { "light": "#ffb3b8", "dark": "#fa4d56", "ref": ["Red/30", "Red/50"] },
+    "action/danger/hover": {
+      "light": { "base": "#da1e28", "opacity": 50 },
+      "dark": { "base": "#a2191f", "opacity": 50 },
+      "ref": ["Red/60", "Red/70"]
+    },
+    "action/neutral/primary": {
+      "light": "#a4aab3",
+      "dark": "#686f78",
+      "ref": ["Cool Gray/40", "Cool Gray/60"]
+    },
+    "action/neutral/secondary": {
+      "light": "#888f99",
+      "dark": "#4b5157",
+      "ref": ["Cool Gray/50", "Cool Gray/70"]
+    },
+    "action/neutral/subtle": {
+      "light": "#c1c5c9",
+      "dark": "#888f99",
+      "ref": ["Cool Gray/30", "Cool Gray/50"]
+    },
+    "action/neutral/hover": {
+      "light": { "base": "#888f99", "opacity": 50 },
+      "dark": { "base": "#4b5157", "opacity": 50 },
+      "ref": ["Cool Gray/50", "Cool Gray/70"]
+    },
+    "action/disabled": {
+      "light": "#dadce0",
+      "dark": "#4b5157",
+      "ref": ["Cool Gray/20", "Cool Gray/70"]
+    },
+
+    "background/primary": {
+      "light": "#ffffff",
+      "dark": "#222528",
+      "ref": ["Neutral/White", "Cool Gray/90"]
+    },
+    "background/secondary": {
+      "light": "#f1f3f5",
+      "dark": "#2f3338",
+      "ref": ["Cool Gray/10", "Cool Gray/80"]
+    },
+    "background/tertiary": {
+      "light": "#dadce0",
+      "dark": "#4b5157",
+      "ref": ["Cool Gray/20", "Cool Gray/70"]
+    },
+    "background/toggle": {
+      "light": "#f1f3f5",
+      "dark": "#0f1214",
+      "ref": ["Cool Gray/10", "Cool Gray/100"]
+    },
+    "background/toggle-2": {
+      "light": { "base": "#000000", "opacity": 3 },
+      "dark": { "base": "#ffffff", "opacity": 3 },
+      "ref": ["Neutral/Black", "Neutral/White"]
+    },
+    "overlay/modal-dialog": {
+      "light": { "base": "#000000", "opacity": 10 },
+      "dark": { "base": "#000000", "opacity": 20 },
+      "ref": ["Neutral/Black", "Neutral/Black"]
+    },
+
+    "border/primary": {
+      "light": "#c1c5c9",
+      "dark": "#686f78",
+      "ref": ["Cool Gray/30", "Cool Gray/60"]
+    },
+    "border/secondary": {
+      "light": "#dadce0",
+      "dark": "#4b5157",
+      "ref": ["Cool Gray/20", "Cool Gray/70"]
+    },
+    "border/focus": { "light": "#78a9ff", "dark": "#4589ff", "ref": ["Blue/40", "Blue/50"] },
+    "border/error": { "light": "#ff8389", "dark": "#fa4d56", "ref": ["Red/40", "Red/50"] },
+
+    "text/primary": {
+      "light": "#0f1214",
+      "dark": "#ffffff",
+      "ref": ["Cool Gray/100", "Neutral/White"]
+    },
+    "text/secondary": {
+      "light": "#686f78",
+      "dark": "#c1c5c9",
+      "ref": ["Cool Gray/60", "Cool Gray/30"]
+    },
+    "text/tertiary": {
+      "light": "#a4aab3",
+      "dark": "#888f99",
+      "ref": ["Cool Gray/40", "Cool Gray/50"]
+    },
+    "text/white": {
+      "light": "#ffffff",
+      "dark": "#ffffff",
+      "ref": ["Neutral/White", "Neutral/White"]
+    },
+    "text/accent": { "light": "#4589ff", "dark": "#4589ff", "ref": ["Blue/50", "Blue/50"] },
+    "text/danger": { "light": "#fa4d56", "dark": "#fa4d56", "ref": ["Red/50", "Red/50"] },
+    "text/link": { "light": "#4589ff", "dark": "#78a9ff", "ref": ["Blue/50", "Blue/40"] },
+
+    "icon/primary": {
+      "light": "#0f1214",
+      "dark": "#ffffff",
+      "ref": ["Cool Gray/100", "Neutral/White"]
+    },
+    "icon/secondary": {
+      "light": "#686f78",
+      "dark": "#c1c5c9",
+      "ref": ["Cool Gray/60", "Cool Gray/30"]
+    },
+    "icon/tertiary": {
+      "light": "#a4aab3",
+      "dark": "#888f99",
+      "ref": ["Cool Gray/40", "Cool Gray/50"]
+    },
+    "icon/white": {
+      "light": "#ffffff",
+      "dark": "#ffffff",
+      "ref": ["Neutral/White", "Neutral/White"]
+    },
+    "icon/accent": { "light": "#4589ff", "dark": "#4589ff", "ref": ["Blue/50", "Blue/50"] },
+    "icon/link": { "light": "#4589ff", "dark": "#78a9ff", "ref": ["Blue/50", "Blue/40"] },
+    "icon/dander": { "light": "#fa4d56", "dark": "#fa4d56", "ref": ["Red/50", "Red/50"] },
+
+    "tag/blue": { "light": "#78a9ff", "dark": "#4589ff", "ref": ["Blue/40", "Blue/50"] },
+    "tag/cyan": { "light": "#33b1ff", "dark": "#1192e8", "ref": ["Cyan/40", "Cyan/50"] },
+    "tag/gray": { "light": "#a4aab3", "dark": "#686f78", "ref": ["Cool Gray/40", "Cool Gray/60"] },
+    "tag/green": { "light": "#42be65", "dark": "#24a148", "ref": ["Green/40", "Green/50"] },
+    "tag/magenta": { "light": "#ff7eb6", "dark": "#ee5396", "ref": ["Magenta/40", "Magenta/50"] },
+    "tag/orange": { "light": "#ff832b", "dark": "#eb6200", "ref": ["Orange/40", "Orange/50"] },
+    "tag/purple": { "light": "#be95ff", "dark": "#a56eff", "ref": ["Purple/40", "Purple/50"] },
+    "tag/red": { "light": "#ff8389", "dark": "#fa4d56", "ref": ["Red/40", "Red/50"] },
+    "tag/teal": { "light": "#08bdba", "dark": "#009d9a", "ref": ["Teal/40", "Teal/50"] },
+    "tag/yellow": { "light": "#f1c21b", "dark": "#d2a106", "ref": ["Yellow/30", "Yellow/40"] },
+
+    "traffic/fill/green": {
+      "light": "#a7f0ba",
+      "dark": "#24a148",
+      "ref": ["Green/20", "Green/50"]
+    },
+    "traffic/fill/yellow": {
+      "light": "#fddc69",
+      "dark": "#d2a106",
+      "ref": ["Yellow/20", "Yellow/40"]
+    },
+    "traffic/fill/orange": {
+      "light": "#ffb784",
+      "dark": "#eb6200",
+      "ref": ["Orange/30", "Orange/50"]
+    },
+    "traffic/fill/red": { "light": "#ffb3b8", "dark": "#fa4d56", "ref": ["Red/30", "Red/50"] },
+    "traffic/border/green": {
+      "light": "#198038",
+      "dark": "#198038",
+      "ref": ["Green/60", "Green/60"]
+    },
+    "traffic/border/yellow": {
+      "light": "#8e6a00",
+      "dark": "#8e6a00",
+      "ref": ["Yellow/60", "Yellow/60"]
+    },
+    "traffic/border/orange": {
+      "light": "#ba4e00",
+      "dark": "#ba4e00",
+      "ref": ["Orange/60", "Orange/60"]
+    },
+    "traffic/border/red": { "light": "#a2191f", "dark": "#a2191f", "ref": ["Red/70", "Red/70"] },
+    "traffic/text/green": {
+      "light": "#0e6027",
+      "dark": "#ffffff",
+      "ref": ["Green/70", "Neutral/White"]
+    },
+    "traffic/text/yellow": {
+      "light": "#684e00",
+      "dark": "#ffffff",
+      "ref": ["Yellow/70", "Neutral/White"]
+    },
+    "traffic/text/orange": {
+      "light": "#8a3800",
+      "dark": "#ffffff",
+      "ref": ["Orange/70", "Neutral/White"]
+    },
+    "traffic/text/red": {
+      "light": "#750e13",
+      "dark": "#ffffff",
+      "ref": ["Red/80", "Neutral/White"]
+    },
+
+    "weather/sun": { "light": "#f1c21b", "dark": "#d2a106", "ref": ["Yellow/30", "Yellow/40"] },
+    "weather/moon": {
+      "light": "#a4aab3",
+      "dark": "#a4aab3",
+      "ref": ["Cool Gray/40", "Cool Gray/40"]
+    },
+    "weather/cloud": { "light": "#82cfff", "dark": "#0072c3", "ref": ["Cyan/30", "Cyan/60"] },
+    "weather/raindrop": { "light": "#4589ff", "dark": "#78a9ff", "ref": ["Blue/50", "Blue/40"] },
+    "weather/snow": { "light": "#c1c5c9", "dark": "#d0e2ff", "ref": ["Cool Gray/30", "Blue/20"] },
+
+    "Map": {
+      "light": "Light",
+      "dark": "Dark",
+      "_type": "STRING",
+      "_note": "не цвет — переключатель стиля тайлов карты по теме"
+    }
+  },
+
+  "numerics": {
+    "dimension/corner-radius": {
+      "2": 2,
+      "4": 4,
+      "6": 6,
+      "8": 8,
+      "10": 10,
+      "12": 12,
+      "16": 16,
+      "max": 9999
+    },
+    "dimension/height": {
+      "4": 4,
+      "8": 8,
+      "12": 12,
+      "16": 16,
+      "20": 20,
+      "24": 24,
+      "28": 28,
+      "40": 40,
+      "64": 64
+    },
+    "dimension/width": {
+      "4": 4,
+      "8": 8,
+      "12": 12,
+      "16": 16,
+      "20": 20,
+      "24": 24,
+      "28": 28,
+      "40": 40,
+      "64": 64
+    },
+    "spacing/gap": {
+      "0": 0,
+      "1": 1,
+      "2": 2,
+      "4": 4,
+      "6": 6,
+      "8": 8,
+      "10": 10,
+      "12": 12,
+      "16": 16,
+      "20": 20,
+      "24": 24
+    },
+    "spacing/padding": {
+      "1": 1,
+      "2": 2,
+      "4": 4,
+      "6": 6,
+      "8": 8,
+      "10": 10,
+      "12": 12,
+      "16": 16,
+      "24": 24
+    },
+    "stroke/border": { "0_5": 0.5, "1": 1, "1_5": 1.5 },
+    "stroke/divider": { "1": 1, "2": 2 },
+    "shadow/blur": { "2": 2, "4": 4, "8": 8, "16": 16, "32": 32 },
+    "shadow/position": { "8": 8, "24": 24 },
+    "typography/font-size": { "10": 10, "12": 12, "14": 14, "16": 16 },
+    "typography/line-height": { "12": 12, "16": 16, "18": 18, "20": 20 }
+  }
+}

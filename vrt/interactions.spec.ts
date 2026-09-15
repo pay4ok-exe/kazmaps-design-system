@@ -1,10 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 
-// Один и тот же сценарий гоняется по корневой молекуле в двух брендах и по
-// kit-версии из /maps: обе головы сидят на общем ядре phone-input-core.
 const BRANDS = [
   { brand: "business", story: "molecules-phoneinput--live" },
-  { brand: "maps", story: "molecules-phoneinput--live" },
   { brand: "maps", story: "maps-kit-phoneinput--live" },
 ] as const;
 

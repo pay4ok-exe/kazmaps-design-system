@@ -7,7 +7,7 @@ export type TextInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChan
   value: string;
   onChange: (value: string) => void;
   label?: string;
-  error?: string | null;
+  invalid?: boolean;
   prefix?: ReactNode;
   trailing?: ReactNode;
   className?: string;
@@ -17,32 +17,35 @@ export function TextInput({
   value,
   onChange,
   label,
-  error = null,
+  invalid = false,
   prefix,
   trailing,
   className = "",
+  id: idProp,
   ...rest
 }: TextInputProps) {
-  const id = useId();
-  const errorId = `${id}-error`;
+  const generatedId = useId();
+  const id = idProp ?? generatedId;
 
   return (
     <div className={className}>
       {label == null ? null : (
         <label
           htmlFor={id}
-          className="mb-1.5 block text-[11.5px] font-semibold text-(color:--text-primary)"
+          className="mb-(--spacing-gap-4) block text-xs leading-(--typography-line-height-16) text-(color:--text-secondary) [font-weight:var(--font-weight-medium)]"
         >
           {label}
         </label>
       )}
       <div
-        className={`flex h-[47px] items-center overflow-hidden rounded-[8px] border bg-(--surface-panel) transition-surface focus-ring-within ${
-          error === null ? "border-(--border-input)" : "border-(--danger)"
+        className={`flex items-center gap-(--spacing-gap-8) overflow-hidden rounded-(--dimension-corner-radius-10) inset-ring-[length:var(--stroke-border-1)] bg-(--background-secondary) px-(--spacing-padding-12) py-(--spacing-padding-8) transition-surface ${
+          invalid
+            ? "inset-ring-(--border-error) focus-ring-within"
+            : "inset-ring-transparent hover:inset-ring-(--border-secondary) has-[input:focus]:inset-ring-(--border-focus)"
         }`}
       >
         {prefix == null ? null : (
-          <span className="flex h-full shrink-0 items-center border-r border-(--border-input) px-2.5 text-[13.5px] text-(color:--text-tertiary)">
+          <span className="shrink-0 text-base leading-(--typography-line-height-20) text-(color:--text-tertiary)">
             {prefix}
           </span>
         )}
@@ -52,18 +55,14 @@ export function TextInput({
           onChange={(event) => {
             onChange(event.target.value);
           }}
-          aria-invalid={error !== null}
-          aria-describedby={error === null ? undefined : errorId}
-          className="min-w-0 flex-1 bg-transparent px-3 text-[13.5px] text-(color:--text-primary) outline-none placeholder:text-(color:--text-tertiary)"
+          aria-invalid={invalid || undefined}
+          className={`min-w-0 flex-1 bg-transparent text-base leading-(--typography-line-height-20) outline-none [font-weight:var(--font-weight-regular)] placeholder:text-(color:--text-tertiary) ${
+            invalid ? "text-(color:--text-danger)" : "text-(color:--text-primary)"
+          }`}
           {...rest}
         />
-        {trailing == null ? null : <span className="shrink-0 pr-1.5">{trailing}</span>}
+        {trailing == null ? null : <span className="shrink-0">{trailing}</span>}
       </div>
-      {error === null ? null : (
-        <p id={errorId} className="mt-1.5 text-[12px] text-(color:--danger)">
-          {error}
-        </p>
-      )}
     </div>
   );
 }

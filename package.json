@@ -1,6 +1,6 @@
 {
   "name": "@temirtator/kazmaps-design-system",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "KazMaps design system — multi-brand UI kit (tokens, atoms, molecules) for Tailwind v4 + React 19 apps",
   "type": "module",
   "license": "MIT",
@@ -28,6 +28,10 @@
       "types": "./dist/maps/index.d.ts",
       "import": "./dist/maps/index.js"
     },
+    "./icons": {
+      "types": "./dist/icons/index.d.ts",
+      "import": "./dist/icons/index.js"
+    },
     "./styles/core.css": "./dist/styles/core.css",
     "./styles/theme.css": "./dist/styles/theme.css",
     "./styles/brands/business.css": "./dist/styles/brands/business.css",
@@ -53,7 +57,10 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepublishOnly": "npm run lint && npm run typecheck && npm run test && npm run build",
-    "prepare": "husky"
+    "prepare": "husky",
+    "icons:import": "node --env-file-if-exists=.env scripts/import-icons.mjs",
+    "icons:build": "node scripts/build-icons.mjs",
+    "icons:check": "npm run icons:build && git diff --quiet --exit-code -- src/icons/generated"
   },
   "peerDependencies": {
     "lucide-react": "^1.0.0",
@@ -86,6 +93,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.5.3",
     "@commitlint/config-conventional": "^20.5.3",
+    "@fontsource-variable/inter": "^5.3.0",
     "@playwright/test": "^1.61.1",
     "@storybook/addon-a11y": "^10.5.3",
     "@storybook/react-vite": "^10.5.0",

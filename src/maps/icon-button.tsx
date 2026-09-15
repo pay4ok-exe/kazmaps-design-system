@@ -1,24 +1,32 @@
 import type { ComponentProps, ReactNode } from "react";
 
 export type IconButtonSize = "sm" | "md" | "lg";
+export type IconButtonShape = "square" | "circle";
+
+const SHAPE_CLASSES: Record<IconButtonShape, string> = {
+  square: "rounded-(--dimension-corner-radius-10)",
+  circle: "rounded-(--dimension-corner-radius-max)",
+};
 
 const SIZE_CLASSES: Record<IconButtonSize, string> = {
-  sm: "size-[34px] rounded-[7px] hover:shadow-(--shadow-button-sm)",
-  md: "size-[38px] rounded-lg shadow-(--shadow-button-sm) hover:shadow-(--shadow-button-md)",
-  lg: "size-10 rounded-lg shadow-(--shadow-button-md)",
+  sm: "size-[34px] p-(--spacing-padding-4)",
+  md: "size-[36px] p-(--spacing-padding-6)",
+  lg: "size-10 p-(--spacing-padding-6)",
 };
 
 export function IconButton({
   children,
   label,
-  size = "lg",
-  active = false,
+  size = "md",
+  shape = "square",
+  active,
   className = "",
   ...rest
 }: ComponentProps<"button"> & {
   children: ReactNode;
   label: string;
   size?: IconButtonSize;
+  shape?: IconButtonShape;
   active?: boolean;
 }) {
   return (
@@ -26,12 +34,13 @@ export function IconButton({
       type="button"
       aria-label={label}
       title={label}
+      aria-pressed={active}
       {...rest}
-      className={`flex items-center justify-center border transition-interactive focus-ring active:scale-[0.97] ${
+      className={`flex items-center justify-center bg-(--background-primary) shadow-(--shadow-hud) transition-interactive focus-ring hover:shadow-(--shadow-hud-hover) ${
         active
-          ? "border-(--accent) bg-(--accent) text-(color:--text-on-accent) hover:bg-(--accent) hover:text-(color:--text-on-accent)"
-          : "border-(--border) bg-(--surface-panel) text-(color:--text-secondary) hover:bg-(--surface-raised) hover:text-(color:--text-primary)"
-      } ${SIZE_CLASSES[size]} ${className}`}
+          ? "text-(color:--icon-accent)"
+          : "text-(color:--icon-tertiary) hover:text-(color:--icon-primary)"
+      } ${SHAPE_CLASSES[shape]} ${SIZE_CLASSES[size]} ${className}`}
     >
       {children}
     </button>

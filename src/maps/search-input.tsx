@@ -24,11 +24,15 @@ export function SearchInput({
 }: SearchInputProps) {
   return (
     <div
-      className={`flex items-center overflow-hidden border border-(--border-input) bg-(--surface-panel) transition-surface focus-ring-within ${
-        compact ? "h-[42px] rounded-lg" : "h-11 rounded-[9px]"
+      className={`group flex items-center gap-(--spacing-gap-8) overflow-hidden rounded-(--dimension-corner-radius-10) inset-ring-[length:var(--stroke-border-1)] inset-ring-(--border-secondary) bg-(--background-primary) p-(--spacing-padding-8) transition-surface focus-ring-within hover:inset-ring-(--border-primary) has-[input:focus]:inset-ring-(--border-focus) ${
+        compact ? "" : "shadow-(--shadow-field)"
       } ${className}`}
     >
-      <Search size={16} className="ml-3 shrink-0 text-(color:--text-tertiary)" aria-hidden="true" />
+      <Search
+        size={20}
+        aria-hidden="true"
+        className="shrink-0 text-(color:--icon-secondary) transition-interactive group-has-[input:focus]:text-(color:--icon-primary)"
+      />
       <input
         type="search"
         value={value}
@@ -36,7 +40,7 @@ export function SearchInput({
           onChange(event.target.value);
         }}
         placeholder={placeholder}
-        className="min-w-0 flex-1 bg-transparent px-2.5 text-[13.5px] text-(color:--text-primary) outline-none placeholder:text-(color:--text-tertiary)"
+        className="min-w-0 flex-1 bg-transparent text-xs leading-(--typography-line-height-16) text-(color:--text-primary) outline-none [font-weight:var(--font-weight-book)] placeholder:text-(color:--text-tertiary)"
         {...rest}
       />
       {suffix}
@@ -46,9 +50,9 @@ export function SearchInput({
           aria-label={submitLabel}
           title={submitLabel}
           onClick={onSubmit}
-          className="flex h-full w-[46px] shrink-0 items-center justify-center bg-(--accent) text-(color:--text-on-accent) transition-interactive focus-ring hover:opacity-90 active:scale-[0.97]"
+          className="-my-[calc(var(--spacing-padding-8)-var(--stroke-border-1))] -mr-[calc(var(--spacing-padding-8)-var(--stroke-border-1))] flex w-[46px] self-stretch shrink-0 items-center justify-center bg-(--action-accent-primary) text-(color:--text-white) transition-interactive focus-ring hover:bg-(--action-accent-secondary)"
         >
-          <Search size={16} aria-hidden="true" />
+          <Search size={20} aria-hidden="true" />
         </button>
       )}
     </div>

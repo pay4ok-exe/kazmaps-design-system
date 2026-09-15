@@ -1,0 +1,16 @@
+/* сгенерировано scripts/build-icons.mjs из src/icons/svg/location-bold.svg — не править руками */
+import type { IconProps } from "../icon";
+import { Icon } from "../icon";
+
+export function IconLocationBold(props: IconProps) {
+  return (
+    <Icon {...props} name="location-bold">
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M11.9994 2.62012C16.2515 2.62012 19.7965 6.41243 19.6664 10.6689C19.5298 15.22 15.6098 19.1301 11.9964 21.4746C8.39154 19.1254 4.47445 15.2155 4.33335 10.6689C4.20128 6.41229 7.74738 2.62029 11.9994 2.62012ZM12.0003 7.7998C10.6192 7.79987 9.50034 8.91954 9.50034 10.3008C9.50049 11.6808 10.6193 12.7997 12.0003 12.7998C13.3806 12.7998 14.5002 11.6809 14.5003 10.3008C14.5003 8.9195 13.3807 7.7998 12.0003 7.7998Z"
+        fill="currentColor"
+      />
+    </Icon>
+  );
+}

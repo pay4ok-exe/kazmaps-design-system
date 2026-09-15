@@ -18,6 +18,7 @@ const STORIES = [
 ];
 
 const THEMES = ["dark", "light"] as const;
+const MAPS_STORY = "maps-kit--toggle";
 
 async function openStory(page: Page, id: string, theme: string, brand = "business"): Promise<void> {
   await page.goto(`/iframe.html?viewMode=story&id=${id}&globals=brand:${brand};theme:${theme}`);
@@ -65,15 +66,6 @@ for (const theme of THEMES) {
 
 for (const story of STORIES) {
   for (const theme of THEMES) {
-    test(`maps ${story.name} — ${theme}`, async ({ page }) => {
-      await openStory(page, story.id, theme, "maps");
-      await expect(page).toHaveScreenshot(`maps-${story.name}-${theme}.png`, { fullPage: true });
-    });
-  }
-}
-
-for (const story of STORIES) {
-  for (const theme of THEMES) {
     test(`booking ${story.name} — ${theme}`, async ({ page }) => {
       await openStory(page, story.id, theme, "booking");
       await expect(page).toHaveScreenshot(`booking-${story.name}-${theme}.png`, {
@@ -93,15 +85,15 @@ test.describe("maps follows the system theme", () => {
   test.use({ colorScheme: "dark" });
 
   test("no data-theme falls back to the system dark scheme", async ({ page }) => {
-    await page.goto(`/iframe.html?viewMode=story&id=${STORIES[0].id}&globals=brand:maps`);
+    await page.goto(`/iframe.html?viewMode=story&id=${MAPS_STORY}&globals=brand:maps`);
     await expect(page.locator("#storybook-root > *").first()).toBeVisible();
     await page.evaluate(() => document.documentElement.removeAttribute("data-theme"));
     await page.waitForTimeout(50);
-    expect(await readSurfacePanel(page)).toBe("#0d1320");
+    expect(await readSurfacePanel(page)).toBe("#222528");
   });
 
   test("explicit data-theme=light overrides the system dark scheme", async ({ page }) => {
-    await page.goto(`/iframe.html?viewMode=story&id=${STORIES[0].id}&globals=brand:maps`);
+    await page.goto(`/iframe.html?viewMode=story&id=${MAPS_STORY}&globals=brand:maps`);
     await expect(page.locator("#storybook-root > *").first()).toBeVisible();
     await page.evaluate(() => document.documentElement.setAttribute("data-theme", "light"));
     await page.waitForTimeout(50);

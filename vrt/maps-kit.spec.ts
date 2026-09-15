@@ -1,50 +1,43 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
 import { expect, test } from "@playwright/test";
 
 const THEMES = ["light", "dark"] as const;
-const STORIES = ["all", "dialog", "bottom-sheet", "toast", "day-picker"] as const;
+const INTERACTIVE = /--(песочница|live)$/;
 
-function snapshotName(story: string, theme: string): string {
-  return story === "all" ? `maps-kit-cases-${theme}.png` : `maps-kit-${story}-${theme}.png`;
-}
+type IndexEntry = { id: string; type: string };
+const index = JSON.parse(
+  readFileSync(join(process.cwd(), "storybook-static", "index.json"), "utf8"),
+) as { entries: Record<string, IndexEntry> };
 
-for (const story of STORIES) {
+const STORIES = Object.values(index.entries)
+  .filter((e) => e.type === "story" && /^(maps-kit|icons)/.test(e.id) && !INTERACTIVE.test(e.id))
+  .map((e) => e.id);
+
+for (const id of STORIES) {
   for (const theme of THEMES) {
-    test(`maps kit ${story} — ${theme}`, async ({ page }) => {
-      if (story === "bottom-sheet") {
-        // BottomSheet is `md:hidden` by design (mobile-only sheet); the
-        // default 900px viewport hides it entirely, so narrow the viewport
-        // below Tailwind's `md` breakpoint just for this story.
+    test(`${id} — ${theme}`, async ({ page }) => {
+      if (id === "maps-kit--bottom-sheet") {
         await page.setViewportSize({ width: 390, height: 700 });
       }
-      await page.goto(
-        `/iframe.html?viewMode=story&id=maps-kit-cases--${story}&globals=brand:maps;theme:${theme}`,
-      );
-      if (story === "dialog") {
-        // Dialog renders through a portal into document.body, outside
-        // #storybook-root, so assert on its own role instead.
+      await page.goto(`/iframe.html?viewMode=story&id=${id}&globals=brand:maps;theme:${theme}`);
+      if (id === "maps-kit--dialog") {
         await expect(page.getByRole("dialog").first()).toBeVisible();
       } else {
         await expect(page.locator("#storybook-root > *").first()).toBeVisible();
       }
-      if (story === "toast") {
+      if (id === "maps-kit--toast") {
         await page.getByRole("status").waitFor();
       }
-      await expect(page).toHaveScreenshot(snapshotName(story, theme), { fullPage: true });
+      await expect(page).toHaveScreenshot(`${id.replace("--", "-")}-${theme}.png`, {
+        fullPage: true,
+      });
     });
   }
 }
 
 for (const theme of THEMES) {
-  test(`maps kit phone-input-states — ${theme}`, async ({ page }) => {
-    await page.goto(
-      `/iframe.html?viewMode=story&id=maps-kit-phoneinput--states&globals=brand:maps;theme:${theme}`,
-    );
-    await expect(page.locator("#storybook-root > *").first()).toBeVisible();
-    await expect(page).toHaveScreenshot(`maps-kit-phone-input-states-${theme}.png`, {
-      fullPage: true,
-    });
-  });
-
   test(`maps kit phone-input-picker — ${theme}`, async ({ page }) => {
     await page.goto(
       `/iframe.html?viewMode=story&id=maps-kit-phoneinput--live&globals=brand:maps;theme:${theme}`,
@@ -57,3 +50,30 @@ for (const theme of THEMES) {
     });
   });
 }
+
+test("inside strokes do not add to the measured heights", async ({ page }) => {
+  const heights = async (id: string, selector: string) => {
+    await page.goto(`/iframe.html?viewMode=story&id=${id}&globals=brand:maps;theme:light`);
+    await expect(page.locator("#storybook-root > *").first()).toBeVisible();
+    return page
+      .locator(selector)
+      .evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().height)));
+  };
+  expect(new Set(await heights("maps-kit--chip", "#storybook-root button"))).toEqual(new Set([28]));
+  expect(new Set(await heights("maps-kit--text-input", "#storybook-root input"))).toEqual(
+    new Set([20]),
+  );
+  expect(
+    new Set(await heights("maps-kit--text-input", "#storybook-root div:has(> input)")),
+  ).toEqual(new Set([36]));
+  expect(
+    new Set(await heights("maps-kit--search-input", "#storybook-root div:has(> input)")),
+  ).toEqual(new Set([36]));
+  expect(
+    await heights("maps-kit--search-input", "#storybook-root div:has(> input) > button"),
+  ).toEqual([34]);
+  expect(await heights("maps-kit--place-row", "#storybook-root button")).toEqual([72]);
+  expect(new Set(await heights("maps-kit--code-input", "#storybook-root input"))).toEqual(
+    new Set([48]),
+  );
+});

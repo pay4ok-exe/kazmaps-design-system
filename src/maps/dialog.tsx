@@ -4,7 +4,6 @@ import { X } from "lucide-react";
 import { type ReactNode, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 
-import { IconButton } from "./icon-button";
 import { useFocusTrap } from "./use-focus-trap";
 
 export type DialogSize = "sm" | "md";
@@ -18,12 +17,27 @@ const subscribeNoop = () => () => undefined;
 const getClientSnapshot = () => true;
 const getServerSnapshot = () => false;
 
+function DialogClose({ onClose, label }: { onClose: () => void; label: string }) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      title={label}
+      onClick={onClose}
+      className="flex size-[28px] shrink-0 items-center justify-center rounded-(--dimension-corner-radius-8) bg-(--background-secondary) text-(color:--icon-secondary) transition-interactive focus-ring hover:bg-(--background-tertiary) hover:text-(color:--icon-primary) active:bg-(--background-tertiary) active:text-(color:--icon-tertiary)"
+    >
+      <X size={20} aria-hidden="true" />
+    </button>
+  );
+}
+
 export function Dialog({
   title,
   subtitle,
   children,
   onClose,
   size = "md",
+  closeLabel = "Закрыть",
   className = "",
   showHeader = true,
 }: {
@@ -32,6 +46,7 @@ export function Dialog({
   children: ReactNode;
   onClose: () => void;
   size?: DialogSize;
+  closeLabel?: string;
   className?: string;
   showHeader?: boolean;
 }) {
@@ -51,27 +66,31 @@ export function Dialog({
         tabIndex={-1}
         aria-hidden="true"
         onClick={onClose}
-        className="absolute inset-0 bg-black/40"
+        className="absolute inset-0 bg-(--overlay-modal-dialog)"
       />
       <div
         ref={panelRef}
         tabIndex={-1}
-        className={`relative w-full rounded-[14px] border border-(--border) bg-(--surface-panel) shadow-(--shadow-modal) outline-none ${SIZE_CLASSES[size]} ${className}`}
+        className={`relative w-full rounded-(--dimension-corner-radius-16) bg-(--background-primary) shadow-(--shadow-modal) outline-none ${SIZE_CLASSES[size]} ${className}`}
       >
         {showHeader ? (
-          <header className="flex items-start gap-2 p-4">
-            <div className="flex-1">
-              <p className="text-[15px] font-semibold text-(color:--text-primary)">{title}</p>
+          <header className="flex items-center gap-(--spacing-gap-8) px-(--spacing-padding-8) pt-(--spacing-padding-8)">
+            <div className="min-w-0 flex-1 px-(--spacing-padding-8) py-(--spacing-padding-4)">
+              <p className="truncate text-base leading-(--typography-line-height-20) text-(color:--text-primary) [font-weight:var(--font-weight-medium)]">
+                {title}
+              </p>
               {subtitle == null ? null : (
-                <div className="mt-1 text-[13px] text-(color:--text-secondary)">{subtitle}</div>
+                <div className="mt-(--spacing-gap-4) text-xs leading-(--typography-line-height-16) text-(color:--text-secondary)">
+                  {subtitle}
+                </div>
               )}
             </div>
-            <IconButton label="Закрыть" size="sm" onClick={onClose}>
-              <X size={18} />
-            </IconButton>
+            <DialogClose onClose={onClose} label={closeLabel} />
           </header>
         ) : null}
-        <div className={showHeader ? "px-4 pb-4" : "p-4"}>{children}</div>
+        <div className="flex flex-col gap-(--spacing-gap-16) p-(--spacing-padding-16)">
+          {children}
+        </div>
       </div>
     </div>,
     document.body,
