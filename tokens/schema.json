@@ -256,7 +256,9 @@
         "danger": "action-danger-primary",
         "danger-soft-bg": "action-danger-subtle",
         "info": "action-accent-primary",
-        "info-soft-bg": "background-secondary"
+        "info-soft-bg": "background-secondary",
+        "bg-2": "background-secondary",
+        "ink-2": "text-secondary"
       }
     }
   }

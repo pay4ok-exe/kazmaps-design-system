@@ -282,12 +282,14 @@
   - `--danger-soft-bg` → `--action-danger-subtle`
   - `--info` → `--action-accent-primary`
   - `--info-soft-bg` → `--background-secondary`
+  - `--bg-2` → `--background-secondary`
+  - `--ink-2` → `--text-secondary`
 
 ## Расширения брендов
 
 - business: `--brand-50`, `--brand-100`, `--brand-200`, `--brand-300`, `--brand-400`, `--brand-500`, `--brand-600`, `--brand-700`, `--gold-press`
 - booking: `--brand-50`, `--brand-100`, `--brand-200`, `--brand-300`, `--brand-400`, `--brand-500`, `--brand-600`, `--brand-700`, `--gold-press`
-- maps: `--map-tile-style`, `--shimmer-peak`
+- maps: `--map-tile-style`, `--shimmer-peak`, `--surface-map`, `--text-on-map`, `--rating-star`, `--marker-primary`
 
 ## Ожидает значения от дизайнера
 
@@ -302,7 +304,15 @@
 - maps `--text-2xl` = `1.5rem` — ожидает значения от дизайнера
 - maps `--text-3xl` = `1.875rem` — ожидает значения от дизайнера
 - maps light `--shimmer-peak` = `0.94` — ожидает значения от дизайнера
+- maps light `--surface-map` = `#e9ece4` — ожидает значения от дизайнера
+- maps light `--text-on-map` = `#22272e` — ожидает значения от дизайнера
+- maps light `--rating-star` = `#f2a615` — ожидает значения от дизайнера
+- maps light `--marker-primary` = `#e0442f` — ожидает значения от дизайнера
 - maps dark `--shimmer-peak` = `1.12` — ожидает значения от дизайнера
+- maps dark `--surface-map` = `#0a0e18` — ожидает значения от дизайнера
+- maps dark `--text-on-map` = `#22272e` — ожидает значения от дизайнера
+- maps dark `--rating-star` = `#f2a615` — ожидает значения от дизайнера
+- maps dark `--marker-primary` = `#e0442f` — ожидает значения от дизайнера
 
 ## Как отдать значения
 

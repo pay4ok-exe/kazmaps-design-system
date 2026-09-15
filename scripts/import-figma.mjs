@@ -66,6 +66,7 @@ for (const [figmaName, def] of Object.entries(fig.semantics)) {
 // icon/dander — опечатка в макете. Заводим роль под именем источника (иначе
 // трассировка разойдётся) и помечаем описанием, чтобы находка не потерялась.
 for (const theme of ["light", "dark"]) {
+  if (themes[theme]["icon-dander"] === undefined) continue;
   themes[theme]["icon-dander"].$description =
     "опечатка в Figma (ожидается icon/danger) — имя держим как в источнике до правки макета";
 }
@@ -156,10 +157,18 @@ const extras = {
   light: {
     "map-tile-style": { $type: "string", $value: fig.semantics.Map.light },
     "shimmer-peak": { $type: "number", $value: "0.94", $description: WAITING },
+    "surface-map": { $type: "color", $value: "#e9ece4", $description: WAITING },
+    "text-on-map": { $type: "color", $value: "#22272e", $description: WAITING },
+    "rating-star": { $type: "color", $value: "#f2a615", $description: WAITING },
+    "marker-primary": { $type: "color", $value: "#e0442f", $description: WAITING },
   },
   dark: {
     "map-tile-style": { $type: "string", $value: fig.semantics.Map.dark },
     "shimmer-peak": { $type: "number", $value: "1.12", $description: WAITING },
+    "surface-map": { $type: "color", $value: "#0a0e18", $description: WAITING },
+    "text-on-map": { $type: "color", $value: "#22272e", $description: WAITING },
+    "rating-star": { $type: "color", $value: "#f2a615", $description: WAITING },
+    "marker-primary": { $type: "color", $value: "#e0442f", $description: WAITING },
   },
 };
 
@@ -274,6 +283,8 @@ schema.byBrand.maps = {
     "danger-soft-bg": "action-danger-subtle",
     info: "action-accent-primary",
     "info-soft-bg": "background-secondary",
+    "bg-2": "background-secondary",
+    "ink-2": "text-secondary",
     // highlight/highlight-soft и их алиасы gold/gold-soft не переносим: в макете
     // такой роли нет, а в main-web на них нет ни одной ссылки (проверено grep).
   },

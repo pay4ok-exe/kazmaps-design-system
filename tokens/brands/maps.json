@@ -921,6 +921,26 @@
         "$type": "number",
         "$value": "0.94",
         "$description": "ожидает значения от дизайнера"
+      },
+      "surface-map": {
+        "$type": "color",
+        "$value": "#e9ece4",
+        "$description": "ожидает значения от дизайнера"
+      },
+      "text-on-map": {
+        "$type": "color",
+        "$value": "#22272e",
+        "$description": "ожидает значения от дизайнера"
+      },
+      "rating-star": {
+        "$type": "color",
+        "$value": "#f2a615",
+        "$description": "ожидает значения от дизайнера"
+      },
+      "marker-primary": {
+        "$type": "color",
+        "$value": "#e0442f",
+        "$description": "ожидает значения от дизайнера"
       }
     },
     "dark": {
@@ -931,6 +951,26 @@
       "shimmer-peak": {
         "$type": "number",
         "$value": "1.12",
+        "$description": "ожидает значения от дизайнера"
+      },
+      "surface-map": {
+        "$type": "color",
+        "$value": "#0a0e18",
+        "$description": "ожидает значения от дизайнера"
+      },
+      "text-on-map": {
+        "$type": "color",
+        "$value": "#22272e",
+        "$description": "ожидает значения от дизайнера"
+      },
+      "rating-star": {
+        "$type": "color",
+        "$value": "#f2a615",
+        "$description": "ожидает значения от дизайнера"
+      },
+      "marker-primary": {
+        "$type": "color",
+        "$value": "#e0442f",
         "$description": "ожидает значения от дизайнера"
       }
     }
