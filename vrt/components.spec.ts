@@ -30,7 +30,7 @@ for (const id of STORIES) {
           await page.setViewportSize({ width: 390, height: 700 });
         }
         await page.goto(
-          `/iframe.html?viewMode=story&id=${id}&globals=brand:${brand};theme:${theme};canvas:brand`,
+          `/iframe.html?viewMode=story&id=${id}&globals=brand:${brand};theme:${theme}`,
         );
         if (id === "components--dialog") {
           await expect(page.getByRole("dialog").first()).toBeVisible();
@@ -51,7 +51,7 @@ for (const id of STORIES) {
 for (const theme of THEMES) {
   test(`phone-input-picker — ${theme}`, async ({ page }) => {
     await page.goto(
-      `/iframe.html?viewMode=story&id=components-phoneinput--playground&globals=brand:maps;theme:${theme};canvas:brand`,
+      `/iframe.html?viewMode=story&id=components-phoneinput--playground&globals=brand:maps;theme:${theme}`,
     );
     await expect(page.getByLabel("Номер телефона")).toBeVisible();
     await page.getByRole("button", { name: /Регион/ }).click();
@@ -64,9 +64,7 @@ for (const theme of THEMES) {
 
 test("inside strokes do not add to the measured heights", async ({ page }) => {
   const heights = async (id: string, selector: string) => {
-    await page.goto(
-      `/iframe.html?viewMode=story&id=${id}&globals=brand:maps;theme:light;canvas:brand`,
-    );
+    await page.goto(`/iframe.html?viewMode=story&id=${id}&globals=brand:maps;theme:light`);
     await expect(page.locator("#storybook-root > *").first()).toBeVisible();
     return page
       .locator(selector)
