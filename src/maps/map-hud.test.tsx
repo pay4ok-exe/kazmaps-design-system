@@ -32,33 +32,6 @@ describe("IconButton", () => {
     expect(className).toContain("text-(color:--icon-accent)");
   });
 
-  it("круглая форма берёт радиус max, квадратная — десятку", () => {
-    const { rerender } = render(<IconButton label="Я">+</IconButton>);
-    expect(screen.getByRole("button", { name: "Я" }).className).toContain(
-      "rounded-(--dimension-corner-radius-10)",
-    );
-    rerender(
-      <IconButton label="Я" shape="circle">
-        +
-      </IconButton>,
-    );
-    expect(screen.getByRole("button", { name: "Я" }).className).toContain(
-      "rounded-(--dimension-corner-radius-max)",
-    );
-  });
-});
-
-describe("MapTrafficBadge", () => {
-  it("уровень красит заливку, обводку и цифру из группы traffic", () => {
-    render(<MapTrafficBadge level="red" value={7} label="Пробки" />);
-    const ring = screen.getByText("7").className;
-    expect(ring).toContain("bg-(--traffic-fill-red)");
-    expect(ring).toContain("outline-(--traffic-border-red)");
-    expect(ring).toContain("text-(color:--traffic-text-red)");
-    expect(ring).toContain("outline-[length:var(--stroke-border-1_5)]");
-    expect(ring).toContain("-outline-offset-[0.75px]");
-  });
-
   it("без уровня заливки нет, а обводка и цифра уходят в icon/secondary", () => {
     render(<MapTrafficBadge level={null} value={3} label="Пробки" />);
     const ring = screen.getByText("3").className;

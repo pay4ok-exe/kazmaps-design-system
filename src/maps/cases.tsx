@@ -183,12 +183,6 @@ export const KIT_CASES: [string, ReactElement][] = [
       options={[{ value: "almaty", label: "Алматы" }]}
     />,
   ],
-  [
-    "IconButton circle",
-    <IconButton key="k" shape="circle" label="Профиль">
-      <Users size={20} aria-hidden="true" />
-    </IconButton>,
-  ],
   ["MapCompass", <MapCompass key="k" label="На север" heading={35} />],
   ["MapCompass aligned", <MapCompass key="k" label="На север" aligned />],
   [
