@@ -45,7 +45,6 @@ export const SectionError: StoryObj = cases("SectionError");
 export const SectionHeader: StoryObj = cases("SectionHeader");
 export const SegmentedRow: StoryObj = cases("SegmentedRow");
 export const SelectField: StoryObj = cases("SelectField");
-export const ProfileButton: StoryObj = cases("ProfileButton");
 export const MapTrafficBadge: StoryObj = cases("MapTrafficBadge");
 export const WeatherBadge: StoryObj = cases("WeatherBadge");
 export const ForecastCard: StoryObj = cases("ForecastCard");
