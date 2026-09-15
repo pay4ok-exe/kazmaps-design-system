@@ -35,11 +35,28 @@ import {
 const noop = () => undefined;
 
 export const KIT_CASES: [string, ReactElement][] = [
-  ["Button outline", <Button key="k">Сохранить</Button>],
   [
-    "Button filled-accent",
-    <Button key="k" variant="filled-accent">
+    "Button outline",
+    <Button key="k" variant="outline">
+      Сохранить
+    </Button>,
+  ],
+  [
+    "Button accent",
+    <Button key="k" variant="accent">
       Продолжить
+    </Button>,
+  ],
+  [
+    "Button neutral",
+    <Button key="k" variant="neutral">
+      Отмена
+    </Button>,
+  ],
+  [
+    "Button danger",
+    <Button key="k" variant="danger">
+      Удалить
     </Button>,
   ],
   [

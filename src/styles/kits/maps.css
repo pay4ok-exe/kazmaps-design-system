@@ -18,18 +18,32 @@
   .animate-shimmer-placeholder {
     animation: shimmer-placeholder var(--motion-shimmer) var(--ease-standard) infinite;
   }
+  /* Обводка кнопок в макете — вертикальный градиент, а не сплошной цвет: замер
+     пикселей даёт сверху action/<type>/subtle, снизу action/<type>/secondary.
+     border градиент не принимает, поэтому два фоновых слоя — заливка по
+     padding-box, градиент по border-box — а сам border прозрачный.
+
+     Прозрачный border остаётся и в состояниях без обводки (pressed, disabled):
+     там оба стопа просто равны заливке. Убирать border нельзя — при
+     border-box кнопка потеряет 2px высоты ровно в момент нажатия. */
+  .btn-surface {
+    background:
+      linear-gradient(var(--btn-fill), var(--btn-fill)) padding-box,
+      linear-gradient(180deg, var(--btn-ring-from), var(--btn-ring-to)) border-box;
+    border: var(--stroke-border-1) solid transparent;
+  }
   .focus-ring {
     outline: none;
   }
   .focus-ring:focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--border-focus);
     outline-offset: 2px;
   }
   .focus-ring-within {
     outline: none;
   }
   .focus-ring-within:focus-within {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--border-focus);
     outline-offset: 2px;
   }
 }
