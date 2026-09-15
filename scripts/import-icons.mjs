@@ -90,21 +90,27 @@ for (let i = 0; i < wanted.length; i += CHUNK) {
 
 // ---- запись -----------------------------------------------------------------
 
-rmSync(OUT, { recursive: true, force: true });
-mkdirSync(OUT, { recursive: true });
-
-let written = 0;
+const downloads = [];
 for (const node of wanted) {
   const url = urls[node.id];
-  if (!url) {
-    console.error(`нет ссылки для ${node.file} (${node.id})`);
-    continue;
-  }
-  const svg = await (await fetch(url)).text();
-  writeFileSync(join(OUT, `${node.file}.svg`), svg.trimEnd() + "\n");
-  written += 1;
+  if (!url) throw new Error(`нет ссылки для ${node.file} (${node.id})`);
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`${node.file}: ${res.status} ${res.statusText}`);
+  const svg = await res.text();
+  if (!svg.trimStart().startsWith("<svg")) throw new Error(`${node.file}: ответ не SVG`);
+  downloads.push({ file: node.file, svg });
+}
+
+rmSync(OUT, { recursive: true, force: true });
+mkdirSync(OUT, { recursive: true });
+for (const { file, svg } of downloads) {
+  writeFileSync(join(OUT, `${file}.svg`), svg.trimEnd() + "\n");
 }
 
 console.log(
-  JSON.stringify({ components: wanted.length, written, files: readdirSync(OUT).length }, null, 2),
+  JSON.stringify(
+    { components: wanted.length, written: downloads.length, files: readdirSync(OUT).length },
+    null,
+    2,
+  ),
 );
