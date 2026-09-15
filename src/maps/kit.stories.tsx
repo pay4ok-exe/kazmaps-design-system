@@ -59,13 +59,13 @@ export const TextInput: StoryObj = cases("TextInput");
 export const Toggle: StoryObj = cases("Toggle");
 export const ToggleSwitch: StoryObj = cases("ToggleSwitch");
 
-export const Dialog: StoryObj = { name: "Dialog (оверлей)", render: () => OVERLAY_CASES[0][1] };
+export const Dialog: StoryObj = { name: "Dialog (overlay)", render: () => OVERLAY_CASES[0][1] };
 export const BottomSheet: StoryObj = {
-  name: "BottomSheet (оверлей)",
+  name: "BottomSheet (overlay)",
   render: () => OVERLAY_CASES[1][1],
 };
-export const Toast: StoryObj = { name: "Toast (оверлей)", render: () => OVERLAY_CASES[2][1] };
+export const Toast: StoryObj = { name: "Toast (overlay)", render: () => OVERLAY_CASES[2][1] };
 export const DayPicker: StoryObj = {
-  name: "DayPicker (оверлей)",
+  name: "DayPicker (overlay)",
   render: () => OVERLAY_CASES[3][1],
 };

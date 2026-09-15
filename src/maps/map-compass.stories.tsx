@@ -14,19 +14,19 @@ const meta: Meta<typeof MapCompass> = {
 };
 export default meta;
 
-export const Песочница: StoryObj<typeof MapCompass> = {};
+export const Playground: StoryObj<typeof MapCompass> = {};
 
-export const Состояния: StoryObj = {
+export const States: StoryObj = {
   render: () => (
     <div className="flex items-center gap-(--spacing-gap-24)">
       {[
         { label: "Default", props: {} },
         { label: "Aligned", props: { aligned: true } },
-        { label: "Азимут 35°", props: { heading: 35 } },
-        { label: "Азимут 180°", props: { heading: 180 } },
+        { label: "Heading 35°", props: { heading: 35 } },
+        { label: "Heading 180°", props: { heading: 180 } },
       ].map(({ label, props }) => (
         <div key={label} className="flex flex-col items-center gap-(--spacing-gap-8)">
-          <MapCompass label={`Компас: ${label}`} {...props} />
+          <MapCompass label={`Compass: ${label}`} {...props} />
           <span className="text-[10px] leading-(--typography-line-height-12) text-(color:--text-tertiary)">
             {label}
           </span>
@@ -36,7 +36,7 @@ export const Состояния: StoryObj = {
   ),
 };
 
-export const ОтДействия: StoryObj = {
+export const Interactive: StoryObj = {
   render: function Interactive() {
     const [heading, setHeading] = useState(35);
     return (
@@ -50,7 +50,7 @@ export const ОтДействия: StoryObj = {
           }}
         />
         <div className="flex flex-col gap-(--spacing-gap-4)">
-          <span className="text-xs text-(color:--text-secondary)">азимут {heading}°</span>
+          <span className="text-xs text-(color:--text-secondary)">heading {heading}°</span>
           <div className="flex gap-(--spacing-gap-8)">
             {[-45, 45].map((delta) => (
               <button
@@ -66,7 +66,7 @@ export const ОтДействия: StoryObj = {
             ))}
           </div>
           <span className="text-[10px] leading-(--typography-line-height-12) text-(color:--text-tertiary)">
-            клик по компасу возвращает на север
+            clicking the compass resets to north
           </span>
         </div>
       </div>

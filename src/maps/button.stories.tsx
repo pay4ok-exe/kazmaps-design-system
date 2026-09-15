@@ -41,24 +41,27 @@ function Row({
   );
 }
 
-export const ВсеВарианты: StoryObj = {
+export const AllVariants: StoryObj = {
   render: () => (
     <div className="flex flex-col gap-(--spacing-gap-24)">
-      <Row title="Из макета" hint="accent / neutral / danger">
+      <Row title="From the design" hint="accent / neutral / danger">
         {MACKET.map((variant) => (
           <Button key={variant} variant={variant}>
             {variant}
           </Button>
         ))}
       </Row>
-      <Row title="Из макета, с иконкой" hint="паддинг справа 10 вместо 12, gap 6, вес 450">
+      <Row
+        title="From the design, with icon"
+        hint="right padding 10 instead of 12, gap 6, weight 450"
+      >
         {MACKET.map((variant) => (
           <Button key={variant} variant={variant} icon={icon}>
             {variant}
           </Button>
         ))}
       </Row>
-      <Row title="Выключенные" hint="заливка action/disabled, текст text/tertiary">
+      <Row title="Disabled" hint="action/disabled fill, text/tertiary label">
         {MACKET.map((variant) => (
           <Button key={variant} variant={variant} disabled>
             {variant}
@@ -66,8 +69,8 @@ export const ВсеВарианты: StoryObj = {
         ))}
       </Row>
       <Row
-        title="Наши, вне макета"
-        hint="outline — 45 вызовов из 77 в main-web, замены в макете нет"
+        title="Ours, not in the design"
+        hint="outline — 45 of 77 call sites in main-web, no counterpart in the design"
       >
         {OURS.map((variant) => (
           <Button key={variant} variant={variant}>
@@ -84,21 +87,21 @@ export const ВсеВарианты: StoryObj = {
   ),
 };
 
-export const НаВсюШирину: StoryObj = {
+export const FullWidth: StoryObj = {
   render: () => (
     <div className="flex w-[320px] flex-col gap-(--spacing-gap-8)">
       <Button fullWidth>accent</Button>
       <Button fullWidth variant="neutral" icon={icon}>
-        neutral с иконкой
+        neutral with icon
       </Button>
       <Button fullWidth variant="danger" disabled>
-        danger выключен
+        danger disabled
       </Button>
     </div>
   ),
 };
 
-export const Песочница: StoryObj<typeof Button> = {
+export const Playground: StoryObj<typeof Button> = {
   args: { children: "Button", variant: "accent", disabled: false, fullWidth: false },
   argTypes: { variant: { control: "inline-radio", options: [...MACKET, ...OURS] } },
 };
