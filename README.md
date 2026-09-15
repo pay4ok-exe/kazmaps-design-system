@@ -98,8 +98,7 @@ import { IconSearchBold, IconStarLight } from "@temirtator/kazmaps-design-system
 
 ## Компоненты
 
-Действия: `Button` (`accent` | `neutral` | `danger`, плюс `outline` | `outline-accent` — их в
-макете нет), `IconButton` (Map Action, 36), `IconButtonGroup` (зум), `Chip`, `Toggle`,
+Действия: `Button` (`accent` | `neutral` | `danger`), `IconButton` (Map Action, 36), `IconButtonGroup` (зум), `Chip`, `Toggle`,
 `ToggleSwitch`, `SegmentedRow`, `Avatar`.
 
 Поля: `TextInput`, `PasswordInput`, `SearchInput`, `PhoneInput`, `CodeInput`, `SelectField`,

@@ -28,6 +28,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
   (`docs/brands.md`). Шрифты брендов сохранены. Значения ждут макетов дизайнера — пометка
   `_pending` в файле бренда.
 - **Ломающее.** `styles/kits/maps.css` → `styles/kit.css`: утилиты и keyframes нужны любому бренду.
+- **Ломающее.** `Button`: варианты `outline` и `outline-accent` удалены — в макете их нет; `SectionError`
+  и main-web переходят на `neutral`.
 - Вход `/maps` оставлен как реэкспорт корня для main-web; новые импорты — из корня.
 - `theme.css` объявляет `--color-*` только для ролей типа `color` — по `$type` токена, а не по
   имени группы.

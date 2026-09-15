@@ -1,6 +1,6 @@
 import type { ComponentProps, ReactNode } from "react";
 
-export type ButtonVariant = "accent" | "neutral" | "danger" | "outline" | "outline-accent";
+export type ButtonVariant = "accent" | "neutral" | "danger";
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   accent: [
@@ -27,25 +27,11 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
     "active:[--btn-ring-from:var(--action-danger-secondary)]",
     "active:[--btn-ring-to:var(--action-danger-secondary)]",
   ].join(" "),
-
-  outline: [
-    "inset-ring-[length:var(--stroke-border-1)] inset-ring-(--border-primary)",
-    "bg-(--background-primary) text-(color:--text-secondary)",
-    "active:bg-(--background-secondary) active:text-(color:--text-primary)",
-  ].join(" "),
-  "outline-accent": [
-    "inset-ring-[length:var(--stroke-border-1)] inset-ring-(--border-primary)",
-    "bg-(--background-primary) text-(color:--text-accent)",
-    "active:bg-(--background-secondary)",
-  ].join(" "),
 };
-
-const GRADIENT_RING = new Set<ButtonVariant>(["accent", "neutral", "danger"]);
 
 const DISABLED_CLASSES = [
   "disabled:cursor-not-allowed",
   "disabled:bg-(--action-disabled)",
-  "disabled:inset-ring-(--action-disabled)",
   "disabled:[--btn-ring-from:var(--action-disabled)]",
   "disabled:[--btn-ring-to:var(--action-disabled)]",
   "disabled:text-(color:--text-tertiary)",
@@ -78,12 +64,10 @@ export function Button({
       {...rest}
       className={`relative inline-flex items-center justify-center rounded-(--dimension-corner-radius-10) whitespace-nowrap transition-interactive focus-ring ${BASE_CLASSES} ${icon ? CONTENT_CLASSES.withIcon : CONTENT_CLASSES.textOnly} ${VARIANT_CLASSES[variant]} ${DISABLED_CLASSES} ${fullWidth ? "w-full" : ""} ${className}`}
     >
-      {GRADIENT_RING.has(variant) ? (
-        <span
-          aria-hidden="true"
-          className="gradient-ring pointer-events-none absolute inset-0 rounded-[inherit]"
-        />
-      ) : null}
+      <span
+        aria-hidden="true"
+        className="gradient-ring pointer-events-none absolute inset-0 rounded-[inherit]"
+      />
       {children}
       {icon}
     </button>

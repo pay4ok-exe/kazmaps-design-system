@@ -10,7 +10,6 @@ const meta: Meta<typeof Button> = {
 export default meta;
 
 const MACKET: ButtonVariant[] = ["accent", "neutral", "danger"];
-const OURS: ButtonVariant[] = ["outline", "outline-accent"];
 
 const icon = <Star size={16} aria-hidden="true" />;
 
@@ -67,21 +66,6 @@ export const AllVariants: StoryObj = {
           </Button>
         ))}
       </Row>
-      <Row
-        title="Ours, not in the design"
-        hint="outline — 45 of 77 call sites in main-web, no counterpart in the design"
-      >
-        {OURS.map((variant) => (
-          <Button key={variant} variant={variant}>
-            {variant}
-          </Button>
-        ))}
-        {OURS.map((variant) => (
-          <Button key={`${variant}-d`} variant={variant} disabled>
-            {variant} disabled
-          </Button>
-        ))}
-      </Row>
     </div>
   ),
 };
@@ -102,5 +86,5 @@ export const FullWidth: StoryObj = {
 
 export const Playground: StoryObj<typeof Button> = {
   args: { children: "Button", variant: "accent", disabled: false, fullWidth: false },
-  argTypes: { variant: { control: "inline-radio", options: [...MACKET, ...OURS] } },
+  argTypes: { variant: { control: "inline-radio", options: MACKET } },
 };

@@ -42,12 +42,6 @@ const noop = () => undefined;
 
 export const KIT_CASES: [string, ReactElement][] = [
   [
-    "Button outline",
-    <Button key="k" variant="outline">
-      Сохранить
-    </Button>,
-  ],
-  [
     "Button accent",
     <Button key="k" variant="accent">
       Продолжить

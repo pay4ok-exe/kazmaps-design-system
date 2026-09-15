@@ -72,14 +72,6 @@ describe("Button", () => {
     expect(ring?.className).toContain("pointer-events-none");
   });
 
-  it("у outline кольцо сплошное и тоже внутреннее", () => {
-    const { container } = render(<Button variant="outline">outline</Button>);
-    const className = screen.getByRole("button", { name: "outline" }).className;
-    expect(className).toContain("inset-ring-(--border-primary)");
-    expect(usesBorderUtility(className)).toBe(false);
-    expect(container.querySelector(".gradient-ring")).toBeNull();
-  });
-
   it("fullWidth растягивает кнопку, type=submit пробрасывается", () => {
     render(
       <Button type="submit" fullWidth>
@@ -93,7 +85,7 @@ describe("Button", () => {
 
   it("disabled гасит кнопку ролями макета, а не прозрачностью", () => {
     render(
-      <Button variant="outline" disabled>
+      <Button variant="neutral" disabled>
         x
       </Button>,
     );
