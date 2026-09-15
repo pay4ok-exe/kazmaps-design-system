@@ -55,17 +55,24 @@ function Grid({ entries, min = 96 }: { entries: readonly Entry[]; min?: number }
   );
 }
 
-function Section({ name }: { name: string }) {
+function Section({ name, note }: { name: string; note?: string }) {
   const entries = inSection(name);
   const paired = new Set(
     entries.filter((e) => e.weight).map((e) => e.slug.replace(/-(bold|light)$/, "")),
   );
   return (
     <div className="flex flex-col gap-(--spacing-gap-8)">
-      <p className="text-xs leading-(--typography-line-height-16) text-(color:--text-secondary)">
-        {entries.length} шт. · в двух начертаниях {paired.size} · в одном{" "}
-        {entries.filter((e) => !e.weight).length}
-      </p>
+      <div className="flex flex-col gap-(--spacing-gap-2)">
+        <p className="text-xs leading-(--typography-line-height-16) text-(color:--text-secondary)">
+          {entries.length} шт. · в двух начертаниях {paired.size} · в одном{" "}
+          {entries.filter((e) => !e.weight).length}
+        </p>
+        {note ? (
+          <p className="max-w-[560px] text-[10px] leading-(--typography-line-height-12) text-(color:--text-tertiary)">
+            {note}
+          </p>
+        ) : null}
+      </div>
       <Grid entries={entries} />
     </div>
   );
@@ -86,7 +93,12 @@ export const MapUiIcons: StoryObj = {
 export const WeatherIcons: StoryObj = {
   name: "Weather Icons",
   globals: MAPS,
-  render: () => <Section name="Weather Icons" />,
+  render: () => (
+    <Section
+      name="Weather Icons"
+      note="Единственные многоцветные в наборе: несут роли weather/*, а не currentColor. Переключите тему в тулбаре — цвета обязаны измениться."
+    />
+  ),
 };
 
 export const Все: StoryObj = {
@@ -141,11 +153,6 @@ export const ОдноНачертание: StoryObj = {
   name: "Только одно начертание",
   globals: MAPS,
   render: () => <Grid entries={ICON_MANIFEST.filter((i) => !i.weight)} />,
-};
-
-export const Погода: StoryObj = {
-  globals: MAPS,
-  render: () => <Grid entries={ICON_MANIFEST.filter((i) => i.multicolour)} />,
 };
 
 export const Раскраска: StoryObj = {
