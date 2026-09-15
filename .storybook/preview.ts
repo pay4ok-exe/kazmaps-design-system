@@ -1,10 +1,15 @@
 import type { Preview } from "@storybook/react-vite";
 
 import "@fontsource-variable/inter";
+import "@fontsource/lexend/400.css";
+import "@fontsource/lexend/500.css";
+import "@fontsource/lexend/600.css";
+import "@fontsource/manrope/400.css";
+import "@fontsource/manrope/500.css";
+import "@fontsource/manrope/600.css";
 
 import "./preview.css";
 
-// Страница «Components - Web» в Figma: фон #a7a7a7, секции залиты белым на 25 %.
 const FIGMA_CANVAS = "color-mix(in srgb, #ffffff 25%, #a7a7a7)";
 
 const preview: Preview = {

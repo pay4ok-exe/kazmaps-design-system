@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 const THEMES = ["light", "dark"] as const;
 const BRANDS = ["maps", "business", "booking"] as const;
@@ -30,7 +30,7 @@ for (const id of STORIES) {
           await page.setViewportSize({ width: 390, height: 700 });
         }
         await page.goto(
-          `/iframe.html?viewMode=story&id=${id}&globals=brand:${brand};theme:${theme}`,
+          `/iframe.html?viewMode=story&id=${id}&globals=brand:${brand};theme:${theme};canvas:brand`,
         );
         if (id === "components--dialog") {
           await expect(page.getByRole("dialog").first()).toBeVisible();
@@ -51,7 +51,7 @@ for (const id of STORIES) {
 for (const theme of THEMES) {
   test(`phone-input-picker — ${theme}`, async ({ page }) => {
     await page.goto(
-      `/iframe.html?viewMode=story&id=components-phoneinput--playground&globals=brand:maps;theme:${theme}`,
+      `/iframe.html?viewMode=story&id=components-phoneinput--playground&globals=brand:maps;theme:${theme};canvas:brand`,
     );
     await expect(page.getByLabel("Номер телефона")).toBeVisible();
     await page.getByRole("button", { name: /Регион/ }).click();
@@ -64,7 +64,9 @@ for (const theme of THEMES) {
 
 test("inside strokes do not add to the measured heights", async ({ page }) => {
   const heights = async (id: string, selector: string) => {
-    await page.goto(`/iframe.html?viewMode=story&id=${id}&globals=brand:maps;theme:light`);
+    await page.goto(
+      `/iframe.html?viewMode=story&id=${id}&globals=brand:maps;theme:light;canvas:brand`,
+    );
     await expect(page.locator("#storybook-root > *").first()).toBeVisible();
     return page
       .locator(selector)
@@ -91,4 +93,32 @@ test("inside strokes do not add to the measured heights", async ({ page }) => {
   expect(new Set(await heights("components--code-input", "#storybook-root input"))).toEqual(
     new Set([48]),
   );
+});
+
+async function readBackgroundPrimary(page: Page): Promise<string> {
+  return page.evaluate(() =>
+    getComputedStyle(document.documentElement).getPropertyValue("--background-primary").trim(),
+  );
+}
+
+test.describe("maps follows the system theme", () => {
+  test.use({ colorScheme: "dark" });
+
+  test("no data-theme falls back to the system dark scheme", async ({ page }) => {
+    await page.goto(
+      "/iframe.html?viewMode=story&id=components--toggle&globals=brand:maps;canvas:brand",
+    );
+    await expect(page.locator("#storybook-root > *").first()).toBeVisible();
+    await page.evaluate(() => document.documentElement.removeAttribute("data-theme"));
+    await expect.poll(() => readBackgroundPrimary(page)).toBe("#222528");
+  });
+
+  test("explicit data-theme=light overrides the system dark scheme", async ({ page }) => {
+    await page.goto(
+      "/iframe.html?viewMode=story&id=components--toggle&globals=brand:maps;canvas:brand",
+    );
+    await expect(page.locator("#storybook-root > *").first()).toBeVisible();
+    await page.evaluate(() => document.documentElement.setAttribute("data-theme", "light"));
+    await expect.poll(() => readBackgroundPrimary(page)).toBe("#fff");
+  });
 });
