@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { ownedStatics } from "./owned-statics.mjs";
+import { ownedStatics, validateOwnStatics } from "./owned-statics.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (p) => JSON.parse(readFileSync(join(ROOT, p), "utf8"));
@@ -175,12 +175,7 @@ for (const [role, def] of Object.entries(kit)) {
 
 const OTHER_BRANDS = ["business", "booking"];
 for (const name of OTHER_BRANDS) {
-  const unknown = (read(`tokens/brands/${name}.json`)._ownStatics ?? []).filter(
-    (role) => !staticRoles.includes(role),
-  );
-  if (unknown.length > 0) {
-    throw new Error(`${name}: _ownStatics называет роли вне контракта: ${unknown.join(", ")}`);
-  }
+  validateOwnStatics(name, read(`tokens/brands/${name}.json`), staticRoles);
 }
 
 write("tokens/brands/maps.json", {

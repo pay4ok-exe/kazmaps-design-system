@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { ownedStatics } from "../../scripts/owned-statics.mjs";
+import { ownedStatics, validateOwnStatics } from "../../scripts/owned-statics.mjs";
 
 const ROOT = join(__dirname, "..", "..");
 const read = (p: string): string => readFileSync(join(ROOT, p), "utf8");
@@ -80,7 +80,9 @@ for (const name of BRANDS) {
     });
 
     it("own statics name contract static roles", () => {
-      for (const role of brand._ownStatics ?? []) expect(schema.static).toContain(role);
+      expect(() => {
+        validateOwnStatics(name, brand, schema.static);
+      }).not.toThrow();
     });
 
     it("statics it does not own follow maps", () => {
@@ -136,3 +138,14 @@ for (const name of BRANDS) {
     });
   });
 }
+
+describe("validateOwnStatics", () => {
+  it("rejects a non-array list and roles outside the contract", () => {
+    expect(() => {
+      validateOwnStatics("x", { _ownStatics: "shadow-hud" }, ["shadow-hud"]);
+    }).toThrow(/массивом/);
+    expect(() => {
+      validateOwnStatics("x", { _ownStatics: ["shadow-hudd"] }, ["shadow-hud"]);
+    }).toThrow(/вне контракта/);
+  });
+});
