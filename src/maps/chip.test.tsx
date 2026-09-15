@@ -38,3 +38,19 @@ describe("Chip", () => {
     expect(className).toContain("hover:border-(--border-secondary)");
   });
 });
+
+describe("Chip: тон", () => {
+  /* Welcome Label из секции Login — тот же чип с другой поверхностью и синей
+     иконкой. Отдельным компонентом не заводили, потому что геометрия совпадает. */
+  it("neutral повторяет Category Label, info — Welcome Label", () => {
+    const { rerender } = render(<Chip label="Кафе" icon={<span />} />);
+    let chip = screen.getByRole("button", { name: "Кафе" });
+    expect(chip.className).toContain("bg-(--background-primary)");
+    expect(chip.querySelector("span")?.className).toContain("bg-(--tag-gray)");
+
+    rerender(<Chip label="Кафе" icon={<span />} tone="info" />);
+    chip = screen.getByRole("button", { name: "Кафе" });
+    expect(chip.className).toContain("bg-(--background-secondary)");
+    expect(chip.querySelector("span")?.className).toContain("bg-(--tag-blue)");
+  });
+});

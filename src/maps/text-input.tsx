@@ -3,6 +3,14 @@
 import type { InputHTMLAttributes, ReactNode } from "react";
 import { useId } from "react";
 
+/* Замер макета: Contact Input, Type=Email (148:721), четыре состояния. Паддинг
+   8/12, радиус 10, фон background/secondary, текст 16/20 весом 400. Высота 36
+   складывается из паддингов и строки, числом не задана.
+
+   Состояния меняют рамку: Default — нет, Hover — border/secondary,
+   Focus — border/focus, Error — border/error. В ошибке макет красит и САМ ТЕКСТ
+   поля в text/danger, не только рамку — это замер, а не вольность. */
+
 export type TextInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> & {
   value: string;
   onChange: (value: string) => void;
@@ -25,24 +33,30 @@ export function TextInput({
 }: TextInputProps) {
   const id = useId();
   const errorId = `${id}-error`;
+  const invalid = error !== null;
 
   return (
     <div className={className}>
       {label == null ? null : (
         <label
           htmlFor={id}
-          className="mb-1.5 block text-[11.5px] font-semibold text-(color:--text-primary)"
+          className="mb-(--spacing-gap-4) block text-xs leading-(--typography-line-height-16) text-(color:--text-secondary) [font-weight:var(--font-weight-medium)]"
         >
           {label}
         </label>
       )}
       <div
-        className={`flex h-[47px] items-center overflow-hidden rounded-[8px] border bg-(--surface-panel) transition-surface focus-ring-within ${
-          error === null ? "border-(--border-input)" : "border-(--danger)"
+        /* Рамка прозрачна, а не отсутствует: в макете она появляется только с
+           наведением, а при border-box её появление сдвинуло бы текст. */
+        className={`flex items-center gap-(--spacing-gap-8) overflow-hidden rounded-(--dimension-corner-radius-10) border-(length:--stroke-border-1) border-solid bg-(--background-secondary) px-(--spacing-padding-12) py-(--spacing-padding-8) transition-surface ${
+          invalid
+            ? "border-(--border-error)"
+            : "border-transparent hover:border-(--border-secondary) has-[input:focus]:border-(--border-focus)"
         }`}
       >
         {prefix == null ? null : (
-          <span className="flex h-full shrink-0 items-center border-r border-(--border-input) px-2.5 text-[13.5px] text-(color:--text-tertiary)">
+          // Префикса в макете нет — остался от кита, на нём стоят формы main-web.
+          <span className="shrink-0 text-base leading-(--typography-line-height-20) text-(color:--text-tertiary)">
             {prefix}
           </span>
         )}
@@ -52,18 +66,23 @@ export function TextInput({
           onChange={(event) => {
             onChange(event.target.value);
           }}
-          aria-invalid={error !== null}
-          aria-describedby={error === null ? undefined : errorId}
-          className="min-w-0 flex-1 bg-transparent px-3 text-[13.5px] text-(color:--text-primary) outline-none placeholder:text-(color:--text-tertiary)"
+          aria-invalid={invalid}
+          aria-describedby={invalid ? errorId : undefined}
+          className={`min-w-0 flex-1 bg-transparent text-base leading-(--typography-line-height-20) outline-none [font-weight:var(--font-weight-regular)] placeholder:text-(color:--text-tertiary) ${
+            invalid ? "text-(color:--text-danger)" : "text-(color:--text-primary)"
+          }`}
           {...rest}
         />
-        {trailing == null ? null : <span className="shrink-0 pr-1.5">{trailing}</span>}
+        {trailing == null ? null : <span className="shrink-0">{trailing}</span>}
       </div>
-      {error === null ? null : (
-        <p id={errorId} className="mt-1.5 text-[12px] text-(color:--danger)">
+      {invalid ? (
+        <p
+          id={errorId}
+          className="mt-(--spacing-gap-4) text-xs leading-(--typography-line-height-16) text-(color:--text-danger)"
+        >
           {error}
         </p>
-      )}
+      ) : null}
     </div>
   );
 }

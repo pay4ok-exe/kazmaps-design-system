@@ -1,4 +1,4 @@
-import { Coffee, Layers, MapPin, Route } from "lucide-react";
+import { Coffee, Layers, MapPin, Route, Users } from "lucide-react";
 import { type ReactElement, useEffect } from "react";
 
 import {
@@ -6,6 +6,7 @@ import {
   BottomSheet,
   Button,
   Chip,
+  CodeInput,
   DayPicker,
   Dialog,
   EmptyState,
@@ -71,6 +72,17 @@ export const KIT_CASES: [string, ReactElement][] = [
   ["Chip", <Chip key="k" label="Кафе" />],
   ["Chip active", <Chip key="k" label="Кафе" active />],
   ["Chip с иконкой", <Chip key="k" label="Кафе" icon={<Coffee size={16} aria-hidden="true" />} />],
+  [
+    "Chip info",
+    <Chip
+      key="k"
+      tone="info"
+      label="Добро пожаловать"
+      icon={<Users size={16} aria-hidden="true" />}
+    />,
+  ],
+  ["CodeInput", <CodeInput key="k" values={["1", "2", "", ""]} onChange={noop} />],
+  ["CodeInput error", <CodeInput key="k" values={["1", "2", "3", "4"]} onChange={noop} invalid />],
   ["InDevelopment", <InDevelopment key="k">Скоро</InDevelopment>],
   ["EmptyState", <EmptyState key="k" title="Пусто" description="Здесь пока ничего нет" />],
   [

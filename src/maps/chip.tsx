@@ -8,14 +8,27 @@ import type { ReactNode } from "react";
    Высота 28 числом нигде не задана: она складывается из паддингов и чипа
    (2 + 24 + 2), поэтому и здесь не фиксируется. */
 
+/* Welcome Label (157:895) из секции Login — тот же чип с точностью до двух
+   заливок: поверхность background/secondary вместо primary и иконочный чип
+   tag/blue вместо tag/gray. Геометрия совпадает полностью, поэтому это тон, а
+   не отдельный компонент. */
+export type ChipTone = "neutral" | "info";
+
 export interface ChipProps {
   label: string;
   /** Иконка в чипе слева. В макете она есть всегда; без неё паддинг симметричный. */
   icon?: ReactNode;
+  /** neutral — Category Label, info — Welcome Label. */
+  tone?: ChipTone;
   active?: boolean;
   onClick?: () => void;
   className?: string;
 }
+
+const TONE = {
+  neutral: { surface: "bg-(--background-primary)", badge: "bg-(--tag-gray)" },
+  info: { surface: "bg-(--background-secondary)", badge: "bg-(--tag-blue)" },
+};
 
 /* Без иконки паддинг слева измерить негде — в макете такого варианта нет.
    Берём измеренную правую шестёрку на обе стороны: так высота остаётся теми же
@@ -33,18 +46,28 @@ const STATE = {
   idle: "border-transparent text-(color:--text-primary) hover:border-(--border-secondary)",
 };
 
-export function Chip({ label, icon, active = false, onClick, className = "" }: ChipProps) {
+export function Chip({
+  label,
+  icon,
+  tone = "neutral",
+  active = false,
+  onClick,
+  className = "",
+}: ChipProps) {
+  const palette = TONE[tone];
   return (
     <button
       type="button"
       aria-pressed={active}
       onClick={onClick}
-      className={`inline-flex items-center gap-(--spacing-gap-6) rounded-(--dimension-corner-radius-10) border-(length:--stroke-border-1) border-solid bg-(--background-primary) text-xs leading-(--typography-line-height-16) transition-interactive [font-weight:var(--font-weight-book)] focus-ring ${
+      className={`inline-flex items-center gap-(--spacing-gap-6) rounded-(--dimension-corner-radius-10) border-(length:--stroke-border-1) border-solid text-xs leading-(--typography-line-height-16) transition-interactive [font-weight:var(--font-weight-book)] focus-ring ${palette.surface} ${
         icon ? PADDING.withIcon : PADDING.textOnly
       } ${active ? STATE.active : STATE.idle} ${className}`}
     >
       {icon == null ? null : (
-        <span className="inline-flex size-(--dimension-width-24) shrink-0 items-center justify-center rounded-(--dimension-corner-radius-8) bg-(--tag-gray) p-(--spacing-padding-4) text-(color:--icon-white)">
+        <span
+          className={`inline-flex size-(--dimension-width-24) shrink-0 items-center justify-center rounded-(--dimension-corner-radius-8) p-(--spacing-padding-4) text-(color:--icon-white) ${palette.badge}`}
+        >
           {icon}
         </span>
       )}

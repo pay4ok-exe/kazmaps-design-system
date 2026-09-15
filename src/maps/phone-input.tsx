@@ -100,11 +100,11 @@ export function PhoneInput({
       {label == null ? null : (
         <label
           htmlFor={id}
-          className="mb-1.5 block text-[11.5px] font-semibold text-(color:--text-primary)"
+          className="mb-(--spacing-gap-4) block text-xs leading-(--typography-line-height-16) text-(color:--text-secondary) [font-weight:var(--font-weight-medium)]"
         >
           {label}
           {required ? (
-            <span className="ml-0.5 text-(color:--danger)" aria-hidden="true">
+            <span className="ml-0.5 text-(color:--text-danger)" aria-hidden="true">
               *
             </span>
           ) : null}
@@ -113,8 +113,10 @@ export function PhoneInput({
 
       <div ref={containerRef} className="relative">
         <div
-          className={`flex h-[47px] items-center overflow-hidden rounded-[8px] border bg-(--surface-panel) transition-surface focus-ring-within ${
-            hasError ? "border-(--danger)" : "border-(--border-input)"
+          className={`flex items-center gap-(--spacing-gap-8) overflow-hidden rounded-(--dimension-corner-radius-10) border-(length:--stroke-border-1) border-solid bg-(--background-secondary) py-(--spacing-padding-4) pr-(--spacing-padding-8) pl-(--spacing-padding-4) transition-surface ${
+            hasError
+              ? "border-(--border-error)"
+              : "border-transparent hover:border-(--border-secondary) has-[input:focus]:border-(--border-focus)"
           } ${disabled ? "opacity-50" : ""}`}
         >
           <button
@@ -137,7 +139,7 @@ export function PhoneInput({
                 setOpen(true);
               }
             }}
-            className="flex h-full shrink-0 items-center gap-1.5 border-r border-(--border-input) px-2.5 text-[13.5px] text-(color:--text-tertiary) focus-ring"
+            className="flex shrink-0 items-center gap-(--spacing-gap-4) rounded-(--dimension-corner-radius-6) bg-(--background-primary) py-(--spacing-padding-6) pr-(--spacing-padding-6) pl-(--spacing-padding-8) text-xs leading-(--typography-line-height-16) text-(color:--text-primary) focus-ring"
           >
             <RegionFlag iso={region.iso} size={16} />
             <span className="tabular-nums">+{region.dial}</span>
@@ -171,7 +173,7 @@ export function PhoneInput({
               placeholder={region.mask ? region.mask.replace(/9/g, "_") : undefined}
               aria-describedby={hasDesc ? descId : undefined}
               aria-invalid={hasError || undefined}
-              className="min-w-0 flex-1 bg-transparent px-3 text-[13.5px] text-(color:--text-primary) outline-none placeholder:text-(color:--text-tertiary)"
+              className={`min-w-0 flex-1 bg-transparent text-base leading-(--typography-line-height-20) outline-none [font-weight:var(--font-weight-regular)] placeholder:text-(color:--text-tertiary) ${hasError ? "text-(color:--text-danger)" : "text-(color:--text-primary)"}`}
             />
           </InputMask>
         </div>
@@ -192,8 +194,8 @@ export function PhoneInput({
       {hasDesc ? (
         <p
           id={descId}
-          className={`mt-1.5 text-[12px] ${
-            hasError ? "text-(color:--danger)" : "text-(color:--text-tertiary)"
+          className={`mt-(--spacing-gap-4) text-xs leading-(--typography-line-height-16) ${
+            hasError ? "text-(color:--text-danger)" : "text-(color:--text-tertiary)"
           }`}
         >
           {description}
