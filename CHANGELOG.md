@@ -5,49 +5,58 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
 
 ## [1.0.0] — 2026-09-15
 
+Один кит на все бренды. Все пункты «Removed» и отмеченные пункты «Changed» ломают совместимость с 0.7.0.
+Таблица замен для business-client и booking-client — `docs/brands.md`.
+
+### Removed
+
+- `atoms` и `molecules`: `Input`, `Select`, `Badge`, `Tabs`, `FormField`, `ErrorBoundary`,
+  `ThemeToggle`, `SegmentedControl`, `Spinner`, `Skeleton`, `Heading`, `Text`, `Caption`,
+  `Checkbox`, `Textarea`, `Divider`, `ChipPill` и прежние корневые `Button`, `Avatar`, `Chip`,
+  `Toggle`, `PhoneInput`, `SearchInput`, `StarRating`. Корневой вход отдаёт компоненты макета.
+- Корневые `colorFor`, `DEFAULT_REGION` и тип `RegionGroup`. Цвет по строке нужен только аватару —
+  `Avatar` берёт его из `seed`; другим местам приложения функцию стоит перенести к себе.
+- `AvatarInitial` и `AvatarInitialSize`: запасная буква и цвет из `seed` переехали в `Avatar`.
+- `ProfileButton`: переименован в `Avatar`.
+- `LogoPin` и `LogoPinProps`: разметка значка теперь внутри `LogoLockup`.
+- `size` у `Button` и `IconButton`, `shape` у `IconButton`, типы `ButtonSize`, `IconButtonSize`,
+  `IconButtonShape`: в макете одна высота — 40 у кнопки и 36 у кнопки карты.
+- Варианты `Button` `outline` и `outline-accent`: в макете их нет, `SectionError` перешёл на `neutral`.
+- `PhoneInput`: проп `hint`. Под полем нет ни подсказок, ни текста ошибки — любой текст показывает тост.
+- Прежний контракт токенов (`--surface-*`, `--text-muted`, `--accent*`, `--radius-*`, `--brand`,
+  `--ink`, `--card`, `--line`, `--muted`, `--bg`, `--gold`, `--highlight*`, `--shadow-sm/md/lg`),
+  все алиасы, `schema.byBrand` с `replacesContract`, роли `--marker-primary` и `--map-tile-style`.
+- Вход `styles/kits/maps.css`: теперь `styles/kit.css`, утилиты и keyframes нужны любому бренду.
+
 ### Changed
 
-- **Ломающее.** Один кит на все бренды. Корневой вход теперь отдаёт компоненты, снятые с
-  макета KazMaps; `atoms` и `molecules` (`Input`, `Select`, `Badge`, `Tabs`, `FormField`,
-  `ErrorBoundary`, `ThemeToggle`, `SegmentedControl`, `Spinner`, `Skeleton`, `Heading`, `Text`,
-  `Caption`, `Checkbox`, `Textarea`, `Divider`, `ChipPill` и корневые `Button`, `Avatar`, `Chip`,
-  `Toggle`, `PhoneInput`, `SearchInput`, `StarRating`) удалены. Таблица замен —
-  `docs/brands.md`.
 - **Ломающее.** Контракт токенов один — имена переменных Figma (`action/*`, `background/*`,
-  `border/*`, `text/*`, `icon/*`, `tag/*`, `traffic/*`, `weather/*`, `map/*`, `effect/*`,
-  шкалы `dimension/*`, `spacing/*`, `stroke/*`, `shadow/*`, `typography/*`). Прежний контракт
-  (`--surface-*`, `--text-muted`, `--accent*`, `--radius-*`, `--brand`, `--ink`, `--card`,
-  `--line`, `--muted`, `--bg`, `--gold`, `--highlight*`, `--shadow-sm/md/lg`) и все алиасы
-  удалены; `schema.byBrand` и `replacesContract` больше не нужны. Тени и тайминги кита
-  (`--shadow-hud`, `--motion-panel`, `--ease-standard` и остальные) стали статическими ролями
-  контракта и объявлены у каждого бренда; `--shimmer-peak`, `--surface-map`, `--text-on-map`,
-  `--rating-star` — темизируемые роли контракта. `--marker-primary` и `--map-tile-style` удалены:
-  их никто не читал.
-- **Ломающее.** `business` и `booking` переведены на контракт Figma переходным набором: где у
-  роли есть прямой аналог в прежней палитре — взято оттуда, остальное — из `maps`
-  (`docs/brands.md`). Шрифты брендов сохранены. Значения ждут макетов дизайнера — пометка
-  `_pending` в файле бренда.
-- **Ломающее.** `styles/kits/maps.css` → `styles/kit.css`: утилиты и keyframes нужны любому бренду.
-- **Ломающее.** `Button`: варианты `outline` и `outline-accent` удалены — в макете их нет; `SectionError`
-  и main-web переходят на `neutral`.
-- Вход `/maps` оставлен как реэкспорт корня для main-web; новые импорты — из корня.
-- `theme.css` объявляет `--color-*` только для ролей типа `color` — по `$type` токена, а не по
-  имени группы.
-- Storybook: витрина — раздел Components, переключатель бренда действует на каждую историю;
+  `border/*`, `text/*`, `icon/*`, `tag/*`, `traffic/*`, `weather/*`, `map/*`, `effect/*`, шкалы
+  `dimension/*`, `spacing/*`, `stroke/*`, `shadow/*`, `typography/*`). Тени и тайминги кита
+  (`--shadow-hud`, `--motion-panel`, `--ease-standard` и остальные) — статические роли каждого бренда;
+  `--shimmer-peak`, `--surface-map`, `--text-on-map`, `--rating-star` — темизируемые роли.
+- **Ломающее.** `business` и `booking` переведены на контракт Figma переходным набором: где у роли есть
+  прямой аналог в прежней палитре — взято оттуда, остальное из `maps`. Шрифты брендов сохранены.
+  Значения ждут макетов дизайнера — пометка `_pending` в файле бренда.
+- **Ломающее.** `formatE164` отдаёт номер группами через пробел: «+7 701 234 56 78» вместо
+  «+7 701 234-56-78».
+- **Ломающее.** `Avatar` — кнопка 40 с тенью макета: снимок, иначе первая буква имени на цвете из
+  `seed`, иначе глиф. `seed` — строка; меньших размеров и варианта без кнопки нет.
+- `PhoneInput` по макету `148:721`: селектор показывает флаг и шеврон, код страны набран в поле перед
+  номером и назван в подписи кнопки региона, маска группами через пробел. Флаги регионов — эмодзи для
+  всех 198 стран; для Windows — `country-flag-emoji-polyfill` в приложении (README §4).
+- Вход `/maps` — реэкспорт корня; новые импорты — из корня.
+- Набор `/icons`: 101 иконка вместо 96 (`edit`, `map-error`, `support`, набор `notification`),
+  начертания одиночных иконок сняты по разделам макета.
+- `theme.css` объявляет `--color-*` только для ролей типа `color` — по `$type` бренда `maps`.
+- Storybook: витрина — раздел Components, переключатель бренда действует на каждую историю,
   Foundations → Tokens показывает палитру, статические роли и ожидания от дизайнера.
 
 ### Added
 
-- `PhoneInput`: проп `hint` удалён — под полем нет ни подсказок, ни текста ошибки, любой текст
-  показывает тост.
-- `PhoneInput` по макету `148:721`: селектор показывает флаг и шеврон, код страны набран текстом в
-  поле, маска группами через пробел («+7 000 000 00 00») без подчёркиваний. `formatE164` отдаёт тот же
-  формат: «+7 701 234 56 78».
-- Флаги регионов в `PhoneInput` — эмодзи, как в макете: все 198 стран вместо десяти нарисованных
-  прямоугольников и кода ISO для остальных. Для Windows — `country-flag-emoji-polyfill` в
-  приложении (README §4).
-- `npm run tokens:import` — импорт переменных из `tokens/figma/export.json` с последующей
-  сборкой CSS; числовые шкалы Figma синхронизируются во все бренды.
+- `IconButtonGroup`: спаренные кнопки карты с общими тенью и радиусом.
+- `npm run tokens:import`: импорт переменных из `tokens/figma/export.json` и сборка CSS. Роли контракта
+  синхронизируются во все бренды: недостающие получают значения `maps`, лишние удаляются.
 
 ## [0.7.0] — 2026-09-15
 

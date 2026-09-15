@@ -60,20 +60,20 @@ CSS — `styles/brands/<brand>.css`.
 Когда дизайнер отдаст макет бренда: значения переносятся литералами в
 `tokens/brands/<brand>.json`, `_pending` удаляется, `npm run tokens:build`.
 
-## Переезд business-client и booking-client с 0.3.0
+## Переезд business-client (0.6.x) и booking-client (0.3.0)
 
-Оба клиента используют по четыре-пять компонентов; корневой вход 0.3.0
-(`atoms`/`molecules`) удалён.
+Оба клиента используют по четыре-пять компонентов; корневые `atoms` и `molecules` удалены.
 
-| было (0.3.0)                                                                                 | стало (1.0.0)                                                                                                                                                                                        |
+| было (0.x)                                                                                   | стало (1.0.0)                                                                                                                                                                                        |
 | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `Button`                                                                                     | `Button` — `variant`: `accent` \| `neutral` \| `danger`; `size` и `loading` убраны, одна высота 40                                                                                                   |
 | `Badge`, `BadgeVariant`                                                                      | `Chip` с `tone`                                                                                                                                                                                      |
-| `Avatar`                                                                                     | `Avatar` — кнопка 40 с тенью, снимок → буква имени → глиф                                                                                                                                            |
+| `Avatar`                                                                                     | `Avatar` — кнопка 40 с тенью: снимок → буква имени → глиф; `size` и `color` убраны, цвет берётся из `seed`                                                                                           |
 | `Spinner`                                                                                    | нет в макете; загрузка — `ShimmerBlock`                                                                                                                                                              |
 | `StarRating`                                                                                 | `StarRating`                                                                                                                                                                                         |
 | `ErrorBoundary`                                                                              | нет; ошибка секции — `SectionError`, ошибка действия — `useToast`                                                                                                                                    |
 | `cn`                                                                                         | `cn`                                                                                                                                                                                                 |
+| `colorFor`                                                                                   | удалён; для аватара — `seed` у `Avatar`, для прочих мест — перенести функцию в приложение                                                                                                            |
 | `styles/core.css` + `styles/brands/<brand>.css`                                              | + `styles/theme.css` и `styles/kit.css` (порядок в README §1)                                                                                                                                        |
 | роли `--brand`, `--ink`, `--card`, `--line`, `--muted`, `--bg`, `--space-page`, `--dur-base` | контракт Figma: `--action-accent-primary`, `--text-primary`, `--background-primary`, `--border-primary`, `--text-secondary`, `--background-secondary`; `--space-*` и `--dur-*` остаются в `core.css` |
 
