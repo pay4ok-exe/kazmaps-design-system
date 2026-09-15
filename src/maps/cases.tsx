@@ -18,9 +18,11 @@ import {
   ListRow,
   LogoLockup,
   LogoPin,
+  MapCompass,
   MapTrafficBadge,
   NavRail,
   Panel,
+  ProfileButton,
   PasswordInput,
   PhoneInput,
   PlaceRow,
@@ -185,6 +187,16 @@ export const KIT_CASES: [string, ReactElement][] = [
     <IconButton key="k" shape="circle" label="Профиль">
       <Users size={20} aria-hidden="true" />
     </IconButton>,
+  ],
+  ["MapCompass", <MapCompass key="k" label="На север" heading={35} />],
+  ["MapCompass aligned", <MapCompass key="k" label="На север" aligned />],
+  [
+    "ProfileButton",
+    <ProfileButton key="k" label="Профиль" icon={<Users size={24} aria-hidden="true" />} />,
+  ],
+  [
+    "ProfileButton active",
+    <ProfileButton key="k" active label="Профиль" icon={<Users size={24} aria-hidden="true" />} />,
   ],
   ["MapTrafficBadge", <MapTrafficBadge key="k" level="orange" value={6} label="Пробки" />],
   ["MapTrafficBadge off", <MapTrafficBadge key="k" level={null} value={3} label="Пробки" />],

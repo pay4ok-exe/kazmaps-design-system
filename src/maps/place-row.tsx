@@ -51,10 +51,7 @@ export function PlaceRow({
       className={`flex w-full items-center gap-(--spacing-gap-4) rounded-(--dimension-corner-radius-16) border-(length:--stroke-border-1) border-solid border-transparent bg-(--background-primary) p-(--spacing-padding-4) text-left transition-interactive focus-ring hover:border-(--border-secondary) ${className}`}
     >
       <span className="size-(--dimension-width-64) shrink-0 overflow-hidden rounded-(--dimension-corner-radius-12) bg-(--background-secondary)">
-        {photoUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={photoUrl} alt={photoAlt} className="size-full object-cover" />
-        ) : null}
+        {photoUrl ? <img src={photoUrl} alt={photoAlt} className="size-full object-cover" /> : null}
       </span>
       <span className="flex min-w-0 flex-1 flex-col gap-(--spacing-gap-4) p-(--spacing-padding-4)">
         <span className="truncate text-xs leading-(--typography-line-height-16) text-(color:--text-primary) [font-weight:var(--font-weight-medium)]">
