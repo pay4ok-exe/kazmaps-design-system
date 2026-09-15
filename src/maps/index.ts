@@ -17,7 +17,6 @@ export { InDevelopment } from "./dev-badge";
 export type { DialogSize } from "./dialog";
 export { Dialog } from "./dialog";
 export { EmptyState } from "./empty-state";
-export type { IconButtonShape } from "./icon-button";
 export { IconButton } from "./icon-button";
 export type { IconButtonGroupDirection, IconButtonGroupProps } from "./icon-button-group";
 export { IconButtonGroup } from "./icon-button-group";
