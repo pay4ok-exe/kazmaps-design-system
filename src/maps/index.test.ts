@@ -9,7 +9,6 @@ const EXPECTED = [
   "EmptyState",
   "ListRow",
   "LogoLockup",
-  "LogoPin",
   "Panel",
   "PasswordInput",
   "PhoneInput",

@@ -24,8 +24,6 @@ export type { ListRowProps } from "./list-row";
 export { ListRow } from "./list-row";
 export type { LogoLockupProps } from "./logo-lockup";
 export { LogoLockup } from "./logo-lockup";
-export type { LogoPinProps } from "./logo-pin";
-export { LogoPin } from "./logo-pin";
 export { MapCompass } from "./map-compass";
 export type { TrafficLevel } from "./map-traffic-badge";
 export { MapTrafficBadge } from "./map-traffic-badge";
