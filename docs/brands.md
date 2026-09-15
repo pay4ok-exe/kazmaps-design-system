@@ -78,5 +78,6 @@ CSS — `styles/brands/<brand>.css`.
 | роли `--brand`, `--ink`, `--card`, `--line`, `--muted`, `--bg`, `--space-page`, `--dur-base` | контракт Figma: `--action-accent-primary`, `--text-primary`, `--background-primary`, `--border-primary`, `--text-secondary`, `--background-secondary`; `--space-*` и `--dur-*` остаются в `core.css` |
 
 Тексты ошибок в полях убраны намеренно: любая ошибка показывается тостом
-(`ToastProvider` + `useToast`), поля принимают только `invalid`. Если текст ошибки всё же выводится рядом с полем, свяжите его через
-`aria-describedby`; `PhoneInput` принимает и `ref` для react-hook-form.
+(`ToastProvider` + `useToast`), поля принимают только `invalid`. Если текст ошибки всё же выводится рядом с `TextInput` или `PhoneInput`, свяжите его через
+`aria-describedby`; `PhoneInput` принимает и `ref` для react-hook-form. У `CodeInput` и `DayPicker`
+такой связи нет — для них ошибка остаётся тостом.

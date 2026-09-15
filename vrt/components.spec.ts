@@ -50,18 +50,22 @@ for (const id of STORIES) {
   }
 }
 
-for (const theme of THEMES) {
-  test(`phone-input-picker — ${theme}`, async ({ page }) => {
-    await page.goto(
-      `/iframe.html?viewMode=story&id=components-phoneinput--playground&globals=brand:maps;theme:${theme}`,
-    );
-    await expect(page.getByLabel("Номер телефона")).toBeVisible();
-    await page.getByRole("button", { name: /Регион/ }).click();
-    await expect(page.getByRole("listbox")).toBeVisible();
-    await expect(page).toHaveScreenshot(`phone-input-picker-${theme}.png`, {
-      fullPage: true,
+for (const brand of BRANDS) {
+  for (const theme of THEMES) {
+    test(`phone-input-picker — ${brand} ${theme}`, async ({ page }) => {
+      await page.goto(
+        `/iframe.html?viewMode=story&id=components-phoneinput--playground&globals=brand:${brand};theme:${theme}`,
+      );
+      await expect(page.getByLabel("Номер телефона")).toBeVisible();
+      await page.getByRole("button", { name: /Регион/ }).click();
+      await expect(page.getByRole("listbox")).toBeVisible();
+      const name =
+        brand === "maps"
+          ? `phone-input-picker-${theme}.png`
+          : `${brand}-phone-input-picker-${theme}.png`;
+      await expect(page).toHaveScreenshot(name, { fullPage: true });
     });
-  });
+  }
 }
 
 test("inside strokes do not add to the measured heights", async ({ page }) => {
