@@ -4,15 +4,13 @@ import { join } from "node:path";
 import { expect, test } from "@playwright/test";
 
 const THEMES = ["light", "dark"] as const;
-// Полный прогон — под maps, откуда сняты компоненты; другие бренды меняют только значения
-// токенов, их проверяет короткий срез.
 const BRANDS = ["maps", "business", "booking"] as const;
 const BRAND_SLICE = new Set([
   "components-button--all-variants",
   "components--place-row",
   "components--text-input",
 ]);
-const INTERACTIVE = /--(песочница|live)$/;
+const INTERACTIVE = /--(playground|live)$/;
 
 type IndexEntry = { id: string; type: string };
 const index = JSON.parse(
