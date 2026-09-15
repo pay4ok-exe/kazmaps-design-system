@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import { Button, type ButtonSize } from "./button";
+import { Button } from "./button";
 
 const usesBorderUtility = (className: string) =>
   className.split(" ").some((c) => c === "border" || /^(\w+:)?border-/.test(c));
@@ -15,30 +15,11 @@ describe("Button", () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  it("по умолчанию type=button и размер md", () => {
+  it("type=button по умолчанию, высота одна — из макета", () => {
     render(<Button>x</Button>);
     const button = screen.getByRole("button", { name: "x" });
     expect(button).toHaveAttribute("type", "button");
     expect(button.className).toContain("h-(--dimension-height-40)");
-  });
-
-  it.each<[ButtonSize, string]>([
-    ["sm", "h-[34px]"],
-    ["md", "h-(--dimension-height-40)"],
-    ["lg", "h-11"],
-  ])("size=%s даёт класс %s независимо от варианта", (size, heightClass) => {
-    render(
-      <>
-        <Button size={size} variant="outline">
-          a
-        </Button>
-        <Button size={size} variant="accent">
-          b
-        </Button>
-      </>,
-    );
-    expect(screen.getByRole("button", { name: "a" }).className).toContain(heightClass);
-    expect(screen.getByRole("button", { name: "b" }).className).toContain(heightClass);
   });
 
   it("иконка включает асимметричный паддинг и gap макета", () => {

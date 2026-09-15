@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Star } from "lucide-react";
 
-import { Button, type ButtonSize, type ButtonVariant } from "./button";
+import { Button, type ButtonVariant } from "./button";
 
 const meta: Meta<typeof Button> = {
   title: "Maps kit/Button",
@@ -12,7 +12,6 @@ export default meta;
 
 const MACKET: ButtonVariant[] = ["accent", "neutral", "danger"];
 const OURS: ButtonVariant[] = ["outline", "outline-accent"];
-const SIZES: ButtonSize[] = ["sm", "md", "lg"];
 
 const icon = <Star size={16} aria-hidden="true" />;
 
@@ -85,25 +84,6 @@ export const ВсеВарианты: StoryObj = {
   ),
 };
 
-export const Размеры: StoryObj = {
-  render: () => (
-    <div className="flex flex-col gap-(--spacing-gap-24)">
-      {SIZES.map((size) => (
-        <Row key={size} title={size} hint={size === "md" ? "из макета" : "источника нет"}>
-          {MACKET.map((variant) => (
-            <Button key={variant} size={size} variant={variant}>
-              {variant}
-            </Button>
-          ))}
-          <Button size={size} icon={icon}>
-            с иконкой
-          </Button>
-        </Row>
-      ))}
-    </div>
-  ),
-};
-
 export const НаВсюШирину: StoryObj = {
   render: () => (
     <div className="flex w-[320px] flex-col gap-(--spacing-gap-8)">
@@ -119,9 +99,6 @@ export const НаВсюШирину: StoryObj = {
 };
 
 export const Песочница: StoryObj<typeof Button> = {
-  args: { children: "Button", variant: "accent", size: "md", disabled: false, fullWidth: false },
-  argTypes: {
-    variant: { control: "inline-radio", options: [...MACKET, ...OURS] },
-    size: { control: "inline-radio", options: SIZES },
-  },
+  args: { children: "Button", variant: "accent", disabled: false, fullWidth: false },
+  argTypes: { variant: { control: "inline-radio", options: [...MACKET, ...OURS] } },
 };

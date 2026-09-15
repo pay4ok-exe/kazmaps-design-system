@@ -1,6 +1,5 @@
 import type { ComponentProps, ReactNode } from "react";
 
-export type IconButtonSize = "sm" | "md" | "lg";
 export type IconButtonShape = "square" | "circle";
 
 const SHAPE_CLASSES: Record<IconButtonShape, string> = {
@@ -8,16 +7,9 @@ const SHAPE_CLASSES: Record<IconButtonShape, string> = {
   circle: "rounded-(--dimension-corner-radius-max)",
 };
 
-const SIZE_CLASSES: Record<IconButtonSize, string> = {
-  sm: "size-[34px] p-(--spacing-padding-4)",
-  md: "size-[36px] p-(--spacing-padding-6)",
-  lg: "size-10 p-(--spacing-padding-6)",
-};
-
 export function IconButton({
   children,
   label,
-  size = "md",
   shape = "square",
   active,
   className = "",
@@ -25,7 +17,6 @@ export function IconButton({
 }: ComponentProps<"button"> & {
   children: ReactNode;
   label: string;
-  size?: IconButtonSize;
   shape?: IconButtonShape;
   active?: boolean;
 }) {
@@ -40,7 +31,7 @@ export function IconButton({
         active
           ? "text-(color:--icon-accent)"
           : "text-(color:--icon-tertiary) hover:text-(color:--icon-primary)"
-      } ${SHAPE_CLASSES[shape]} ${SIZE_CLASSES[size]} ${className}`}
+      } size-[36px] p-(--spacing-padding-6) ${SHAPE_CLASSES[shape]} ${className}`}
     >
       {children}
     </button>
