@@ -177,7 +177,31 @@
 ## Ожидает значения от дизайнера
 
 - business: переходный набор: значения перенесены с прежней палитры бренда там, где роль имеет прямой аналог, остальное — из maps; ждёт макета дизайнера для этого бренда
+- business `--text-lg` = `1.125rem` — ожидает значения от дизайнера
+- business `--text-xl` = `1.25rem` — ожидает значения от дизайнера
+- business `--text-2xl` = `1.5rem` — ожидает значения от дизайнера
+- business `--text-3xl` = `1.875rem` — ожидает значения от дизайнера
+- business `--motion-fast` = `140ms` — ожидает значения от дизайнера
+- business `--motion-panel` = `240ms` — ожидает значения от дизайнера
+- business `--motion-shimmer` = `1.6s` — ожидает значения от дизайнера
+- business `--shadow-column` = `rgba(16, 24, 40, 0.05) 2px 0px 8px 0px` — ожидает значения от дизайнера
+- business `--shadow-button-sm` = `rgba(16, 24, 40, 0.08) 0px 1px 3px 0px` — ожидает значения от дизайнера
+- business `--shadow-button-md` = `rgba(16, 24, 40, 0.1) 0px 1px 3px 0px` — ожидает значения от дизайнера
+- business `--shadow-sheet-top` = `rgba(16, 24, 40, 0.14) 0px -4px 20px 0px` — ожидает значения от дизайнера
+- business `--shadow-dropdown` = `rgba(16, 24, 40, 0.22) 0px 12px 32px 0px` — ожидает значения от дизайнера
 - booking: переходный набор: значения перенесены с прежней палитры бренда там, где роль имеет прямой аналог, остальное — из maps; ждёт макета дизайнера для этого бренда
+- booking `--text-lg` = `1.125rem` — ожидает значения от дизайнера
+- booking `--text-xl` = `1.25rem` — ожидает значения от дизайнера
+- booking `--text-2xl` = `1.5rem` — ожидает значения от дизайнера
+- booking `--text-3xl` = `1.875rem` — ожидает значения от дизайнера
+- booking `--motion-fast` = `140ms` — ожидает значения от дизайнера
+- booking `--motion-panel` = `240ms` — ожидает значения от дизайнера
+- booking `--motion-shimmer` = `1.6s` — ожидает значения от дизайнера
+- booking `--shadow-column` = `rgba(16, 24, 40, 0.05) 2px 0px 8px 0px` — ожидает значения от дизайнера
+- booking `--shadow-button-sm` = `rgba(16, 24, 40, 0.08) 0px 1px 3px 0px` — ожидает значения от дизайнера
+- booking `--shadow-button-md` = `rgba(16, 24, 40, 0.1) 0px 1px 3px 0px` — ожидает значения от дизайнера
+- booking `--shadow-sheet-top` = `rgba(16, 24, 40, 0.14) 0px -4px 20px 0px` — ожидает значения от дизайнера
+- booking `--shadow-dropdown` = `rgba(16, 24, 40, 0.22) 0px 12px 32px 0px` — ожидает значения от дизайнера
 - maps light `--icon-dander` = `#fa4d56` — опечатка в Figma (ожидается icon/danger) — имя держим как в источнике до правки макета
 - maps light `--shimmer-peak` = `0.94` — ожидает значения от дизайнера
 - maps light `--surface-map` = `#e9ece4` — ожидает значения от дизайнера

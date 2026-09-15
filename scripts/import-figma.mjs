@@ -184,11 +184,6 @@ write("tokens/brands/maps.json", {
 const schema = read("tokens/schema.json");
 write("tokens/schema.json", { ...schema, themed: GROUPS, static: staticRoles });
 
-const numeric = new Set(
-  Object.entries(fig.numerics).flatMap(([group, steps]) =>
-    Object.keys(steps).map((step) => cssName(`${group}/${step}`)),
-  ),
-);
 const syncRoles = (current, contract, fallback, override) => {
   const own = current ?? {};
   const keep = Object.keys(own)
@@ -199,6 +194,7 @@ const syncRoles = (current, contract, fallback, override) => {
 };
 const themedContract = Object.values(GROUPS).flat();
 const OTHER_BRANDS = ["business", "booking"];
+const BRAND_OWNED_STATICS = new Set(["font-sans"]);
 for (const name of OTHER_BRANDS) {
   const path = `tokens/brands/${name}.json`;
   const brand = read(path);
@@ -211,7 +207,7 @@ for (const name of OTHER_BRANDS) {
     );
   }
   brand.static = syncRoles(brand.static, staticRoles, statics, (role) =>
-    numeric.has(role) ? statics[role] : undefined,
+    BRAND_OWNED_STATICS.has(role) ? undefined : statics[role],
   );
   write(path, brand);
   GENERATED.push(path);

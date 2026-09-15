@@ -852,19 +852,23 @@
     },
     "text-lg": {
       "$type": "dimension",
-      "$value": "1.125rem"
+      "$value": "1.125rem",
+      "$description": "ожидает значения от дизайнера"
     },
     "text-xl": {
       "$type": "dimension",
-      "$value": "1.25rem"
+      "$value": "1.25rem",
+      "$description": "ожидает значения от дизайнера"
     },
     "text-2xl": {
       "$type": "dimension",
-      "$value": "1.5rem"
+      "$value": "1.5rem",
+      "$description": "ожидает значения от дизайнера"
     },
     "text-3xl": {
       "$type": "dimension",
-      "$value": "1.875rem"
+      "$value": "1.875rem",
+      "$description": "ожидает значения от дизайнера"
     },
     "shadow-field": {
       "$type": "shadow",
@@ -896,35 +900,43 @@
     },
     "motion-fast": {
       "$type": "duration",
-      "$value": "140ms"
+      "$value": "140ms",
+      "$description": "ожидает значения от дизайнера"
     },
     "motion-panel": {
       "$type": "duration",
-      "$value": "240ms"
+      "$value": "240ms",
+      "$description": "ожидает значения от дизайнера"
     },
     "motion-shimmer": {
       "$type": "duration",
-      "$value": "1.6s"
+      "$value": "1.6s",
+      "$description": "ожидает значения от дизайнера"
     },
     "shadow-column": {
       "$type": "shadow",
-      "$value": "rgba(16, 24, 40, 0.05) 2px 0px 8px 0px"
+      "$value": "rgba(16, 24, 40, 0.05) 2px 0px 8px 0px",
+      "$description": "ожидает значения от дизайнера"
     },
     "shadow-button-sm": {
       "$type": "shadow",
-      "$value": "rgba(16, 24, 40, 0.08) 0px 1px 3px 0px"
+      "$value": "rgba(16, 24, 40, 0.08) 0px 1px 3px 0px",
+      "$description": "ожидает значения от дизайнера"
     },
     "shadow-button-md": {
       "$type": "shadow",
-      "$value": "rgba(16, 24, 40, 0.1) 0px 1px 3px 0px"
+      "$value": "rgba(16, 24, 40, 0.1) 0px 1px 3px 0px",
+      "$description": "ожидает значения от дизайнера"
     },
     "shadow-sheet-top": {
       "$type": "shadow",
-      "$value": "rgba(16, 24, 40, 0.14) 0px -4px 20px 0px"
+      "$value": "rgba(16, 24, 40, 0.14) 0px -4px 20px 0px",
+      "$description": "ожидает значения от дизайнера"
     },
     "shadow-dropdown": {
       "$type": "shadow",
-      "$value": "rgba(16, 24, 40, 0.22) 0px 12px 32px 0px"
+      "$value": "rgba(16, 24, 40, 0.22) 0px 12px 32px 0px",
+      "$description": "ожидает значения от дизайнера"
     }
   }
 }
