@@ -31,40 +31,11 @@ export default tseslint.config(
     rules: { "no-console": "error" },
   },
   {
-    files: ["src/maps/**/*.{ts,tsx}"],
+    files: ["src/components/**/*.{ts,tsx}"],
     rules: {
       "no-restricted-imports": [
         "error",
-        {
-          patterns: [
-            {
-              group: ["../atoms/*", "../molecules/*", "../index"],
-              message: "maps kit must not depend on the root entry",
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    files: [
-      "src/atoms/**/*.{ts,tsx}",
-      "src/molecules/**/*.{ts,tsx}",
-      "src/lib/**/*.{ts,tsx}",
-      "src/data/**/*.{ts,tsx}",
-      "src/index.ts",
-    ],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          patterns: [
-            {
-              group: ["**/maps/*", "**/maps", "../maps", "./maps"],
-              message: "root entry must not depend on the maps kit",
-            },
-          ],
-        },
+        { patterns: [{ group: ["../index"], message: "components must not import the barrel" }] },
       ],
     },
   },
@@ -74,7 +45,7 @@ export default tseslint.config(
     // This repo has no `@next/eslint-plugin-next`, so ESLint can't resolve the
     // rule name and errors on the directive itself; register a no-op stand-in
     // so the untouched comment lints clean without pulling in Next.js tooling.
-    files: ["src/maps/place-row.tsx"],
+    files: ["src/components/place-row.tsx"],
     plugins: { "@next/next": { rules: { "no-img-element": { create: () => ({}) } } } },
     linterOptions: { reportUnusedDisableDirectives: "off" },
   },

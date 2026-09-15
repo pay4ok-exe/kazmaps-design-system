@@ -2,6 +2,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { ownedStatics, validateOwnStatics } from "./owned-statics.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (p) => JSON.parse(readFileSync(join(ROOT, p), "utf8"));
@@ -116,24 +117,19 @@ for (const [role, value] of Object.entries(TEXT_SCALE)) {
   };
 }
 
-const extras = {
-  light: {
-    "map-tile-style": { $type: "string", $value: fig.semantics.Map.light },
-    "shimmer-peak": { $type: "number", $value: "0.94", $description: WAITING },
-    "surface-map": { $type: "color", $value: "#e9ece4", $description: WAITING },
-    "text-on-map": { $type: "color", $value: "#22272e", $description: WAITING },
-    "rating-star": { $type: "color", $value: "#f2a615", $description: WAITING },
-    "marker-primary": { $type: "color", $value: "#e0442f", $description: WAITING },
-  },
-  dark: {
-    "map-tile-style": { $type: "string", $value: fig.semantics.Map.dark },
-    "shimmer-peak": { $type: "number", $value: "1.12", $description: WAITING },
-    "surface-map": { $type: "color", $value: "#0a0e18", $description: WAITING },
-    "text-on-map": { $type: "color", $value: "#22272e", $description: WAITING },
-    "rating-star": { $type: "color", $value: "#f2a615", $description: WAITING },
-    "marker-primary": { $type: "color", $value: "#e0442f", $description: WAITING },
-  },
+const WAIT_MAP = {
+  "shimmer-peak": { light: "0.94", dark: "1.12", $type: "number" },
+  "surface-map": { light: "#e9ece4", dark: "#0a0e18", $type: "color" },
+  "text-on-map": { light: "#22272e", dark: "#22272e", $type: "color" },
+  "rating-star": { light: "#f2a615", dark: "#f2a615", $type: "color" },
 };
+GROUPS.map = ["surface-map", "text-on-map", "rating-star"];
+GROUPS.effect = ["shimmer-peak"];
+for (const [role, def] of Object.entries(WAIT_MAP)) {
+  for (const theme of ["light", "dark"]) {
+    themes[theme][role] = { $type: def.$type, $value: def[theme], $description: WAITING };
+  }
+}
 
 const kit = {
   "shadow-field": { $type: "shadow", $value: "rgba(0, 0, 0, 0.04) 0px 4px 4px 0px" },
@@ -172,6 +168,15 @@ const kit = {
     $description: WAITING,
   },
 };
+for (const [role, def] of Object.entries(kit)) {
+  staticRoles.push(role);
+  statics[role] = def;
+}
+
+const OTHER_BRANDS = ["business", "booking"];
+for (const name of OTHER_BRANDS) {
+  validateOwnStatics(name, read(`tokens/brands/${name}.json`), staticRoles);
+}
 
 write("tokens/brands/maps.json", {
   brand: "maps",
@@ -180,53 +185,38 @@ write("tokens/brands/maps.json", {
   _source: "tokens/figma/export.json — сгенерировано scripts/import-figma.mjs, не править руками",
   themes,
   static: statics,
-  kit,
-  extras,
 });
 
 const schema = read("tokens/schema.json");
-schema.byBrand = schema.byBrand ?? {};
-schema.byBrand.maps = {
-  replacesContract: true,
-  themed: GROUPS,
-  static: staticRoles,
-  aliases: {
-    "radius-sm": "dimension-corner-radius-4",
-    "radius-md": "dimension-corner-radius-6",
-    "radius-lg": "dimension-corner-radius-8",
-    "radius-xl": "dimension-corner-radius-12",
-    "radius-2xl": "dimension-corner-radius-16",
-    "radius-full": "dimension-corner-radius-max",
+write("tokens/schema.json", { ...schema, themed: GROUPS, static: staticRoles });
 
-    "surface-base": "background-secondary",
-    "surface-panel": "background-primary",
-    "surface-raised": "background-secondary",
-    "surface-subtle": "background-secondary",
-    "backdrop-scrim": "overlay-modal-dialog",
-    "text-muted": "text-secondary",
-    "text-faint": "text-tertiary",
-    "text-on-accent": "text-white",
-    border: "border-primary",
-    "border-subtle": "border-secondary",
-    "border-hairline": "border-secondary",
-    "border-input": "border-primary",
-    accent: "action-accent-primary",
-    "accent-press": "action-accent-secondary",
-    "accent-soft-bg": "background-secondary",
-    "accent-soft-border": "action-accent-subtle",
-    success: "tag-green",
-    "success-soft-bg": "traffic-fill-green",
-    warning: "tag-orange",
-    "warning-soft-bg": "traffic-fill-orange",
-    danger: "action-danger-primary",
-    "danger-soft-bg": "action-danger-subtle",
-    info: "action-accent-primary",
-    "info-soft-bg": "background-secondary",
-    "bg-2": "background-secondary",
-    "ink-2": "text-secondary",
-  },
+const syncRoles = (current, contract, fallback, override) => {
+  const own = current ?? {};
+  const keep = Object.keys(own)
+    .filter((role) => contract.includes(role))
+    .map((role) => [role, override(role) ?? own[role]]);
+  const added = contract.filter((role) => !(role in own)).map((role) => [role, fallback[role]]);
+  return Object.fromEntries([...keep, ...added]);
 };
-write("tokens/schema.json", schema);
+const themedContract = Object.values(GROUPS).flat();
+for (const name of OTHER_BRANDS) {
+  const path = `tokens/brands/${name}.json`;
+  const brand = read(path);
+  for (const theme of Object.keys(themes)) {
+    brand.themes[theme] = syncRoles(
+      brand.themes[theme],
+      themedContract,
+      themes[theme],
+      () => undefined,
+    );
+  }
+  const owned = ownedStatics(brand);
+  brand.static = syncRoles(brand.static, staticRoles, statics, (role) =>
+    owned.has(role) ? undefined : statics[role],
+  );
+  write(path, brand);
+  GENERATED.push(path);
+}
 
 execFileSync("npx", ["--no-install", "prettier", "--write", ...GENERATED], {
   cwd: ROOT,

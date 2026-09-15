@@ -1,0 +1,215 @@
+"use client";
+
+import { ChevronDown } from "lucide-react";
+import { useId, useImperativeHandle } from "react";
+import InputMask from "react-input-mask-format";
+
+import { DEFAULT_REGION, type RegionCode } from "../data/regions";
+import {
+  DEFAULT_LABELS,
+  type PhoneInputLabels,
+  type PhoneValue,
+  RegionFlag,
+  usePhoneMask,
+} from "../lib/phone-input-core";
+import { RegionPicker } from "./region-picker";
+
+export type { PhoneValue };
+
+export type PhoneInputProps = {
+  value?: string;
+  defaultValue?: string;
+  defaultRegion?: RegionCode;
+  onChange?: (value: PhoneValue) => void;
+  onRegionChange?: (region: RegionCode) => void;
+  onFocus?: React.FocusEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  regions?: RegionCode[];
+  locale?: "ru" | "en";
+  label?: string;
+  invalid?: boolean;
+  required?: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  id?: string;
+  name?: string;
+  autoFocus?: boolean;
+  autoComplete?: string;
+  labels?: Partial<PhoneInputLabels>;
+  className?: string;
+  ref?: React.Ref<HTMLInputElement>;
+  "aria-describedby"?: string;
+  "aria-label"?: string;
+  "aria-labelledby"?: string;
+};
+
+export function PhoneInput({
+  value: valueProp,
+  defaultValue,
+  defaultRegion = DEFAULT_REGION,
+  onChange,
+  onRegionChange,
+  onFocus,
+  onBlur,
+  regions: regionCodes,
+  locale = "ru",
+  label,
+  invalid = false,
+  required,
+  disabled,
+  readOnly,
+  id: idProp,
+  name,
+  autoFocus,
+  autoComplete = "tel-national",
+  labels: labelsProp,
+  className = "",
+  ref,
+  "aria-describedby": ariaDescribedBy,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+}: PhoneInputProps) {
+  const generatedId = useId();
+  const id = idProp ?? generatedId;
+  const pickerId = `${id}-picker`;
+  const labels = { ...DEFAULT_LABELS, ...labelsProp };
+
+  const {
+    region,
+    mask,
+    formatted,
+    open,
+    setOpen,
+    available,
+    inputRef,
+    containerRef,
+    beforeMaskedStateChange,
+    handleChange,
+    selectRegion,
+    closePicker,
+  } = usePhoneMask({
+    value: valueProp,
+    defaultValue,
+    defaultRegion,
+    regions: regionCodes,
+    onChange,
+    onRegionChange,
+  });
+
+  useImperativeHandle(ref, () => inputRef.current!, [inputRef]);
+
+  const hasError = invalid;
+  const hasVisibleLabel = Boolean(label?.trim());
+
+  return (
+    <div className={className}>
+      {!hasVisibleLabel ? null : (
+        <label
+          id={`${id}-label`}
+          htmlFor={id}
+          className="mb-(--spacing-gap-4) block text-xs leading-(--typography-line-height-16) text-(color:--text-secondary) [font-weight:var(--font-weight-medium)]"
+        >
+          {label}
+          {required ? (
+            <span className="ml-0.5 text-(color:--text-danger)" aria-hidden="true">
+              *
+            </span>
+          ) : null}
+        </label>
+      )}
+
+      <div ref={containerRef} className="relative">
+        <div
+          className={`flex items-center gap-(--spacing-gap-8) overflow-hidden rounded-(--dimension-corner-radius-10) inset-ring-[length:var(--stroke-border-1)] bg-(--background-secondary) py-(--spacing-padding-4) pr-(--spacing-padding-8) pl-(--spacing-padding-4) transition-surface ${
+            hasError
+              ? "inset-ring-(--border-error) focus-ring-within"
+              : "inset-ring-transparent hover:inset-ring-(--border-secondary) has-[input:focus]:inset-ring-(--border-focus)"
+          } ${disabled ? "opacity-50" : ""}`}
+        >
+          <button
+            type="button"
+            disabled={Boolean(disabled) || Boolean(readOnly)}
+            aria-haspopup="listbox"
+            aria-expanded={open}
+            aria-controls={open ? `${pickerId}-list` : undefined}
+            aria-label={`${labels.region}: ${locale === "en" ? region.nameEn : region.name}, +${region.dial}`}
+            title={locale === "en" ? region.nameEn : region.name}
+            onMouseDown={(event) => {
+              if (open) event.preventDefault();
+            }}
+            onClick={() => {
+              setOpen((v) => !v);
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "ArrowDown") {
+                event.preventDefault();
+                setOpen(true);
+              }
+            }}
+            className="flex shrink-0 items-center gap-(--spacing-gap-4) rounded-(--dimension-corner-radius-6) bg-(--background-primary) py-(--spacing-padding-6) pr-(--spacing-padding-6) pl-(--spacing-padding-8) leading-(--typography-line-height-16) text-(color:--icon-primary) focus-ring"
+          >
+            <RegionFlag iso={region.iso} />
+            <ChevronDown
+              size={16}
+              aria-hidden="true"
+              className={`transition-transform ${open ? "rotate-180" : ""}`}
+            />
+          </button>
+
+          <span className="flex min-w-0 flex-1 items-center gap-(--spacing-gap-4)">
+            <span
+              aria-hidden="true"
+              onMouseDown={(event) => {
+                event.preventDefault();
+                inputRef.current?.focus();
+              }}
+              className={`shrink-0 cursor-text text-base leading-(--typography-line-height-20) tabular-nums [font-weight:var(--font-weight-regular)] ${hasError ? "text-(color:--text-danger)" : "text-(color:--text-primary)"}`}
+            >
+              +{region.dial}
+            </span>
+            <InputMask
+              ref={inputRef}
+              mask={mask}
+              maskPlaceholder={null}
+              value={formatted}
+              onChange={handleChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              disabled={disabled}
+              readOnly={readOnly}
+              beforeMaskedStateChange={beforeMaskedStateChange}
+            >
+              <input
+                id={id}
+                name={name}
+                type="tel"
+                inputMode="tel"
+                autoComplete={autoComplete}
+                autoFocus={autoFocus}
+                required={required}
+                placeholder={region.mask ? region.mask.replace(/\d/g, "0") : undefined}
+                aria-invalid={hasError || undefined}
+                aria-describedby={ariaDescribedBy}
+                aria-label={hasVisibleLabel ? undefined : ariaLabel}
+                aria-labelledby={ariaLabelledBy}
+                className={`min-w-0 flex-1 bg-transparent text-base leading-(--typography-line-height-20) outline-none [font-weight:var(--font-weight-regular)] placeholder:text-(color:--text-tertiary) ${hasError ? "text-(color:--text-danger)" : "text-(color:--text-primary)"}`}
+              />
+            </InputMask>
+          </span>
+        </div>
+
+        {open ? (
+          <RegionPicker
+            id={pickerId}
+            regions={available}
+            value={region.iso}
+            locale={locale}
+            labels={labels}
+            onSelect={selectRegion}
+            onClose={closePicker}
+          />
+        ) : null}
+      </div>
+    </div>
+  );
+}

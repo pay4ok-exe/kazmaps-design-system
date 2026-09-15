@@ -1,0 +1,151 @@
+import { createRef } from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
+import { PhoneInput } from "./phone-input";
+
+describe("maps PhoneInput", () => {
+  it("masks KZ input and reports E.164", async () => {
+    const onChange = vi.fn();
+    render(<PhoneInput label="Телефон" onChange={onChange} />);
+    const input = screen.getByLabelText("Телефон");
+    await userEvent.type(input, "7012345678");
+    expect(input).toHaveValue("701 234 56 78");
+    expect(onChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({ e164: "+77012345678", complete: true }),
+    );
+  });
+
+  it("types a KZ number whose network code starts with 7 without the literal swallowing it", async () => {
+    const onChange = vi.fn();
+    render(<PhoneInput label="Телефон" onChange={onChange} />);
+    const input = screen.getByLabelText("Телефон");
+    await userEvent.type(input, "7771234567");
+    expect(input).toHaveValue("777 123 45 67");
+    expect(onChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({ e164: "+77771234567", complete: true }),
+    );
+  });
+
+  it("drops a leading 8 typed into an empty KZ field", async () => {
+    const onChange = vi.fn();
+    render(<PhoneInput label="Телефон" onChange={onChange} />);
+    const input = screen.getByLabelText("Телефон");
+    await userEvent.type(input, "87071234567");
+    expect(input).toHaveValue("707 123 45 67");
+    expect(onChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({ e164: "+77071234567", complete: true }),
+    );
+  });
+
+  it("opens the region picker and switches region", async () => {
+    render(<PhoneInput label="Телефон" />);
+    await userEvent.click(screen.getByRole("button", { name: /Регион/ }));
+    expect(screen.getByRole("listbox")).toBeVisible();
+    await userEvent.type(screen.getByRole("searchbox"), "Росс");
+    await userEvent.keyboard("{Enter}");
+    expect(screen.getByRole("button", { name: /Регион: Россия/ })).toBeInTheDocument();
+  });
+});
+
+describe("maps PhoneInput focus", () => {
+  it("an invalid field still shows a focus indicator", () => {
+    render(<PhoneInput label="Телефон" onChange={vi.fn()} invalid />);
+    const shell = screen.getByLabelText("Телефон").closest("div.flex");
+    expect(shell?.className).toContain("focus-ring-within");
+  });
+});
+
+describe("maps PhoneInput idle ring", () => {
+  it("keeps the idle ring transparent instead of the text colour", () => {
+    render(<PhoneInput label="Телефон" onChange={vi.fn()} />);
+    const shell = screen.getByLabelText("Телефон").closest("div.flex");
+    expect(shell?.className).toContain("inset-ring-transparent");
+  });
+});
+
+describe("PhoneInput dial code", () => {
+  it("names the dial code on the region button", () => {
+    render(<PhoneInput label="Телефон" onChange={vi.fn()} />);
+    expect(screen.getByRole("button", { name: /Регион: Казахстан, \+7/ })).toBeInTheDocument();
+  });
+
+  it("clicking the dial code moves focus into the field", async () => {
+    render(<PhoneInput label="Телефон" onChange={vi.fn()} />);
+    await userEvent.click(screen.getByText("+7"));
+    expect(screen.getByLabelText("Телефон")).toHaveFocus();
+  });
+});
+
+describe("PhoneInput field name", () => {
+  it("keeps the dial code out of the field's accessible name", () => {
+    render(<PhoneInput label="Телефон" onChange={vi.fn()} />);
+    expect(screen.getByRole("textbox", { name: "Телефон" })).toBeInTheDocument();
+  });
+});
+
+describe("PhoneInput ref and aria", () => {
+  it("forwards ref to the input element", () => {
+    const ref = createRef<HTMLInputElement>();
+    render(<PhoneInput label="Телефон" onChange={vi.fn()} ref={ref} />);
+    expect(ref.current).toBe(screen.getByLabelText("Телефон"));
+  });
+
+  it("describes the field with error text rendered outside it", () => {
+    render(
+      <>
+        <PhoneInput label="Телефон" aria-describedby="phone-error" invalid onChange={vi.fn()} />
+        <p id="phone-error">Неверный номер</p>
+      </>,
+    );
+    expect(screen.getByRole("textbox", { name: "Телефон" })).toHaveAccessibleDescription(
+      "Неверный номер",
+    );
+  });
+
+  it("keeps the visible label as the name when aria-label is also passed", () => {
+    render(<PhoneInput label="Номер телефона" aria-label="Телефон" onChange={vi.fn()} />);
+    expect(screen.getByRole("textbox", { name: "Номер телефона" })).toBeInTheDocument();
+  });
+
+  it("can be named without a visible label", () => {
+    render(<PhoneInput aria-label="Телефон" onChange={vi.fn()} />);
+    expect(screen.getByRole("textbox", { name: "Телефон" })).toBeInTheDocument();
+  });
+});
+
+describe("PhoneInput naming and ref stability", () => {
+  it("honours aria-labelledby and exposes the label id for composing a name", () => {
+    render(
+      <>
+        <span id="billing">Оплата</span>
+        <PhoneInput
+          id="phone"
+          label="Телефон"
+          aria-labelledby="billing phone-label"
+          onChange={vi.fn()}
+        />
+      </>,
+    );
+    expect(screen.getByRole("textbox", { name: "Оплата Телефон" })).toBeInTheDocument();
+  });
+
+  it("treats a whitespace-only label as no label", () => {
+    const { container } = render(<PhoneInput label="  " aria-label="Телефон" onChange={vi.fn()} />);
+    expect(container.querySelector("label")).toBeNull();
+    expect(screen.getByRole("textbox", { name: "Телефон" })).toBeInTheDocument();
+  });
+
+  it("treats an empty label as no label and keeps aria-label", () => {
+    const { container } = render(<PhoneInput label="" aria-label="Телефон" onChange={vi.fn()} />);
+    expect(container.querySelector("label")).toBeNull();
+    expect(screen.getByRole("textbox", { name: "Телефон" })).toBeInTheDocument();
+  });
+
+  it("hands a callback ref the field once instead of on every keystroke", async () => {
+    const refCallback = vi.fn();
+    render(<PhoneInput label="Телефон" onChange={vi.fn()} ref={refCallback} />);
+    await userEvent.type(screen.getByLabelText("Телефон"), "7012");
+    expect(refCallback.mock.calls.filter(([el]) => el !== null)).toHaveLength(1);
+  });
+});

@@ -1,0 +1,406 @@
+{
+  "air-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "air-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "alert-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "alert-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "bag": {
+    "section": "Map UI Icons",
+    "weight": null
+  },
+  "bookmark-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "bookmark-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "buildings": {
+    "section": "Map UI Icons",
+    "weight": null
+  },
+  "burger": {
+    "section": "Map UI Icons",
+    "weight": null
+  },
+  "bus-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "bus-front-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "bus-front-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "bus-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "business-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "business-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "camera-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "camera-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "car": {
+    "section": "Map UI Icons",
+    "weight": null
+  },
+  "category": {
+    "section": "Map UI Icons",
+    "weight": null
+  },
+  "checkmark": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "chevron-down": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "chevron-left": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "chevron-right": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "chevron-up": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "close": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "cloud": {
+    "section": "Weather Icons",
+    "weight": null
+  },
+  "cloud-lunar": {
+    "section": "Weather Icons",
+    "weight": null
+  },
+  "cloud-sunny": {
+    "section": "Weather Icons",
+    "weight": null
+  },
+  "cup": {
+    "section": "Map UI Icons",
+    "weight": null
+  },
+  "dark-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "dark-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "delete-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "delete-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "dimension-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "dimension-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "edit": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "error-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "error-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "flash-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "flash-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "hospital": {
+    "section": "Map UI Icons",
+    "weight": null
+  },
+  "info-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "info-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "knife-and-fork": {
+    "section": "Map UI Icons",
+    "weight": null
+  },
+  "language": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "layer-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "layer-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "letter-n-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "letter-n-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "light-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "light-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "location-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "location-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "logout": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "map-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "map-error": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "map-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "menu": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "minus": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "moon": {
+    "section": "Weather Icons",
+    "weight": null
+  },
+  "navigate-center-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "navigate-center-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "navigate-left-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "navigate-left-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "navigate-right-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "navigate-right-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "notification-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "notification-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "phone-and-tablet-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "phone-and-tablet-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "pills": {
+    "section": "Map UI Icons",
+    "weight": null
+  },
+  "plus": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "rain": {
+    "section": "Weather Icons",
+    "weight": null
+  },
+  "route-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "route-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "scissors": {
+    "section": "Map UI Icons",
+    "weight": null
+  },
+  "scooter-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "scooter-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "search-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "search-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "settings": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "share": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "shopping-bag": {
+    "section": "Map UI Icons",
+    "weight": null
+  },
+  "shopping-basket": {
+    "section": "Map UI Icons",
+    "weight": null
+  },
+  "snow": {
+    "section": "Weather Icons",
+    "weight": null
+  },
+  "star-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "star-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "sun": {
+    "section": "Weather Icons",
+    "weight": null
+  },
+  "support": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "terminal-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "terminal-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "tree": {
+    "section": "Map UI Icons",
+    "weight": null
+  },
+  "upload": {
+    "section": "Interface Icons",
+    "weight": null
+  },
+  "user-add-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "user-add-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "user-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "user-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "users-three-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "users-three-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
+  "users-two-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "users-two-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  }
+}

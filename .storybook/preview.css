@@ -1,11 +1,12 @@
+@import "./fonts.css";
 @import "tailwindcss";
 @import "../src/styles/core.css";
 @import "../src/styles/brands/business.css";
 @import "../src/styles/brands/booking.css";
 @import "../src/styles/brands/maps.css";
-@import "../src/styles/kits/maps.css";
+@import "../src/styles/kit.css";
 @source "../src";
 
 :root {
-  --font-inter: "Inter Variable", system-ui, sans-serif;
+  --font-inter: "Inter", system-ui, sans-serif;
 }

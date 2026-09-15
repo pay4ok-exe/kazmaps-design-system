@@ -1,0 +1,75 @@
+import type { ComponentProps, ReactNode } from "react";
+
+export type ButtonVariant = "accent" | "neutral" | "danger";
+
+const VARIANT_CLASSES: Record<ButtonVariant, string> = {
+  accent: [
+    "text-(color:--text-white) bg-(--action-accent-primary)",
+    "[--btn-ring-from:var(--action-accent-subtle)]",
+    "[--btn-ring-to:var(--action-accent-secondary)]",
+    "active:bg-(--action-accent-secondary)",
+    "active:[--btn-ring-from:var(--action-accent-secondary)]",
+    "active:[--btn-ring-to:var(--action-accent-secondary)]",
+  ].join(" "),
+  neutral: [
+    "text-(color:--text-white) bg-(--action-neutral-primary)",
+    "[--btn-ring-from:var(--action-neutral-subtle)]",
+    "[--btn-ring-to:var(--action-neutral-secondary)]",
+    "active:bg-(--action-neutral-secondary)",
+    "active:[--btn-ring-from:var(--action-neutral-secondary)]",
+    "active:[--btn-ring-to:var(--action-neutral-secondary)]",
+  ].join(" "),
+  danger: [
+    "text-(color:--text-white) bg-(--action-danger-primary)",
+    "[--btn-ring-from:var(--action-danger-subtle)]",
+    "[--btn-ring-to:var(--action-danger-hover)]",
+    "active:bg-(--action-danger-secondary)",
+    "active:[--btn-ring-from:var(--action-danger-secondary)]",
+    "active:[--btn-ring-to:var(--action-danger-secondary)]",
+  ].join(" "),
+};
+
+const DISABLED_CLASSES = [
+  "disabled:cursor-not-allowed",
+  "disabled:bg-(--action-disabled)",
+  "disabled:[--btn-ring-from:var(--action-disabled)]",
+  "disabled:[--btn-ring-to:var(--action-disabled)]",
+  "disabled:text-(color:--text-tertiary)",
+].join(" ");
+
+const BASE_CLASSES = "h-(--dimension-height-40) text-base leading-(--typography-line-height-20)";
+
+const CONTENT_CLASSES = {
+  withIcon:
+    "pl-(--spacing-padding-12) pr-(--spacing-padding-10) gap-(--spacing-gap-6) [font-weight:var(--font-weight-book)]",
+  textOnly: "px-(--spacing-padding-12) [font-weight:var(--font-weight-medium)]",
+};
+
+export function Button({
+  children,
+  icon,
+  variant = "accent",
+  fullWidth = false,
+  className = "",
+  ...rest
+}: ComponentProps<"button"> & {
+  children: ReactNode;
+  icon?: ReactNode;
+  variant?: ButtonVariant;
+  fullWidth?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      {...rest}
+      className={`relative inline-flex items-center justify-center rounded-(--dimension-corner-radius-10) whitespace-nowrap transition-interactive focus-ring ${BASE_CLASSES} ${icon ? CONTENT_CLASSES.withIcon : CONTENT_CLASSES.textOnly} ${VARIANT_CLASSES[variant]} ${DISABLED_CLASSES} ${fullWidth ? "w-full" : ""} ${className}`}
+    >
+      <span
+        aria-hidden="true"
+        className="gradient-ring pointer-events-none absolute inset-0 rounded-[inherit]"
+      />
+      {children}
+      {icon}
+    </button>
+  );
+}
