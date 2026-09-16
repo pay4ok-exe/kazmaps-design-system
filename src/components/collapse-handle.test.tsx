@@ -30,11 +30,9 @@ describe("CollapseHandle", () => {
     expect(className).not.toContain("inset-shadow-");
   });
 
-  it("свёрнутая панель залита background/secondary и обведена с трёх сторон", () => {
+  it("свёрнутая панель залита background/secondary, а кромку макета дают три inset-тени по верху, правому краю и низу: border съел бы ширину под глиф", () => {
     const className = handle(false).button.className;
     expect(className).toContain("bg-(--background-secondary)");
-    // Кромка макета INSIDE и идёт по верху, правому краю и низу; слева её нет.
-    // Три inset-тени вместо border: border съел бы ширину под иконку (24 − 2 − 2 − 1 < 20).
     expect(className).toContain("0_1px_0_0_var(--background-primary)");
     expect(className).toContain("0_-1px_0_0_var(--background-primary)");
     expect(className).toContain("-1px_0_0_0_var(--background-primary)");

@@ -24,12 +24,10 @@ describe("PasswordInput", () => {
     expect(button()).toHaveAttribute("aria-pressed", "true");
   });
 
-  it("глаз ростом со строку, чтобы поле осталось 36 как у TextInput", () => {
+  it("глаз ростом со строку (20), а площадь нажатия добирает псевдоэлемент вне потока — поле остаётся 36 как у TextInput", () => {
     render(<PasswordInput label="Пароль" value="secret" onChange={vi.fn()} />);
     const className = screen.getByRole("button", { name: "Показать пароль" }).className;
-    // 20 — высота строки поля; кнопка выше неё растянула бы поле до 48.
     expect(className).toContain("size-5");
-    // Площадь нажатия добирается псевдоэлементом: он вне потока и высоту не трогает.
     expect(className).toContain("before:-inset-2");
   });
 });

@@ -10,9 +10,6 @@ function walk(dir: string): string[] {
   );
 }
 
-// cases.tsx — не компонент, а набор примеров: его читают только истории и
-// axe-прогон, в пакет он не входит. Примеры берут глифы из набора /icons,
-// чтобы витрина показывала иконки макета, а не их заменители.
 const FIXTURES = new Set(["components/cases.tsx"]);
 
 function sourceFiles(paths: string[]): string[] {
@@ -39,7 +36,7 @@ describe("component boundaries", () => {
     ]);
   });
 
-  it("components import only siblings, lib, data and peers", () => {
+  it("components import only siblings, lib, data, the /icons set and peers", () => {
     const offenders: string[] = [];
     for (const file of sourceFiles(walk("components"))) {
       for (const spec of importSpecs(file)) {
@@ -47,8 +44,6 @@ describe("component boundaries", () => {
           (spec.startsWith("./") && spec !== "./index") ||
           spec.startsWith("../lib/") ||
           spec.startsWith("../data/") ||
-          // Глифы кита — набор макета из ../icons. Модуль листовой: сам он
-          // ничего из компонентов не тянет, это проверено ниже.
           spec.startsWith("../icons/") ||
           // qrcode is an optional peer dependency read only by qr-code.tsx's dynamic import.
           ["react", "react-dom", "lucide-react", "qrcode", "react-input-mask-format"].includes(

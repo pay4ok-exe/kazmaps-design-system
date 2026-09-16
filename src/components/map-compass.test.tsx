@@ -22,10 +22,8 @@ describe("MapCompass", () => {
     expect(dial(container)).toHaveStyle({ rotate: "-90deg" });
   });
 
-  it("буква вращается вместе со шкалой, а не висит отдельно", () => {
+  it("буква лежит в том же svg, которому задан поворот: отдельного неподвижного слоя у неё нет", () => {
     const { container } = render(<MapCompass label="Север" heading={90} />);
-    // Буква вложена в тот же svg, которому задан поворот: отдельного слоя,
-    // способного остаться неподвижным, у неё нет.
     expect(letter(container)?.closest("svg[style]")).toBe(dial(container));
   });
 

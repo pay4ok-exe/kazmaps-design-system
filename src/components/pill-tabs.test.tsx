@@ -63,7 +63,7 @@ describe("PillTabs", () => {
     expect(inactive).toContain("text-(color:--text-tertiary)");
     expect(inactive).toContain("hover:text-(color:--text-primary)");
   });
-  it("контейнер несёт обе заливки макета", () => {
+  it("контейнер несёт обе заливки макета: background/toggle и слой background/toggle-2 поверх неё", () => {
     const { container } = render(
       <PillTabs
         label="Вид"
@@ -76,12 +76,10 @@ describe("PillTabs", () => {
       />,
     );
     const className = container.firstElementChild?.className ?? "";
-    // В макете у Toggle Switch две заливки: background/toggle и поверх неё
-    // background/toggle-2 в 3 % — вторая ложится слоем фона-картинки.
     expect(className).toContain("bg-(--background-toggle)");
     expect(className).toContain("--background-toggle-2");
   });
-  it("размер menu повторяет Menu Toggle Switch: радиусы 8 и 6, паддинг 4, текст 14/18", () => {
+  it("размер menu повторяет Menu Toggle Switch: радиусы 8 и 6, паддинг 4 по горизонтали и 6 по вертикали (высота 30 при тексте 18 не сходится, figma-deltas 21), текст 14/18", () => {
     const { container } = render(
       <PillTabs
         label="Вид"
@@ -100,8 +98,6 @@ describe("PillTabs", () => {
     expect(indicator?.className).toContain("rounded-(--dimension-corner-radius-6)");
     const option = screen.getByRole("button", { name: "Карта" }).className;
     expect(option).toContain("px-(--spacing-padding-4)");
-    // Макет объявляет паддинг 4, но фиксирует высоту пилюли 30 при тексте 18 —
-    // по вертикали это ровно 6 (figma-deltas, пункт 21).
     expect(option).toContain("py-(--spacing-padding-6)");
     expect(option).toContain("text-sm");
     expect(option).toContain("leading-(--typography-line-height-18)");
