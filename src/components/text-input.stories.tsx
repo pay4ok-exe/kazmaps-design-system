@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Mail } from "lucide-react";
 import { useArgs } from "storybook/preview-api";
 
 import { TextInput } from "./text-input";
@@ -42,19 +41,6 @@ export const AllVariants: StoryObj = {
       <Cell caption="With label">
         <TextInput label="E-mail" value="" onChange={noop} placeholder="yourmail@example.com" />
       </Cell>
-      <Cell caption="With prefix and trailing">
-        <TextInput
-          value=""
-          onChange={noop}
-          placeholder="yourmail@example.com"
-          prefix={<Mail size={20} aria-hidden="true" />}
-          trailing={
-            <span className="text-xs text-(color:--text-tertiary) [font-weight:var(--font-weight-medium)]">
-              @kazmaps.kz
-            </span>
-          }
-        />
-      </Cell>
       <Cell caption="Disabled">
         <TextInput value="" onChange={noop} placeholder="yourmail@example.com" disabled />
       </Cell>
@@ -72,10 +58,8 @@ export const Playground: StoryObj<typeof TextInput> = {
     type: "text",
   },
   argTypes: {
-    type: { control: "inline-radio", options: ["text", "email", "password", "number"] },
+    type: { control: "inline-radio", options: ["text", "email", "number"] },
     onChange: { table: { disable: true } },
-    prefix: { table: { disable: true } },
-    trailing: { table: { disable: true } },
   },
   render: function Render(args) {
     const [, updateArgs] = useArgs();

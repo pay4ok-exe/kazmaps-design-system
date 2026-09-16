@@ -22,7 +22,7 @@ export function PasswordInput({ ...rest }: PasswordInputProps) {
           onClick={() => {
             setVisible((v) => !v);
           }}
-          className="flex size-8 items-center justify-center rounded-[6px] text-(color:--text-tertiary) transition-interactive focus-ring hover:text-(color:--text-primary)"
+          className="relative flex size-5 shrink-0 items-center justify-center rounded-(--dimension-corner-radius-4) text-(color:--icon-secondary) transition-interactive before:absolute before:-inset-2 before:content-[''] focus-ring hover:text-(color:--icon-primary)"
         >
           {visible ? <EyeOff size={16} aria-hidden="true" /> : <Eye size={16} aria-hidden="true" />}
         </button>

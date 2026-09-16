@@ -7,6 +7,10 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
 
 ### Changed
 
+- `PasswordInput`: поле стало 36 в высоту, как `TextInput` — прежде кнопка глаза размером 32
+  растягивала его до 48. Кнопка теперь ростом со строку (20), а площадь нажатия добирается
+  псевдоэлементом: он вне потока и высоту не трогает. Глаз перешёл на роли `icon/secondary` и
+  `icon/primary`.
 - **Ломающее.** `SegmentedRow`, `SectionHeader`, `SectionError` и `ShimmerBlock` удалены вместе с
   типами `SegmentedRowItem` и `SegmentedRowProps`. В макете этих компонентов нет; main-web рисует
   заголовок секции, её ошибку и заглушку загрузки у себя. Утилита `.animate-shimmer-placeholder`
