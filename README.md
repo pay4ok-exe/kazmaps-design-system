@@ -199,7 +199,8 @@ if (!valid) show("Введите номер полностью");
 Источник истины — `tokens/schema.json` и `tokens/brands/*.json`; CSS и `docs/tokens.md`
 генерирует `npm run tokens:build`. Бренд `maps` импортируется из `tokens/figma/export.json`
 командой `npm run tokens:import`; `business` и `booking` пока переходные — `docs/brands.md`.
-Чего не хватает в макете — `docs/figma-deltas.md`.
+Чего не хватает в макете — `docs/figma-deltas.md`. Какой компонент макета каким стал в коде —
+`docs/figma-map.md`.
 
 Обводки повторяют `strokeAlign` макета и места не занимают: внутренние рисуются `inset-ring`,
 градиентное кольцо `Button` — отдельным слоем `gradient-ring`, внешние — `ring`. Высоты
