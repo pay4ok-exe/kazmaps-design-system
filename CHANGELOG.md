@@ -7,6 +7,10 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
 
 ### Changed
 
+- **Ломающее.** `Panel` и тип `PanelVariant` удалены: в макете такого компонента нет, а сам он был
+  обёрткой над четырьмя классами с единственным значением `variant`. Три вызова main-web переносят
+  классы к себе — `docs/figma-deltas.md`, пункт 21. Токен `--shadow-column` оставлен: он объявлен
+  у всех брендов и ждёт значения от дизайнера.
 - Кит рисует глифы набора `/icons`, а не `lucide-react`: `SearchInput` и пикер регионов —
   `search`, `SelectField`, `PhoneInput` и `DayPicker` — `chevron-*`, `Dialog` и `BottomSheet` —
   `close`, пикер регионов — `checkmark`, `StarRating` — `star`, `CollapseHandle` — шевроны.

@@ -32,7 +32,6 @@ import { LogoLockup } from "./logo-lockup";
 import { MapCompass } from "./map-compass";
 import { MapTrafficBadge } from "./map-traffic-badge";
 import { NavBar } from "./nav-bar";
-import { Panel } from "./panel";
 import { PasswordInput } from "./password-input";
 import { PhoneInput } from "./phone-input";
 import { PlaceRow } from "./place-row";
@@ -120,12 +119,6 @@ export const KIT_CASES: [string, ReactElement][] = [
     <ListRow key="k" title="Помощь" href="https://kazmaps.dev" target="_blank" rel="noreferrer" />,
   ],
   ["LogoLockup", <LogoLockup key="k" />],
-  [
-    "Panel",
-    <Panel key="k">
-      <div className="p-3">Панель</div>
-    </Panel>,
-  ],
   ["PasswordInput", <PasswordInput key="k" label="Пароль" value="secret" onChange={noop} />],
   ["PhoneInput", <PhoneInput key="k" label="Телефон" />],
   ["PhoneInput invalid", <PhoneInput key="k" label="Телефон" invalid />],

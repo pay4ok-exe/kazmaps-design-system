@@ -21,7 +21,6 @@ const EXPECTED = [
   "MapTrafficBadge",
   "NavBar",
   "PHONE_INPUT_DEFAULT_LABELS",
-  "Panel",
   "PasswordInput",
   "PhoneInput",
   "PlaceRow",

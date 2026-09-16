@@ -35,8 +35,6 @@ export type { TrafficLevel } from "./components/map-traffic-badge";
 export { MapTrafficBadge } from "./components/map-traffic-badge";
 export type { NavBarItem, NavBarProps } from "./components/nav-bar";
 export { NavBar } from "./components/nav-bar";
-export type { PanelVariant } from "./components/panel";
-export { Panel } from "./components/panel";
 export type { PasswordInputProps } from "./components/password-input";
 export { PasswordInput } from "./components/password-input";
 export type { PhoneInputProps, PhoneValue } from "./components/phone-input";
