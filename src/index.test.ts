@@ -34,7 +34,7 @@ const EXPECTED = [
   "TextInput",
   "ToastProvider",
   "Toggle",
-  "ToggleSwitch",
+  "PillTabs",
   "WeatherBadge",
   "cn",
   "findRegion",

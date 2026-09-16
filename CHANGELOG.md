@@ -7,6 +7,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
 
 ### Changed
 
+- **Ломающее.** `ToggleSwitch` переименован в `PillTabs` вместе с типами `ToggleSwitchOption` и
+  `ToggleSwitchProps` — в макете это `Toggle Switch` (`141:612`), ряд вкладок-пилюль, а не
+  переключатель «вкл/выкл» (тот остался `Toggle`).
+- `PillTabs`: у контейнера появилась вторая заливка `background/toggle-2` поверх
+  `background/toggle` — так в макете. Роль была объявлена у всех брендов, но не читалась нигде.
 - `PasswordInput`: поле стало 36 в высоту, как `TextInput` — прежде кнопка глаза размером 32
   растягивала его до 48. Кнопка теперь ростом со строку (20), а площадь нажатия добирается
   псевдоэлементом: он вне потока и высоту не трогает. Глаз перешёл на роли `icon/secondary` и

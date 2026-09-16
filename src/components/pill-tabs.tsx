@@ -1,29 +1,23 @@
 "use client";
 
-export type ToggleSwitchOption = { id: string; label: string };
+export type PillTabsOption = { id: string; label: string };
 
-export interface ToggleSwitchProps {
-  options: ToggleSwitchOption[];
+export interface PillTabsProps {
+  options: PillTabsOption[];
   activeId: string;
   onSelect: (id: string) => void;
   label: string;
   className?: string;
 }
 
-export function ToggleSwitch({
-  options,
-  activeId,
-  onSelect,
-  label,
-  className = "",
-}: ToggleSwitchProps) {
+export function PillTabs({ options, activeId, onSelect, label, className = "" }: PillTabsProps) {
   const activeIndex = options.findIndex((option) => option.id === activeId);
 
   return (
     <div
       role="group"
       aria-label={label}
-      className={`relative flex gap-(--spacing-gap-2) rounded-(--dimension-corner-radius-12) bg-(--background-toggle) p-(--spacing-padding-2) ${className}`}
+      className={`relative flex gap-(--spacing-gap-2) rounded-(--dimension-corner-radius-12) bg-(--background-toggle) bg-[linear-gradient(var(--background-toggle-2),var(--background-toggle-2))] p-(--spacing-padding-2) ${className}`}
     >
       {activeIndex < 0 ? null : (
         <span

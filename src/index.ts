@@ -58,8 +58,8 @@ export type { ShowToast, ToastAction, ToastOptions } from "./components/toast";
 export { ToastProvider, useToast } from "./components/toast";
 export { Toggle } from "./components/toggle";
 export { WeatherBadge } from "./components/weather-badge";
-export type { ToggleSwitchOption, ToggleSwitchProps } from "./components/toggle-switch";
-export { ToggleSwitch } from "./components/toggle-switch";
+export type { PillTabsOption, PillTabsProps } from "./components/pill-tabs";
+export { PillTabs } from "./components/pill-tabs";
 export { isTopmostTrap, useFocusTrap } from "./components/use-focus-trap";
 
 export {

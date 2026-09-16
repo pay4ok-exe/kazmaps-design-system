@@ -43,7 +43,7 @@ import { StarRating } from "./star-rating";
 import { TextInput } from "./text-input";
 import { ToastProvider, useToast } from "./toast";
 import { Toggle } from "./toggle";
-import { ToggleSwitch } from "./toggle-switch";
+import { PillTabs } from "./pill-tabs";
 import { WeatherBadge } from "./weather-badge";
 
 const noop = () => undefined;
@@ -240,8 +240,8 @@ export const KIT_CASES: [string, ReactElement][] = [
   ["TextInput invalid", <TextInput key="k" label="Имя" value="" onChange={noop} invalid />],
   ["Toggle", <Toggle key="k" checked onChange={noop} label="Уведомления" />],
   [
-    "ToggleSwitch",
-    <ToggleSwitch
+    "PillTabs",
+    <PillTabs
       key="k"
       label="Вид"
       activeId="map"
