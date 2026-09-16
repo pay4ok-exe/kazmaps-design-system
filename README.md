@@ -123,7 +123,8 @@ import { IconSearchBold, IconStarLight } from "@temirtator/kazmaps-design-system
 `PhoneInput`, `CodeInput`, `SelectField`,
 `DayPicker`.
 
-Оверлеи: `Dialog`, `BottomSheet`, `ToastProvider` + `useToast`.
+Оверлеи: `Dialog`, `BottomSheet`, `ToastProvider` + `useToast`, `Menu` + `MenuItem` +
+`MenuDivider`.
 
 Карта: `MapCompass` (клик возвращает на север; с `heading` поворотом управляет приложение), `MapTrafficBadge`, `WeatherBadge`, `ForecastCard`, `ScaleBar`, `NavBar`,
 `CollapseHandle`.

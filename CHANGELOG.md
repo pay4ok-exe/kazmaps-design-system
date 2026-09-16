@@ -10,6 +10,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
 - **Ломающее.** `ToggleSwitch` переименован в `PillTabs` вместе с типами `ToggleSwitchOption` и
   `ToggleSwitchProps` — в макете это `Toggle Switch` (`141:612`), ряд вкладок-пилюль, а не
   переключатель «вкл/выкл» (тот остался `Toggle`).
+- `Menu`, `MenuItem` и `MenuDivider` — выпадающее меню по макету: карточка `Menu` (`245:569`)
+  240 в ширину, радиус 10, тень HUD, паддинг 8 и зазор 4; разделитель `Menu Item Divder` — восемь
+  в высоту с линией `background/tertiary` по центру. `MenuItem` — одна оболочка на все три типа
+  пункта из макета: `Profile Menu Item` (`243:429`) со счётчиком и точкой непрочитанного,
+  `Servises Menu Item` (`245:680`) с шевроном и `Layers Menu Item` (`253:187`) с жирным глифом у
+  активного. Пункт 224 на 32 собирается из паддинга 6, зазора 8 и радиуса 4; подпись 14/20 весом
+  450. Состояния: обычное — `secondary`, наведение — `primary` на фоне `background/secondary`,
+  выключенное — `tertiary`, активное — глиф `icon/accent` и подпись `text/primary`.
 - `MenuTabs` — новый компонент по `Menu Toggle Item` (`251:758`): заголовок 12/16 весом 500
   `text/secondary`, необязательная иконка 16 `icon/tertiary` справа, зазор 4 и компактные
   `PillTabs`. Заголовок называет группу вкладок. Имя взято не из макета: там компонент назван
