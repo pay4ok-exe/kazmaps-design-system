@@ -10,6 +10,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
 - **Ломающее.** `ToggleSwitch` переименован в `PillTabs` вместе с типами `ToggleSwitchOption` и
   `ToggleSwitchProps` — в макете это `Toggle Switch` (`141:612`), ряд вкладок-пилюль, а не
   переключатель «вкл/выкл» (тот остался `Toggle`).
+- **Ломающее.** `SelectField` больше не использует нативный `<select>`: поле стало кнопкой с
+  собственным списком. Ходит по стрелкам, `Home` и `End`, выбирает `Enter` и пробелом, закрывается
+  `Escape` и щелчком мимо; активный пункт назван через `aria-activedescendant`, выбранный помечен
+  `aria-selected` и галочкой. Пропы `value`, `onChange`, `options`, `label`, `bordered` не менялись,
+  но остальные атрибуты теперь от `<button>`, а не от `<select>`. Открытого списка в макете нет —
+  `docs/figma-deltas.md`, пункт 24.
 - `Menu`, `MenuItem` и `MenuDivider` — выпадающее меню по макету: карточка `Menu` (`245:569`)
   240 в ширину, радиус 10, тень HUD, паддинг 8 и зазор 4; разделитель `Menu Item Divder` — восемь
   в высоту с линией `background/tertiary` по центру. `MenuItem` — одна оболочка на все три типа
