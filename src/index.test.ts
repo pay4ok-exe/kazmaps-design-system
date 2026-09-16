@@ -19,6 +19,7 @@ const EXPECTED = [
   "LogoLockup",
   "MapCompass",
   "MapTrafficBadge",
+  "MenuTabs",
   "NavBar",
   "NavItem",
   "PHONE_INPUT_DEFAULT_LABELS",

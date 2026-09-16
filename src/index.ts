@@ -33,6 +33,8 @@ export { LogoLockup } from "./components/logo-lockup";
 export { MapCompass } from "./components/map-compass";
 export type { TrafficLevel } from "./components/map-traffic-badge";
 export { MapTrafficBadge } from "./components/map-traffic-badge";
+export type { MenuTabsProps } from "./components/menu-tabs";
+export { MenuTabs } from "./components/menu-tabs";
 export type { NavItemProps } from "./components/nav-item";
 export { NavItem } from "./components/nav-item";
 export type { NavBarItem, NavBarProps } from "./components/nav-bar";

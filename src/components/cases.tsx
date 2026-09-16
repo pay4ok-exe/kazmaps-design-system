@@ -28,6 +28,7 @@ import { IconButton } from "./icon-button";
 import { IconButtonGroup } from "./icon-button-group";
 import { LegalLink } from "./legal-link";
 import { ListRow } from "./list-row";
+import { MenuTabs } from "./menu-tabs";
 import { LogoLockup } from "./logo-lockup";
 import { MapCompass } from "./map-compass";
 import { MapTrafficBadge } from "./map-traffic-badge";
@@ -265,6 +266,20 @@ export const KIT_CASES: [string, ReactElement][] = [
         { id: "list", label: "Список" },
         { id: "photo", label: "Фото" },
       ]}
+    />,
+  ],
+  [
+    "MenuTabs",
+    <MenuTabs
+      key="k"
+      title="Тема карты"
+      options={[
+        { id: "auto", label: "Авто" },
+        { id: "light", label: "Светлая" },
+        { id: "dark", label: "Тёмная" },
+      ]}
+      activeId="auto"
+      onSelect={noop}
     />,
   ],
 ];
