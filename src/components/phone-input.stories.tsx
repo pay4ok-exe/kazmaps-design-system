@@ -7,7 +7,7 @@ import { PhoneInput, type PhoneValue } from "./phone-input";
 const meta: Meta<typeof PhoneInput> = { title: "Components/PhoneInput", component: PhoneInput };
 export default meta;
 
-export const States: StoryObj<typeof PhoneInput> = {
+export const AllVariants: StoryObj<typeof PhoneInput> = {
   render: () => (
     <div className="flex w-[340px] flex-col gap-4">
       <PhoneInput label="Пусто" />

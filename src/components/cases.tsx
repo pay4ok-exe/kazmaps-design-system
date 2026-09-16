@@ -329,3 +329,24 @@ export const OVERLAY_CASES: [string, ReactElement][] = [
     />,
   ],
 ];
+
+export function Cases({ component }: { component: string }) {
+  const cases = KIT_CASES.filter(([name]) => name.split(" ")[0] === component);
+  return (
+    <div className="flex max-w-[420px] flex-col gap-(--spacing-gap-16)">
+      {cases.map(([name, element]) => (
+        <section key={name} className="flex flex-col gap-(--spacing-gap-8)">
+          <h3 className="text-[10px] leading-(--typography-line-height-12) tracking-wider text-(color:--text-tertiary) uppercase">
+            {name}
+          </h3>
+          {element}
+        </section>
+      ))}
+    </div>
+  );
+}
+
+export function Overlay({ component }: { component: string }) {
+  const found = OVERLAY_CASES.find(([name]) => name === component);
+  return found ? found[1] : null;
+}

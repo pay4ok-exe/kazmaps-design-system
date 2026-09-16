@@ -70,20 +70,6 @@ export const AllVariants: StoryObj = {
   ),
 };
 
-export const FullWidth: StoryObj = {
-  render: () => (
-    <div className="flex w-[320px] flex-col gap-(--spacing-gap-8)">
-      <Button fullWidth>accent</Button>
-      <Button fullWidth variant="neutral" icon={icon}>
-        neutral with icon
-      </Button>
-      <Button fullWidth variant="danger" disabled>
-        danger disabled
-      </Button>
-    </div>
-  ),
-};
-
 export const Playground: StoryObj<typeof Button> = {
   args: { children: "Button", variant: "accent", disabled: false, fullWidth: false },
   argTypes: { variant: { control: "inline-radio", options: MACKET } },

@@ -7,10 +7,10 @@ const THEMES = ["light", "dark"] as const;
 const BRANDS = ["maps", "business", "booking"] as const;
 const BRAND_SLICE = new Set([
   "components-button--all-variants",
-  "components--place-row",
+  "components-placerow--all-variants",
   "components-textinput--all-variants",
-  "components-phoneinput--states",
-  "components--icon-button-group",
+  "components-phoneinput--all-variants",
+  "components-iconbuttongroup--all-variants",
 ]);
 const INTERACTIVE = /--(playground|live)$/;
 
@@ -28,18 +28,18 @@ for (const id of STORIES) {
     if (brand !== "maps" && !BRAND_SLICE.has(id)) continue;
     for (const theme of THEMES) {
       test(`${id} — ${brand} ${theme}`, async ({ page }) => {
-        if (id === "components--bottom-sheet") {
+        if (id === "components-bottomsheet--all-variants") {
           await page.setViewportSize({ width: 390, height: 700 });
         }
         await page.goto(
           `/iframe.html?viewMode=story&id=${id}&globals=brand:${brand};theme:${theme}`,
         );
-        if (id === "components--dialog") {
+        if (id === "components-dialog--all-variants") {
           await expect(page.getByRole("dialog").first()).toBeVisible();
         } else {
           await expect(page.locator("#storybook-root > *").first()).toBeVisible();
         }
-        if (id === "components--toast") {
+        if (id === "components-toast--all-variants") {
           await page.getByRole("status").waitFor();
         }
         await expect(page).toHaveScreenshot(`${brand}-${id.replace("--", "-")}-${theme}.png`, {
@@ -76,7 +76,7 @@ test("inside strokes do not add to the measured heights", async ({ page }) => {
       .locator(selector)
       .evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().height)));
   };
-  expect(new Set(await heights("components--chip", "#storybook-root button"))).toEqual(
+  expect(new Set(await heights("components-chip--all-variants", "#storybook-root button"))).toEqual(
     new Set([28]),
   );
   expect(
@@ -88,15 +88,22 @@ test("inside strokes do not add to the measured heights", async ({ page }) => {
     ),
   ).toEqual(new Set([36]));
   expect(
-    new Set(await heights("components--search-input", "#storybook-root div:has(> input)")),
+    new Set(
+      await heights("components-searchinput--all-variants", "#storybook-root div:has(> input)"),
+    ),
   ).toEqual(new Set([36]));
   expect(
-    await heights("components--search-input", "#storybook-root div:has(> input) > button"),
+    await heights(
+      "components-searchinput--all-variants",
+      "#storybook-root div:has(> input) > button",
+    ),
   ).toEqual([34]);
-  expect(await heights("components--place-row", "#storybook-root button")).toEqual([72]);
-  expect(new Set(await heights("components--code-input", "#storybook-root input"))).toEqual(
-    new Set([48]),
-  );
+  expect(await heights("components-placerow--all-variants", "#storybook-root button")).toEqual([
+    72,
+  ]);
+  expect(
+    new Set(await heights("components-codeinput--all-variants", "#storybook-root input")),
+  ).toEqual(new Set([48]));
 });
 
 async function readBackgroundPrimary(page: Page): Promise<string> {
@@ -110,7 +117,7 @@ test.describe("maps follows the system theme", () => {
 
   test("no data-theme falls back to the system dark scheme", async ({ page }) => {
     await page.goto(
-      "/iframe.html?viewMode=story&id=components--toggle&globals=brand:maps;canvas:brand",
+      "/iframe.html?viewMode=story&id=components-toggle--all-variants&globals=brand:maps;canvas:brand",
     );
     await expect(page.locator("#storybook-root > *").first()).toBeVisible();
     await page.evaluate(() => document.documentElement.removeAttribute("data-theme"));
@@ -119,7 +126,7 @@ test.describe("maps follows the system theme", () => {
 
   test("explicit data-theme=light overrides the system dark scheme", async ({ page }) => {
     await page.goto(
-      "/iframe.html?viewMode=story&id=components--toggle&globals=brand:maps;canvas:brand",
+      "/iframe.html?viewMode=story&id=components-toggle--all-variants&globals=brand:maps;canvas:brand",
     );
     await expect(page.locator("#storybook-root > *").first()).toBeVisible();
     await page.evaluate(() => document.documentElement.setAttribute("data-theme", "light"));
