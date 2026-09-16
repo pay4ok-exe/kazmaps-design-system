@@ -1,5 +1,6 @@
-import { Search } from "lucide-react";
 import type { InputHTMLAttributes } from "react";
+
+import { IconSearchLight } from "../icons/generated";
 
 export type SearchInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> & {
   value: string;
@@ -18,9 +19,8 @@ export function SearchInput({
     <div
       className={`group flex items-center gap-(--spacing-gap-8) overflow-hidden rounded-(--dimension-corner-radius-10) inset-ring-[length:var(--stroke-border-1)] inset-ring-(--border-secondary) bg-(--background-primary) p-(--spacing-padding-8) shadow-(--shadow-field) transition-surface hover:inset-ring-(--border-primary) has-[input:focus]:inset-ring-(--border-focus) ${className}`}
     >
-      <Search
+      <IconSearchLight
         size={20}
-        aria-hidden="true"
         className="shrink-0 text-(color:--icon-secondary) transition-interactive group-has-[input:focus]:text-(color:--icon-primary)"
       />
       <input

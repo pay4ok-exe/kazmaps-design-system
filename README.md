@@ -110,7 +110,7 @@ import { IconSearchBold, IconStarLight } from "@temirtator/kazmaps-design-system
 <IconStarLight title="Рейтинг" />
 ```
 
-Одноцветные иконки залиты `currentColor`. Иконки погоды многоцветные: читают роли
+Одноцветные иконки залиты `currentColor`. Компоненты кита рисуют глифы из этого же набора. Иконки погоды многоцветные: читают роли
 `--weather-*` и на `currentColor` не реагируют. Без `title` иконка декоративная и скрыта от
 скринридера. `ICON_MANIFEST` перечисляет набор, раздел и начертание каждой иконки.
 

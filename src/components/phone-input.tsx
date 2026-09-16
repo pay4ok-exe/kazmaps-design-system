@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
 import { useId, useImperativeHandle } from "react";
 import InputMask from "react-input-mask-format";
 
@@ -13,6 +12,7 @@ import {
   usePhoneMask,
 } from "../lib/phone-input-core";
 import { RegionPicker } from "./region-picker";
+import { IconChevronDown } from "../icons/generated";
 
 export type { PhoneValue };
 
@@ -149,9 +149,8 @@ export function PhoneInput({
             className="flex shrink-0 items-center gap-(--spacing-gap-4) rounded-(--dimension-corner-radius-6) bg-(--background-primary) py-(--spacing-padding-6) pr-(--spacing-padding-6) pl-(--spacing-padding-8) leading-(--typography-line-height-16) text-(color:--icon-primary) focus-ring"
           >
             <RegionFlag iso={region.iso} />
-            <ChevronDown
+            <IconChevronDown
               size={16}
-              aria-hidden="true"
               className={`transition-transform ${open ? "rotate-180" : ""}`}
             />
           </button>

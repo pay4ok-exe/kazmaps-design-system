@@ -9,6 +9,7 @@ export interface NavBarItem {
   id: string;
   label: string;
   icon: ReactNode;
+  activeIcon?: ReactNode;
   onSelect: () => void;
 }
 
@@ -44,7 +45,7 @@ export function NavBar({
         <TabAction
           key={item.id}
           label={item.label}
-          icon={item.icon}
+          icon={item.id === activeId ? (item.activeIcon ?? item.icon) : item.icon}
           active={item.id === activeId}
           selection="current"
           onSelect={() => {

@@ -1,7 +1,8 @@
 "use client";
 
-import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { CalendarDays } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { IconChevronDown, IconChevronLeft, IconChevronRight } from "../icons/generated";
 
 const WEEKDAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
@@ -49,9 +50,8 @@ function SelectField({
           </option>
         ))}
       </select>
-      <ChevronDown
+      <IconChevronDown
         size={12}
-        aria-hidden="true"
         className="pointer-events-none absolute top-1/2 right-1.5 -translate-y-1/2 text-(color:--text-tertiary)"
       />
     </div>
@@ -153,7 +153,7 @@ export function DayPicker({
               }}
               className="flex size-7 shrink-0 items-center justify-center rounded-[7px] text-(color:--text-tertiary) transition-interactive focus-ring hover:bg-(--background-secondary) hover:text-(color:--text-primary)"
             >
-              <ChevronLeft size={15} />
+              <IconChevronLeft size={15} />
             </button>
 
             <div className="flex min-w-0 flex-1 items-center justify-center gap-1">
@@ -190,7 +190,7 @@ export function DayPicker({
               }}
               className="flex size-7 shrink-0 items-center justify-center rounded-[7px] text-(color:--text-tertiary) transition-interactive focus-ring hover:bg-(--background-secondary) hover:text-(color:--text-primary)"
             >
-              <ChevronRight size={15} />
+              <IconChevronRight size={15} />
             </button>
           </div>
 

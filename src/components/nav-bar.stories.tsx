@@ -1,6 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Bookmark, MapPin, Plus, Route, Users } from "lucide-react";
-
+import {
+  IconBookmarkBold,
+  IconBookmarkLight,
+  IconPhoneAndTabletBold,
+  IconPhoneAndTabletLight,
+  IconRouteBold,
+  IconRouteLight,
+  IconSearchBold,
+  IconSearchLight,
+  IconUsersThreeBold,
+  IconUsersThreeLight,
+} from "../icons/generated";
 import { NavBar } from "./nav-bar";
 import { TabAction } from "./tab-action";
 import { TAB_ACTION_STATE } from "./tab-action.states";
@@ -13,15 +23,42 @@ export default meta;
 
 const noop = () => undefined;
 
+// Вес глифа в макете меняется вместе с состоянием: light у неактивной вкладки
+// и наведения, bold у активной.
 const ITEMS = [
-  { id: "search", label: "Поиск", icon: <MapPin size={20} aria-hidden="true" /> },
-  { id: "routes", label: "Маршруты", icon: <Route size={20} aria-hidden="true" /> },
-  { id: "friends", label: "Друзья", icon: <Users size={20} aria-hidden="true" /> },
-  { id: "bookmarks", label: "Избранные", icon: <Bookmark size={20} aria-hidden="true" /> },
+  {
+    id: "search",
+    label: "Поиск",
+    icon: <IconSearchLight size={20} />,
+    activeIcon: <IconSearchBold size={20} />,
+  },
+  {
+    id: "routes",
+    label: "Маршруты",
+    icon: <IconRouteLight size={20} />,
+    activeIcon: <IconRouteBold size={20} />,
+  },
+  {
+    id: "friends",
+    label: "Друзья",
+    icon: <IconUsersThreeLight size={20} />,
+    activeIcon: <IconUsersThreeBold size={20} />,
+  },
+  {
+    id: "bookmarks",
+    label: "Избранные",
+    icon: <IconBookmarkLight size={20} />,
+    activeIcon: <IconBookmarkBold size={20} />,
+  },
 ];
 
 const SECONDARY = [
-  { id: "install", label: "Установить", icon: <Plus size={20} aria-hidden="true" /> },
+  {
+    id: "install",
+    label: "Установить",
+    icon: <IconPhoneAndTabletLight size={20} />,
+    activeIcon: <IconPhoneAndTabletBold size={20} />,
+  },
 ];
 
 export const AllVariants: StoryObj = {

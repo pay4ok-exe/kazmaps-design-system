@@ -1,8 +1,8 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
 import type { SelectHTMLAttributes } from "react";
 import { useId } from "react";
+import { IconChevronDown } from "../icons/generated";
 
 export type SelectFieldOption = { value: string; label: string };
 
@@ -65,9 +65,9 @@ export function SelectField({
             </option>
           ))}
         </select>
-        <ChevronDown
-          aria-hidden="true"
-          className="pointer-events-none absolute right-(--spacing-padding-6) size-(--dimension-width-16) text-(color:--icon-primary) transition-interactive peer-focus:text-(color:--icon-accent)"
+        <IconChevronDown
+          size={16}
+          className="pointer-events-none absolute right-(--spacing-padding-6) text-(color:--icon-primary) transition-interactive peer-focus:text-(color:--icon-accent)"
         />
       </div>
     </div>

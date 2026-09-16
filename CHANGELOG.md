@@ -7,6 +7,17 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
 
 ### Changed
 
+- Кит рисует глифы набора `/icons`, а не `lucide-react`: `SearchInput` и пикер регионов —
+  `search`, `SelectField`, `PhoneInput` и `DayPicker` — `chevron-*`, `Dialog` и `BottomSheet` —
+  `close`, пикер регионов — `checkmark`, `StarRating` — `star`, `CollapseHandle` — шевроны.
+  Глифы набора залиты `currentColor`, поэтому роли цвета не изменились, но начертание теперь
+  макетное. Исключение — глаз в `PasswordInput` и календарь в `DayPicker`: таких иконок в наборе
+  нет (`docs/figma-deltas.md`, пункт 20).
+- `NavBarItem` принимает `activeIcon`: в макете вес глифа меняется вместе с состоянием —
+  `light` у неактивной вкладки и наведения, `bold` у активной. Витрина `NavBar` берёт иконки
+  из набора `/icons` (`search`, `route`, `users-three`, `bookmark`, `phone-and-tablet`), а не
+  их заменители из `lucide`. Остальные компоненты кита пока рисуют `lucide` —
+  `docs/figma-deltas.md`, пункт 20.
 - **Ломающее.** `NavRail` переименован в `NavBar` — компонент в макете называется «Nav bar»
   (`134:406`). Типы `NavRailItem` и `NavRailProps` стали `NavBarItem` и `NavBarProps`.
 - `NavBar` работает и без внешнего состояния: с `defaultActiveId` панель сама отмечает нажатую

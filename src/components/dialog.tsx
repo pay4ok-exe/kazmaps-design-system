@@ -1,9 +1,9 @@
 "use client";
 
-import { X } from "lucide-react";
 import { type ReactNode, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 
+import { IconClose } from "../icons/generated";
 import { useFocusTrap } from "./use-focus-trap";
 
 export type DialogSize = "sm" | "md";
@@ -26,7 +26,7 @@ function DialogClose({ onClose, label }: { onClose: () => void; label: string })
       onClick={onClose}
       className="flex size-[28px] shrink-0 items-center justify-center rounded-(--dimension-corner-radius-8) bg-(--background-secondary) text-(color:--icon-secondary) transition-interactive focus-ring hover:bg-(--background-tertiary) hover:text-(color:--icon-primary) active:bg-(--background-tertiary) active:text-(color:--icon-tertiary)"
     >
-      <X size={20} aria-hidden="true" />
+      <IconClose size={20} />
     </button>
   );
 }

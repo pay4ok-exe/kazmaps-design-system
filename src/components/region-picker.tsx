@@ -1,8 +1,8 @@
 "use client";
 
-import { Check, Search } from "lucide-react";
 import { useEffect, useRef } from "react";
 
+import { IconCheckmark, IconSearchLight } from "../icons/generated";
 import type { Region } from "../data/regions";
 import {
   type PhoneInputLabels,
@@ -80,7 +80,7 @@ export function RegionPicker({
                 <span className="flex-1">{name(r)}</span>
                 <span className="tabular-nums text-(color:--text-tertiary)">+{r.dial}</span>
                 <span className="inline-flex w-4 text-(color:--action-accent-primary)">
-                  {selected ? <Check size={14} aria-hidden="true" /> : null}
+                  {selected ? <IconCheckmark size={14} /> : null}
                 </span>
               </li>
             );
@@ -96,7 +96,7 @@ export function RegionPicker({
       className="absolute left-0 top-[calc(100%+6px)] z-50 w-full max-w-[340px] overflow-hidden rounded-lg border border-(--border-primary) bg-(--background-primary) shadow-(--shadow-dropdown) animate-modal-in"
     >
       <div className="flex items-center gap-2 border-b border-(--border-primary) px-3 py-2.5 text-(color:--text-tertiary)">
-        <Search size={16} aria-hidden="true" />
+        <IconSearchLight size={16} />
         <input
           ref={searchRef}
           type="search"

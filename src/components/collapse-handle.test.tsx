@@ -49,8 +49,8 @@ describe("CollapseHandle", () => {
   });
 
   it("шеврон разворачивается вслед за состоянием, как вариант макета", () => {
-    expect(handle(true).icon).toHaveClass("lucide-chevron-left");
-    expect(handle(false).icon).toHaveClass("lucide-chevron-right");
+    expect(handle(true).icon).toHaveAttribute("data-icon", "chevron-left");
+    expect(handle(false).icon).toHaveAttribute("data-icon", "chevron-right");
   });
 
   it("глиф двадцатый и скрыт от скринридера — имя несёт кнопка", () => {

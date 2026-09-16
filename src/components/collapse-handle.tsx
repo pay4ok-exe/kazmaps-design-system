@@ -1,5 +1,6 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { ComponentProps } from "react";
+
+import { IconChevronLeft, IconChevronRight } from "../icons/generated";
 
 const CLOSED_EDGE = [
   "inset-shadow-[0_1px_0_0_var(--background-primary),0_-1px_0_0_var(--background-primary),-1px_0_0_0_var(--background-primary)]",
@@ -15,7 +16,7 @@ export function CollapseHandle({
   label: string;
   open?: boolean;
 }) {
-  const Chevron = open ? ChevronLeft : ChevronRight;
+  const Chevron = open ? IconChevronLeft : IconChevronRight;
 
   return (
     <button
@@ -28,7 +29,7 @@ export function CollapseHandle({
         open ? "bg-(--background-primary)" : CLOSED_EDGE
       } ${className}`}
     >
-      <Chevron size={20} aria-hidden="true" />
+      <Chevron size={20} />
     </button>
   );
 }

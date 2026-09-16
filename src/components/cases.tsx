@@ -1,5 +1,18 @@
-import { Bookmark, Coffee, Layers, MapPin, Minus, Plus, Route, Sun, Users } from "lucide-react";
+import { Coffee, Layers, MapPin, Minus, Plus, Route, Sun, Users } from "lucide-react";
 import { type ReactElement, useEffect } from "react";
+
+import {
+  IconBookmarkBold,
+  IconBookmarkLight,
+  IconPhoneAndTabletBold,
+  IconPhoneAndTabletLight,
+  IconRouteBold,
+  IconRouteLight,
+  IconSearchBold,
+  IconSearchLight,
+  IconUsersThreeBold,
+  IconUsersThreeLight,
+} from "../icons/generated";
 
 import { BottomSheet } from "./bottom-sheet";
 import { Button } from "./button";
@@ -39,6 +52,24 @@ import { ToggleSwitch } from "./toggle-switch";
 import { WeatherBadge } from "./weather-badge";
 
 const noop = () => undefined;
+
+const navItem = (
+  id: string,
+  label: string,
+  Light: (props: { size?: number }) => ReactElement,
+  Bold: (props: { size?: number }) => ReactElement,
+) => ({ id, label, icon: <Light size={20} />, activeIcon: <Bold size={20} />, onSelect: noop });
+
+const NAV_ITEMS = [
+  navItem("search", "Поиск", IconSearchLight, IconSearchBold),
+  navItem("routes", "Маршруты", IconRouteLight, IconRouteBold),
+  navItem("friends", "Друзья", IconUsersThreeLight, IconUsersThreeBold),
+  navItem("bookmarks", "Избранные", IconBookmarkLight, IconBookmarkBold),
+];
+
+const NAV_SECONDARY = [
+  navItem("install", "Установить", IconPhoneAndTabletLight, IconPhoneAndTabletBold),
+];
 
 export const KIT_CASES: [string, ReactElement][] = [
   [
@@ -229,40 +260,8 @@ export const KIT_CASES: [string, ReactElement][] = [
       key="k"
       label="Разделы"
       defaultActiveId="search"
-      items={[
-        {
-          id: "search",
-          label: "Поиск",
-          icon: <MapPin size={20} aria-hidden="true" />,
-          onSelect: noop,
-        },
-        {
-          id: "routes",
-          label: "Маршруты",
-          icon: <Route size={20} aria-hidden="true" />,
-          onSelect: noop,
-        },
-        {
-          id: "friends",
-          label: "Друзья",
-          icon: <Users size={20} aria-hidden="true" />,
-          onSelect: noop,
-        },
-        {
-          id: "bookmarks",
-          label: "Избранные",
-          icon: <Bookmark size={20} aria-hidden="true" />,
-          onSelect: noop,
-        },
-      ]}
-      secondaryItems={[
-        {
-          id: "install",
-          label: "Установить",
-          icon: <Plus size={20} aria-hidden="true" />,
-          onSelect: noop,
-        },
-      ]}
+      items={NAV_ITEMS}
+      secondaryItems={NAV_SECONDARY}
     />,
   ],
   ["ShimmerBlock", <ShimmerBlock key="k" className="h-4 w-24" />],

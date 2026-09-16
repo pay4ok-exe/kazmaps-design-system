@@ -1,9 +1,9 @@
 "use client";
 
-import { X } from "lucide-react";
 import { type ReactNode, type Ref, useEffect, useRef } from "react";
 
 import { IconButton } from "./icon-button";
+import { IconClose } from "../icons/generated";
 
 const HANDLE_TAP_THRESHOLD_PX = 8;
 
@@ -131,7 +131,7 @@ export function BottomSheet({
           ) : null}
           {onClose !== undefined ? (
             <IconButton label="Закрыть" className="ml-auto" onClick={onClose}>
-              <X size={14} aria-hidden="true" />
+              <IconClose size={14} />
             </IconButton>
           ) : null}
         </div>
