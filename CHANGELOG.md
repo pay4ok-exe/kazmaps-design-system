@@ -10,6 +10,10 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
 - **Ломающее.** `ToggleSwitch` переименован в `PillTabs` вместе с типами `ToggleSwitchOption` и
   `ToggleSwitchProps` — в макете это `Toggle Switch` (`141:612`), ряд вкладок-пилюль, а не
   переключатель «вкл/выкл» (тот остался `Toggle`).
+- `PillTabs` принимает `size`: `default` — `Toggle Switch` из раздела Essential (высота 40,
+  радиусы 12 и 10, текст 16/20), `menu` — `Menu Toggle Switch` из Map HUD (34, радиусы 8 и 6,
+  текст 14/18). Это один компонент: структура, заливки, зазор и паддинг контейнера совпадают,
+  различаются только числа, и обе величины нарисованы дизайнером.
 - `PillTabs`: у контейнера появилась вторая заливка `background/toggle-2` поверх
   `background/toggle` — так в макете. Роль была объявлена у всех брендов, но не читалась нигде.
 - `PasswordInput`: поле стало 36 в высоту, как `TextInput` — прежде кнопка глаза размером 32

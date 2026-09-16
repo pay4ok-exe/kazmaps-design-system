@@ -81,4 +81,49 @@ describe("PillTabs", () => {
     expect(className).toContain("bg-(--background-toggle)");
     expect(className).toContain("--background-toggle-2");
   });
+  it("размер menu повторяет Menu Toggle Switch: радиусы 8 и 6, паддинг 4, текст 14/18", () => {
+    const { container } = render(
+      <PillTabs
+        label="Вид"
+        size="menu"
+        activeId="map"
+        onSelect={vi.fn()}
+        options={[
+          { id: "map", label: "Карта" },
+          { id: "list", label: "Список" },
+        ]}
+      />,
+    );
+    const root = container.firstElementChild;
+    expect(root?.className).toContain("rounded-(--dimension-corner-radius-8)");
+    const indicator = root?.querySelector("span[aria-hidden]");
+    expect(indicator?.className).toContain("rounded-(--dimension-corner-radius-6)");
+    const option = screen.getByRole("button", { name: "Карта" }).className;
+    expect(option).toContain("px-(--spacing-padding-4)");
+    // Макет объявляет паддинг 4, но фиксирует высоту пилюли 30 при тексте 18 —
+    // по вертикали это ровно 6 (figma-deltas, пункт 23).
+    expect(option).toContain("py-(--spacing-padding-6)");
+    expect(option).toContain("text-sm");
+    expect(option).toContain("leading-(--typography-line-height-18)");
+  });
+
+  it("размер по умолчанию повторяет Toggle Switch: радиусы 12 и 10, текст 16/20", () => {
+    const { container } = render(
+      <PillTabs
+        label="Вид"
+        activeId="map"
+        onSelect={vi.fn()}
+        options={[
+          { id: "map", label: "Карта" },
+          { id: "list", label: "Список" },
+        ]}
+      />,
+    );
+    expect(container.firstElementChild?.className).toContain(
+      "rounded-(--dimension-corner-radius-12)",
+    );
+    const option = screen.getByRole("button", { name: "Карта" }).className;
+    expect(option).toContain("px-(--spacing-padding-12)");
+    expect(option).toContain("text-base");
+  });
 });

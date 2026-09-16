@@ -252,6 +252,21 @@ export const KIT_CASES: [string, ReactElement][] = [
       ]}
     />,
   ],
+  [
+    "PillTabs menu",
+    <PillTabs
+      key="k"
+      label="Вид"
+      size="menu"
+      activeId="map"
+      onSelect={noop}
+      options={[
+        { id: "map", label: "Карта" },
+        { id: "list", label: "Список" },
+        { id: "photo", label: "Фото" },
+      ]}
+    />,
+  ],
 ];
 
 function ToastDemo() {
