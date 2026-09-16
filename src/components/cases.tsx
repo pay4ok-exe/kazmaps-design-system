@@ -1,5 +1,5 @@
 import { Coffee, Minus, Plus, Route, Sun, Users } from "lucide-react";
-import { type ReactElement, useEffect } from "react";
+import { type ReactElement, useEffect, useRef } from "react";
 
 import {
   IconBookmarkBold,
@@ -28,11 +28,14 @@ import { IconButton } from "./icon-button";
 import { IconButtonGroup } from "./icon-button-group";
 import { LegalLink } from "./legal-link";
 import { ListRow } from "./list-row";
+import { Menu, MenuDivider } from "./menu";
+import { MenuItem } from "./menu-item";
 import { MenuTabs } from "./menu-tabs";
 import { LogoLockup } from "./logo-lockup";
 import { MapCompass } from "./map-compass";
 import { MapTrafficBadge } from "./map-traffic-badge";
 import { NavBar } from "./nav-bar";
+import { NavItem } from "./nav-item";
 import { PasswordInput } from "./password-input";
 import { PhoneInput } from "./phone-input";
 import { PlaceRow } from "./place-row";
@@ -68,6 +71,23 @@ const NAV_ITEMS = [
 const NAV_SECONDARY = [
   navItem("install", "Установить", IconPhoneAndTabletLight, IconPhoneAndTabletBold),
 ];
+
+const CITIES = [
+  { value: "almaty", label: "Алматы" },
+  { value: "astana", label: "Астана" },
+];
+
+function OpenSelectField() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    ref.current?.querySelector("button")?.click();
+  }, []);
+  return (
+    <div ref={ref}>
+      <SelectField label="Город" value="almaty" onChange={noop} options={CITIES} />
+    </div>
+  );
+}
 
 export const KIT_CASES: [string, ReactElement][] = [
   [
@@ -155,6 +175,7 @@ export const KIT_CASES: [string, ReactElement][] = [
       ]}
     />,
   ],
+  ["SelectField открытый", <OpenSelectField key="k" />],
   [
     "SelectField bordered",
     <SelectField
@@ -241,6 +262,56 @@ export const KIT_CASES: [string, ReactElement][] = [
       defaultActiveId="search"
       items={NAV_ITEMS}
       secondaryItems={NAV_SECONDARY}
+    />,
+  ],
+  [
+    "Menu",
+    <Menu key="k" label="Профиль">
+      <MenuItem
+        icon={<IconBookmarkLight size={20} />}
+        label="Избранные"
+        count={5}
+        onSelect={noop}
+      />
+      <MenuItem
+        icon={<IconUsersThreeLight size={20} />}
+        label="Друзья и чаты"
+        count={3}
+        unread
+        onSelect={noop}
+      />
+      <MenuItem icon={<IconRouteLight size={20} />} label="Маршруты" chevron onSelect={noop} />
+      <MenuDivider />
+      <MenuItem
+        icon={<IconSearchLight size={20} />}
+        activeIcon={<IconSearchBold size={20} />}
+        label="Поиск по карте"
+        active
+        onSelect={noop}
+      />
+      <MenuItem icon={<IconSearchLight size={20} />} label="Недоступно" disabled />
+    </Menu>,
+  ],
+  [
+    "NavItem",
+    <NavItem
+      key="k"
+      label="Поиск"
+      icon={<IconSearchLight size={20} />}
+      active
+      selection="current"
+      onSelect={noop}
+    />,
+  ],
+  [
+    "NavItem неактивный",
+    <NavItem
+      key="k"
+      label="Маршруты"
+      icon={<IconRouteLight size={20} />}
+      active={false}
+      selection="pressed"
+      onSelect={noop}
     />,
   ],
   ["StarRating", <StarRating key="k" value={4.5} />],
