@@ -12,8 +12,8 @@ import {
   IconUsersThreeLight,
 } from "../icons/generated";
 import { NavBar } from "./nav-bar";
-import { TabAction } from "./tab-action";
-import { TAB_ACTION_STATE } from "./tab-action.states";
+import { NavItem } from "./nav-item";
+import { NAV_ITEM_STATE } from "./nav-item.states";
 
 const meta: Meta<typeof NavBar> = {
   title: "Components/NavBar",
@@ -77,7 +77,7 @@ export const AllVariants: StoryObj = {
             {
               caption: "Inactive",
               node: (
-                <TabAction
+                <NavItem
                   label="Поиск"
                   icon={ITEMS[0].icon}
                   active={false}
@@ -89,20 +89,20 @@ export const AllVariants: StoryObj = {
             {
               caption: "Hover",
               node: (
-                <TabAction
+                <NavItem
                   label="Поиск"
                   icon={ITEMS[0].icon}
                   active={false}
                   selection="current"
                   onSelect={noop}
-                  className={TAB_ACTION_STATE.hoverPreview}
+                  className={NAV_ITEM_STATE.hoverPreview}
                 />
               ),
             },
             {
               caption: "Active",
               node: (
-                <TabAction
+                <NavItem
                   label="Поиск"
                   icon={ITEMS[0].icon}
                   active

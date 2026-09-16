@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
 
-import { TabAction } from "./tab-action";
+import { NavItem } from "./nav-item";
 
 export interface NavBarItem {
   id: string;
@@ -42,7 +42,7 @@ export function NavBar({
   const group = (list: NavBarItem[]) => (
     <div className="flex flex-col gap-(--spacing-gap-20)">
       {list.map((item) => (
-        <TabAction
+        <NavItem
           key={item.id}
           label={item.label}
           icon={item.id === activeId ? (item.activeIcon ?? item.icon) : item.icon}

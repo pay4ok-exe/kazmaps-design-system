@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 
-import { TAB_ACTION_STATE } from "./tab-action.states";
+import { NAV_ITEM_STATE } from "./nav-item.states";
 
-export interface TabActionProps {
+export interface NavItemProps {
   label: string;
   icon: ReactNode;
   active: boolean;
@@ -11,14 +11,14 @@ export interface TabActionProps {
   className?: string;
 }
 
-export function TabAction({
+export function NavItem({
   label,
   icon,
   active,
   onSelect,
   selection,
   className = "",
-}: TabActionProps) {
+}: NavItemProps) {
   return (
     <button
       type="button"
@@ -33,7 +33,7 @@ export function TabAction({
     >
       <span
         className={`inline-flex size-[32px] items-center justify-center rounded-(--dimension-corner-radius-10) p-(--spacing-padding-6) transition-interactive ${
-          active ? TAB_ACTION_STATE.active : TAB_ACTION_STATE.idle
+          active ? NAV_ITEM_STATE.active : NAV_ITEM_STATE.idle
         }`}
       >
         {icon}

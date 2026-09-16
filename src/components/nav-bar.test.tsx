@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { NavBar } from "./nav-bar";
-import { TAB_ACTION_STATE } from "./tab-action.states";
+import { NAV_ITEM_STATE } from "./nav-item.states";
 
 const item = (id: string, label: string, onSelect = vi.fn()) => ({
   id,
@@ -99,8 +99,8 @@ describe("NavBar", () => {
     );
     const glyph = () =>
       screen.getByRole("button", { name: "Поиск" }).querySelector("span")?.className ?? "";
-    expect(glyph()).toContain(TAB_ACTION_STATE.idle);
+    expect(glyph()).toContain(NAV_ITEM_STATE.idle);
     rerender(<NavBar label="Разделы" activeId="search" items={[item("search", "Поиск")]} />);
-    expect(glyph()).toContain(TAB_ACTION_STATE.active);
+    expect(glyph()).toContain(NAV_ITEM_STATE.active);
   });
 });

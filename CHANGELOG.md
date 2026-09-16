@@ -7,6 +7,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
 
 ### Changed
 
+- **Ломающее.** `SegmentedRow`, `SectionHeader`, `SectionError` и `ShimmerBlock` удалены вместе с
+  типами `SegmentedRowItem` и `SegmentedRowProps`. В макете этих компонентов нет; main-web рисует
+  заголовок секции, её ошибку и заглушку загрузки у себя. Утилита `.animate-shimmer-placeholder`
+  и токены `--motion-shimmer`, `--shimmer-peak` остались в `kit.css` — на них и держится своя
+  заглушка. Подробности — `docs/figma-deltas.md`, пункт 22.
+- **Ломающее.** Внутренний `TabAction` стал публичным `NavItem` (`NavItemProps`) — так этот
+  компонент назван по месту применения, а ряд сервисов main-web собирается из него напрямую,
+  без `SegmentedRow`.
 - **Ломающее.** `Panel` и тип `PanelVariant` удалены: в макете такого компонента нет, а сам он был
   обёрткой над четырьмя классами с единственным значением `variant`. Три вызова main-web переносят
   классы к себе — `docs/figma-deltas.md`, пункт 21. Токен `--shadow-column` оставлен: он объявлен

@@ -1,4 +1,4 @@
-import { Coffee, Layers, MapPin, Minus, Plus, Route, Sun, Users } from "lucide-react";
+import { Coffee, Minus, Plus, Route, Sun, Users } from "lucide-react";
 import { type ReactElement, useEffect } from "react";
 
 import {
@@ -38,11 +38,7 @@ import { PlaceRow } from "./place-row";
 import { QrCode } from "./qr-code";
 import { ScaleBar } from "./scale-bar";
 import { SearchInput } from "./search-input";
-import { SectionError } from "./section-error";
-import { SectionHeader } from "./section-header";
-import { SegmentedRow } from "./segmented-row";
 import { SelectField } from "./select-field";
-import { ShimmerBlock } from "./shimmer-block";
 import { StarRating } from "./star-rating";
 import { TextInput } from "./text-input";
 import { ToastProvider, useToast } from "./toast";
@@ -136,27 +132,6 @@ export const KIT_CASES: [string, ReactElement][] = [
   ["QrCode", <QrCode key="k" value="https://kazmaps.dev" />],
   ["ScaleBar", <ScaleBar key="k" label="100 м" widthPx={80} />],
   ["SearchInput", <SearchInput key="k" value="" onChange={noop} placeholder="Поиск" />],
-  ["SectionError", <SectionError key="k" message="Не удалось загрузить" onRetry={noop} />],
-  ["SectionHeader", <SectionHeader key="k">Рядом</SectionHeader>],
-  [
-    "SectionHeader с действием",
-    <SectionHeader key="k" action={<Chip label="Все" />}>
-      Рядом
-    </SectionHeader>,
-  ],
-  [
-    "SegmentedRow",
-    <SegmentedRow
-      key="k"
-      label="Слои"
-      activeId="a"
-      onSelect={noop}
-      items={[
-        { id: "a", label: "Карта", icon: <MapPin size={16} aria-hidden="true" /> },
-        { id: "b", label: "Слои", icon: <Layers size={16} aria-hidden="true" /> },
-      ]}
-    />,
-  ],
   [
     "SelectField",
     <SelectField
@@ -257,7 +232,6 @@ export const KIT_CASES: [string, ReactElement][] = [
       secondaryItems={NAV_SECONDARY}
     />,
   ],
-  ["ShimmerBlock", <ShimmerBlock key="k" className="h-4 w-24" />],
   ["StarRating", <StarRating key="k" value={4.5} />],
   [
     "TextInput",

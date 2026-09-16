@@ -117,7 +117,7 @@ import { IconSearchBold, IconStarLight } from "@temirtator/kazmaps-design-system
 ## Компоненты
 
 Действия: `Button` (`accent` | `neutral` | `danger`), `IconButton` (Map Action, 36), `IconButtonGroup` (зум), `Chip`, `Toggle`,
-`ToggleSwitch`, `SegmentedRow`, `Avatar`.
+`ToggleSwitch`, `NavItem`, `Avatar`.
 
 Поля: `TextInput`, `PasswordInput`, `SearchInput` (обводка, иконка и ввод — отправка по Enter),
 `PhoneInput`, `CodeInput`, `SelectField`,
@@ -128,8 +128,8 @@ import { IconSearchBold, IconStarLight } from "@temirtator/kazmaps-design-system
 Карта: `MapCompass` (клик возвращает на север; с `heading` поворотом управляет приложение), `MapTrafficBadge`, `WeatherBadge`, `ForecastCard`, `ScaleBar`, `NavBar`,
 `CollapseHandle`.
 
-Содержимое: `PlaceRow`, `ListRow`, `SectionHeader`, `SectionError`, `EmptyState`,
-`ShimmerBlock`, `StarRating`, `LogoLockup`, `LegalLink`, `InDevelopment`, `QrCode`.
+Содержимое: `PlaceRow`, `ListRow`, `EmptyState`, `StarRating`, `LogoLockup`, `LegalLink`,
+`InDevelopment`, `QrCode`.
 
 Хелперы: `cn`, `useFocusTrap`, `isTopmostTrap`, `REGIONS`, `findRegion`, `parseE164`,
 `formatE164`, `toE164`, `isKazakhstanMobile`.
