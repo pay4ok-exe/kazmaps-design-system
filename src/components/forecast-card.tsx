@@ -21,10 +21,10 @@ export function ForecastCard({
 }: ForecastCardProps) {
   return (
     <div
-      className={`flex w-(--dimension-width-64) flex-col items-center gap-(--spacing-gap-4) rounded-(--dimension-corner-radius-8) bg-(--background-secondary) px-(--spacing-padding-4) pt-(--spacing-padding-4) pb-(--spacing-padding-6) ${className}`}
+      className={`flex w-(--dimension-width-64) flex-col items-center gap-(--spacing-gap-4) overflow-hidden rounded-(--dimension-corner-radius-8) bg-(--background-secondary) px-(--spacing-padding-4) pt-(--spacing-padding-4) pb-(--spacing-padding-6) text-center ${className}`}
     >
       <span
-        className={`text-xs leading-(--typography-line-height-16) text-(color:--text-primary) ${
+        className={`w-full truncate text-xs leading-(--typography-line-height-16) text-(color:--text-primary) ${
           current
             ? "[font-weight:var(--font-weight-medium)]"
             : "[font-weight:var(--font-weight-regular)]"
@@ -33,17 +33,17 @@ export function ForecastCard({
         {title}
       </span>
       {day == null ? null : (
-        <span className="text-[10px] leading-(--typography-line-height-12) text-(color:--text-secondary) [font-weight:var(--font-weight-book)]">
+        <span className="w-full truncate text-[10px] leading-(--typography-line-height-12) text-(color:--text-secondary) [font-weight:var(--font-weight-book)]">
           {day}
         </span>
       )}
-      <span className="flex size-[32px] items-center justify-center">{icon}</span>
-      <span className="flex flex-col items-center gap-(--spacing-gap-2)">
-        <span className="text-xs leading-(--typography-line-height-16) text-(color:--text-primary) [font-weight:var(--font-weight-regular)]">
+      <span className="flex size-[32px] shrink-0 items-center justify-center">{icon}</span>
+      <span className="flex w-full flex-col items-center gap-(--spacing-gap-2)">
+        <span className="w-full text-xs leading-(--typography-line-height-16) text-(color:--text-primary) [font-weight:var(--font-weight-regular)]">
           {temperature}
         </span>
         <span
-          className={`text-[10px] leading-(--typography-line-height-12) [font-weight:var(--font-weight-book)] ${
+          className={`w-full text-[10px] leading-(--typography-line-height-12) [font-weight:var(--font-weight-book)] ${
             current ? "text-(color:--text-secondary)" : "text-(color:--text-tertiary)"
           }`}
         >

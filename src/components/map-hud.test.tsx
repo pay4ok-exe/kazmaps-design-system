@@ -81,6 +81,38 @@ describe("WeatherBadge", () => {
 });
 
 describe("ForecastCard", () => {
+  it("строки занимают всю ширину карточки, а карточка обрезает содержимое", () => {
+    const { container } = render(
+      <ForecastCard
+        title="Пн"
+        day="понедельник"
+        icon={<span />}
+        temperature="+20°"
+        precipitation="10%"
+      />,
+    );
+    expect(container.firstElementChild?.className).toContain("overflow-hidden");
+    for (const text of ["Пн", "понедельник", "+20°", "10%"]) {
+      expect(screen.getByText(text).className, text).toContain("w-full");
+    }
+  });
+
+  it("многоточие только у заголовка и дня — у погоды обрезка в макете выключена", () => {
+    render(
+      <ForecastCard
+        title="Пн"
+        day="понедельник"
+        icon={<span />}
+        temperature="+20°"
+        precipitation="10%"
+      />,
+    );
+    expect(screen.getByText("Пн").className).toContain("truncate");
+    expect(screen.getByText("понедельник").className).toContain("truncate");
+    expect(screen.getByText("+20°").className).not.toContain("truncate");
+    expect(screen.getByText("10%").className).not.toContain("truncate");
+  });
+
   it("текущий утяжеляет заголовок и поднимает контраст осадков", () => {
     const { rerender } = render(
       <ForecastCard title="14:00" icon={<span />} temperature="+20°" precipitation="0%" current />,
