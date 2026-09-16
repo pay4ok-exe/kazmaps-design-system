@@ -109,7 +109,23 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
   `--shadow-field` стоит всегда. В фокусе остаётся одна рамка `border/focus` — прежде поверх неё
   рисовалось второе кольцо `focus-ring-within`. Крестик очистки `::-webkit-search-cancel-button`
   скрыт: в макете его нет, в Firefox его не было, нашим ролям он не подчиняется.
-  Что это значит для main-web — `docs/figma-deltas.md`, пункт 14.
+  Что это значит для main-web — `docs/figma-deltas.md`, пункт 15.
+
+### Миграция main-web
+
+Числа — вызовы в JSX, все ссылки на имя и файлы, где оно встречается.
+
+| было в ките                                 | чем заменить в приложении                          | сколько в main-web |
+| ------------------------------------------- | -------------------------------------------------- | ------------------ |
+| `SegmentedRow`                              | ряд из `NavItem`                                   | 2 / 5 / 3          |
+| `SectionError`                              | своя разметка ошибки секции                        | 15 / 29 / 14       |
+| `Panel`                                     | свои классы: фон, граница справа, без тени         | 3 / 10 / 4         |
+| `NavRail`, `NavRailItem`, `NavRailProps`    | `NavBar`, `NavBarItem`, `NavBarProps`              | переименование     |
+| `ToggleSwitch`, `ToggleSwitchProps`         | `PillTabs`, `PillTabsProps`                        | переименование     |
+| `Dialog` проп `subtitle`                    | первый абзац в `children`                          | 7 диалогов         |
+| `SearchInput` `onSubmit`/`compact`/`suffix` | своя кнопка рядом с полем, отправка на потребителе | 4 файла            |
+
+`SectionHeader` и `ShimmerBlock` в ките остались — их переносить не нужно.
 
 ## [1.0.0] — 2026-09-15
 
