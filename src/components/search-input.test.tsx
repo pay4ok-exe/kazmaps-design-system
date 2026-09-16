@@ -27,6 +27,13 @@ describe("SearchInput", () => {
     expect(className).toContain("has-[input:focus]:inset-ring-(--border-focus)");
   });
 
+  it("фокус показывает только рамку макета, без второго кольца", () => {
+    const { container } = render(<SearchInput value="" onChange={vi.fn()} />);
+    const className = container.firstElementChild?.className ?? "";
+    expect(className).toContain("has-[input:focus]:inset-ring-(--border-focus)");
+    expect(className).not.toContain("focus-ring-within");
+  });
+
   it("тень есть в обычном виде и снята в плотном", () => {
     const { container, rerender } = render(<SearchInput value="" onChange={vi.fn()} />);
     expect(container.firstElementChild?.className).toContain("shadow-(--shadow-field)");
