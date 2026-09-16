@@ -30,6 +30,8 @@ export function SelectField({
   className = "",
   id: idProp,
   disabled,
+  onClick,
+  onKeyDown,
   ...rest
 }: SelectFieldProps) {
   const generatedId = useId();
@@ -75,7 +77,14 @@ export function SelectField({
     triggerRef.current?.focus();
   };
 
-  const onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    onClick?.(event);
+    if (open) setOpen(false);
+    else openAt(selectedIndex);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    onKeyDown?.(event);
     if (event.key === "Escape") {
       if (!open) return;
       event.preventDefault();
@@ -127,19 +136,16 @@ export function SelectField({
         <button
           ref={triggerRef}
           id={id}
+          {...rest}
           type="button"
           role="combobox"
           aria-haspopup="listbox"
           aria-expanded={open}
           aria-controls={open ? listId : undefined}
-          aria-activedescendant={open ? optionId(active) : undefined}
+          aria-activedescendant={open && options.length > 0 ? optionId(active) : undefined}
           disabled={disabled}
-          onClick={() => {
-            if (open) setOpen(false);
-            else openAt(selectedIndex);
-          }}
-          onKeyDown={onKeyDown}
-          {...rest}
+          onClick={handleClick}
+          onKeyDown={handleKeyDown}
           className={`flex h-(--dimension-height-28) w-full items-center gap-(--spacing-gap-4) rounded-(--dimension-corner-radius-6) inset-ring-[length:var(--stroke-border-1)] bg-(--background-primary) py-(--spacing-padding-6) pr-(--spacing-padding-6) pl-(--spacing-padding-8) transition-interactive focus-ring disabled:cursor-not-allowed ${
             open
               ? "inset-ring-(--border-focus)"

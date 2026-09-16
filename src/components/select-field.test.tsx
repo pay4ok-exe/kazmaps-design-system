@@ -102,6 +102,38 @@ describe("SelectField", () => {
     expect(trigger().className).toContain("inset-ring-(--border-secondary)");
   });
 
+  it("пустой список не называет несуществующий пункт", async () => {
+    setup({ options: [] });
+    await userEvent.click(trigger());
+    expect(screen.getByRole("listbox")).toBeInTheDocument();
+    expect(trigger()).not.toHaveAttribute("aria-activedescendant");
+  });
+
+  it("onClick потребителя вызывается, а список всё равно открывается", async () => {
+    const onClick = vi.fn();
+    setup({ onClick });
+    await userEvent.click(trigger());
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole("listbox")).toBeInTheDocument();
+  });
+
+  it("onKeyDown потребителя вызывается, а стрелки всё равно ведут по списку", async () => {
+    const onKeyDown = vi.fn();
+    const onChange = vi.fn();
+    setup({ onKeyDown, onChange });
+    trigger().focus();
+    await userEvent.keyboard("{ArrowDown}{ArrowDown}{Enter}");
+    expect(onKeyDown).toHaveBeenCalled();
+    expect(screen.queryByRole("listbox")).toBeNull();
+    expect(onChange).toHaveBeenCalledWith("astana");
+  });
+
+  it("пропы потребителя не перебивают роль и состояние поля", () => {
+    setup({ role: "button", "aria-expanded": true });
+    expect(trigger()).toHaveAttribute("role", "combobox");
+    expect(trigger()).toHaveAttribute("aria-expanded", "false");
+  });
+
   it("выключенное поле не открывается", async () => {
     setup({ disabled: true });
     expect(trigger()).toBeDisabled();
