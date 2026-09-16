@@ -1,4 +1,4 @@
-import { Coffee, Layers, MapPin, Minus, Plus, Route, Sun, Users } from "lucide-react";
+import { Bookmark, Coffee, Layers, MapPin, Minus, Plus, Route, Sun, Users } from "lucide-react";
 import { type ReactElement, useEffect } from "react";
 
 import { BottomSheet } from "./bottom-sheet";
@@ -18,7 +18,7 @@ import { ListRow } from "./list-row";
 import { LogoLockup } from "./logo-lockup";
 import { MapCompass } from "./map-compass";
 import { MapTrafficBadge } from "./map-traffic-badge";
-import { NavRail } from "./nav-rail";
+import { NavBar } from "./nav-bar";
 import { Panel } from "./panel";
 import { PasswordInput } from "./password-input";
 import { PhoneInput } from "./phone-input";
@@ -224,11 +224,11 @@ export const KIT_CASES: [string, ReactElement][] = [
     </LegalLink>,
   ],
   [
-    "NavRail",
-    <NavRail
+    "NavBar",
+    <NavBar
       key="k"
       label="Разделы"
-      activeId="search"
+      defaultActiveId="search"
       items={[
         {
           id: "search",
@@ -240,6 +240,18 @@ export const KIT_CASES: [string, ReactElement][] = [
           id: "routes",
           label: "Маршруты",
           icon: <Route size={20} aria-hidden="true" />,
+          onSelect: noop,
+        },
+        {
+          id: "friends",
+          label: "Друзья",
+          icon: <Users size={20} aria-hidden="true" />,
+          onSelect: noop,
+        },
+        {
+          id: "bookmarks",
+          label: "Избранные",
+          icon: <Bookmark size={20} aria-hidden="true" />,
           onSelect: noop,
         },
       ]}
