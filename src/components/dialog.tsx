@@ -33,22 +33,18 @@ function DialogClose({ onClose, label }: { onClose: () => void; label: string })
 
 export function Dialog({
   title,
-  subtitle,
   children,
   onClose,
   size = "md",
   closeLabel = "Закрыть",
   className = "",
-  showHeader = true,
 }: {
   title: string;
-  subtitle?: ReactNode;
   children: ReactNode;
   onClose: () => void;
   size?: DialogSize;
   closeLabel?: string;
   className?: string;
-  showHeader?: boolean;
 }) {
   const panelRef = useFocusTrap(onClose);
   const onClient = useSyncExternalStore(subscribeNoop, getClientSnapshot, getServerSnapshot);
@@ -73,21 +69,14 @@ export function Dialog({
         tabIndex={-1}
         className={`relative w-full rounded-(--dimension-corner-radius-16) bg-(--background-primary) shadow-(--shadow-modal) outline-none ${SIZE_CLASSES[size]} ${className}`}
       >
-        {showHeader ? (
-          <header className="flex items-center gap-(--spacing-gap-8) px-(--spacing-padding-8) pt-(--spacing-padding-8)">
-            <div className="min-w-0 flex-1 px-(--spacing-padding-8) py-(--spacing-padding-4)">
-              <p className="truncate text-base leading-(--typography-line-height-20) text-(color:--text-primary) [font-weight:var(--font-weight-medium)]">
-                {title}
-              </p>
-              {subtitle == null ? null : (
-                <div className="mt-(--spacing-gap-4) text-xs leading-(--typography-line-height-16) text-(color:--text-secondary)">
-                  {subtitle}
-                </div>
-              )}
-            </div>
-            <DialogClose onClose={onClose} label={closeLabel} />
-          </header>
-        ) : null}
+        <header className="flex items-center gap-(--spacing-gap-8) px-(--spacing-padding-8) pt-(--spacing-padding-8)">
+          <div className="min-w-0 flex-1 px-(--spacing-padding-8) py-(--spacing-padding-4)">
+            <p className="truncate text-base leading-(--typography-line-height-20) text-(color:--text-primary) [font-weight:var(--font-weight-medium)]">
+              {title}
+            </p>
+          </div>
+          <DialogClose onClose={onClose} label={closeLabel} />
+        </header>
         <div className="flex flex-col gap-(--spacing-gap-16) p-(--spacing-padding-16)">
           {children}
         </div>

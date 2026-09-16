@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+
 import { Overlay } from "./cases";
 import { Dialog } from "./dialog";
 
@@ -11,13 +12,7 @@ export default meta;
 export const AllVariants: StoryObj = { render: () => <Overlay component="Dialog" /> };
 
 export const Playground: StoryObj<typeof Dialog> = {
-  args: {
-    title: "Удалить маршрут?",
-    subtitle: "Действие нельзя отменить",
-    size: "md",
-    closeLabel: "Закрыть",
-    showHeader: true,
-  },
+  args: { title: "Удалить маршрут?", size: "md", closeLabel: "Закрыть" },
   argTypes: {
     size: { control: "inline-radio", options: ["sm", "md"] },
     children: { table: { disable: true } },
@@ -25,7 +20,9 @@ export const Playground: StoryObj<typeof Dialog> = {
   },
   render: (args) => (
     <Dialog {...args} onClose={() => undefined}>
-      <p className="text-[13.5px]">Маршрут исчезнет из списка.</p>
+      <p className="text-xs leading-(--typography-line-height-16) text-(color:--text-secondary)">
+        Действие нельзя отменить — маршрут исчезнет из списка.
+      </p>
     </Dialog>
   ),
 };

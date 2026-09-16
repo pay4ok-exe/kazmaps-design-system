@@ -278,12 +278,7 @@ function ToastDemo() {
 export const OVERLAY_CASES: [string, ReactElement][] = [
   [
     "Dialog",
-    <Dialog
-      key="k"
-      title="Удалить маршрут?"
-      subtitle="Действие нельзя отменить"
-      onClose={() => undefined}
-    >
+    <Dialog key="k" title="Удалить маршрут?" onClose={() => undefined}>
       <p className="text-[13.5px]">Маршрут исчезнет из списка.</p>
     </Dialog>,
   ],

@@ -7,6 +7,10 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
 
 ### Changed
 
+- **Ломающее.** `Dialog` больше не принимает `subtitle` и `showHeader`. В макете `137:440` в шапке
+  только заголовок, а сама шапка есть всегда; поясняющий текст кладётся первым абзацем в тело —
+  в макете это свободный слот. Семь диалогов main-web переносят текст из `subtitle` в `children`.
+  Ширина (`size`) и растяжка тела оставлены как есть — `docs/figma-deltas.md`, пункты 18 и 19.
 - **Ломающее.** `CollapseHandle` больше не принимает `children`: шеврон вшит в компонент и
   разворачивается вслед за `open`, как варианты макета (`Close` — влево, `Open` — вправо).
 - `CollapseHandle` сведён к макету сайта (`Collapse Sidebar Action`, `121:7021` и `155:7884`):
