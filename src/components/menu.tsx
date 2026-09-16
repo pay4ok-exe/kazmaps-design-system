@@ -17,8 +17,9 @@ export interface MenuProps {
 export function Menu({ label, children, className = "" }: MenuProps) {
   return (
     <div
+      role="group"
       aria-label={label}
-      className={`flex w-[240px] flex-col gap-(--spacing-gap-4) rounded-(--dimension-corner-radius-10) bg-(--background-primary) p-(--spacing-padding-8) shadow-(--shadow-hud) ${className}`}
+      className={`flex w-[240px] flex-col gap-(--spacing-gap-4) rounded-(--dimension-corner-radius-10) bg-(--background-primary) p-(--spacing-padding-8) shadow-(--shadow-modal) ${className}`}
     >
       {children}
     </div>

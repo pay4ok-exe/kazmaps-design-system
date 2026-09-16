@@ -183,7 +183,7 @@ export function SelectField({
             id={listId}
             role="listbox"
             aria-label={label ?? rest["aria-label"]}
-            className="absolute top-[calc(100%+var(--spacing-gap-4))] left-0 z-30 m-0 flex max-h-[268px] w-full list-none flex-col gap-(--spacing-gap-4) overflow-y-auto rounded-(--dimension-corner-radius-10) bg-(--background-primary) p-(--spacing-padding-8) shadow-(--shadow-hud) animate-modal-in"
+            className="absolute top-[calc(100%+var(--spacing-gap-4))] left-0 z-30 m-0 flex max-h-[268px] w-full list-none flex-col gap-(--spacing-gap-4) overflow-y-auto rounded-(--dimension-corner-radius-10) bg-(--background-primary) p-(--spacing-padding-8) shadow-(--shadow-modal) animate-modal-in"
           >
             {options.map((option, index) => {
               const isSelected = option.value === value;

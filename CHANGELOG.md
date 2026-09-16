@@ -27,8 +27,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
   `aria-selected` и галочкой. Пропы `value`, `onChange`, `options`, `label`, `bordered` не менялись,
   но остальные атрибуты теперь от `<button>`, а не от `<select>`. Открытого списка в макете нет —
   `docs/figma-deltas.md`, пункт 22.
-- `Menu`, `MenuItem` и `MenuDivider` — выпадающее меню по макету: карточка `Menu` (`245:569`)
-  240 в ширину, радиус 10, тень HUD, паддинг 8 и зазор 4; разделитель `Menu Item Divder` — восемь
+- `Menu`, `MenuItem` и `MenuDivider` — карточка и пункты из макета, а не готовое выпадающее меню:
+  открытие и закрытие, триггер и возврат фокуса остаются за приложением. Карточка `Menu`
+  (`245:569`) 240 в ширину, радиус 10, паддинг 8 и зазор 4, тень `--shadow-modal` — в ноде она
+  `#00000014`, то есть альфа 0.08, а не 0.12 у `--shadow-hud`. Сама карточка несёт `role="group"`,
+  иначе её `aria-label` не читается; разделитель `Menu Item Divder` — восемь
   в высоту с линией `background/tertiary` по центру. `MenuItem` — одна оболочка на все три типа
   пункта из макета: `Profile Menu Item` (`243:429`) со счётчиком и точкой непрочитанного,
   `Servises Menu Item` (`245:680`) с шевроном и `Layers Menu Item` (`253:187`) с жирным глифом у

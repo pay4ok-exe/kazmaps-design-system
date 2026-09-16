@@ -5,7 +5,7 @@ import { Menu, MenuDivider } from "./menu";
 import { MenuItem } from "./menu-item";
 
 describe("Menu", () => {
-  it("повторяет карточку макета: радиус 10, фон и тень HUD, паддинг 8, зазор 4", () => {
+  it("повторяет карточку макета: радиус 10, фон, тень modal, паддинг 8, зазор 4", () => {
     const { container } = render(
       <Menu label="Профиль">
         <MenuItem icon={<svg />} label="Настройки" />
@@ -14,18 +14,18 @@ describe("Menu", () => {
     const className = container.firstElementChild?.className ?? "";
     expect(className).toContain("rounded-(--dimension-corner-radius-10)");
     expect(className).toContain("bg-(--background-primary)");
-    expect(className).toContain("shadow-(--shadow-hud)");
+    expect(className).toContain("shadow-(--shadow-modal)");
     expect(className).toContain("p-(--spacing-padding-8)");
     expect(className).toContain("gap-(--spacing-gap-4)");
   });
 
-  it("подписан для скринридера", () => {
+  it("карточка — группа, поэтому её aria-label читается", () => {
     render(
       <Menu label="Профиль">
         <MenuItem icon={<svg />} label="Настройки" />
       </Menu>,
     );
-    expect(screen.getByLabelText("Профиль")).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Профиль" })).toBeInTheDocument();
   });
 
   it("разделитель — восемь в высоту с линией по центру", () => {
