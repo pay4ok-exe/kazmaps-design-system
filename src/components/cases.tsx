@@ -39,7 +39,9 @@ import { PlaceRow } from "./place-row";
 import { QrCode } from "./qr-code";
 import { ScaleBar } from "./scale-bar";
 import { SearchInput } from "./search-input";
+import { SectionHeader } from "./section-header";
 import { SelectField } from "./select-field";
+import { ShimmerBlock } from "./shimmer-block";
 import { StarRating } from "./star-rating";
 import { TextInput } from "./text-input";
 import { ToastProvider, useToast } from "./toast";
@@ -133,6 +135,13 @@ export const KIT_CASES: [string, ReactElement][] = [
   ["QrCode", <QrCode key="k" value="https://kazmaps.dev" />],
   ["ScaleBar", <ScaleBar key="k" label="100 м" widthPx={80} />],
   ["SearchInput", <SearchInput key="k" value="" onChange={noop} placeholder="Поиск" />],
+  ["SectionHeader", <SectionHeader key="k">Рядом</SectionHeader>],
+  [
+    "SectionHeader с действием",
+    <SectionHeader key="k" action={<Chip label="Все" />}>
+      Рядом
+    </SectionHeader>,
+  ],
   [
     "SelectField",
     <SelectField
@@ -157,6 +166,7 @@ export const KIT_CASES: [string, ReactElement][] = [
       options={[{ value: "almaty", label: "Алматы" }]}
     />,
   ],
+  ["ShimmerBlock", <ShimmerBlock key="k" className="h-4 w-24" />],
   ["MapCompass", <MapCompass key="k" label="На север" heading={35} />],
   ["MapCompass aligned", <MapCompass key="k" label="На север" aligned />],
   [

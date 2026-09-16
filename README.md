@@ -129,8 +129,8 @@ import { IconSearchBold, IconStarLight } from "@temirtator/kazmaps-design-system
 Карта: `MapCompass` (клик возвращает на север; с `heading` поворотом управляет приложение), `MapTrafficBadge`, `WeatherBadge`, `ForecastCard`, `ScaleBar`, `NavBar`,
 `CollapseHandle`.
 
-Содержимое: `PlaceRow`, `ListRow`, `EmptyState`, `StarRating`, `LogoLockup`, `LegalLink`,
-`InDevelopment`, `QrCode`.
+Содержимое: `PlaceRow`, `ListRow`, `SectionHeader`, `EmptyState`, `ShimmerBlock`, `StarRating`,
+`LogoLockup`, `LegalLink`, `InDevelopment`, `QrCode`.
 
 Хелперы: `cn`, `useFocusTrap`, `isTopmostTrap`, `REGIONS`, `findRegion`, `parseE164`,
 `formatE164`, `toE164`, `isKazakhstanMobile`.

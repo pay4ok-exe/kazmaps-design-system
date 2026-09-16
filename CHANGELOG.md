@@ -52,11 +52,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
   растягивала его до 48. Кнопка теперь ростом со строку (20), а площадь нажатия добирается
   псевдоэлементом: он вне потока и высоту не трогает. Глаз перешёл на роли `icon/secondary` и
   `icon/primary`.
-- **Ломающее.** `SegmentedRow`, `SectionHeader`, `SectionError` и `ShimmerBlock` удалены вместе с
-  типами `SegmentedRowItem` и `SegmentedRowProps`. В макете этих компонентов нет; main-web рисует
-  заголовок секции, её ошибку и заглушку загрузки у себя. Утилита `.animate-shimmer-placeholder`
-  и токены `--motion-shimmer`, `--shimmer-peak` остались в `kit.css` — на них и держится своя
-  заглушка. Подробности — `docs/figma-deltas.md`, пункт 20.
+- **Ломающее.** `SegmentedRow` и `SectionError` удалены вместе с типами `SegmentedRowItem` и
+  `SegmentedRowProps`. В макете этих компонентов нет: ряд сервисов main-web собирается из `NavItem`
+  напрямую, ошибку секции приложение рисует у себя. Подробности — `docs/figma-deltas.md`, пункт 20.
+- `SectionHeader` остался в ките: это `Header` из раздела Navigation (`88:30`) — 328 × 28, паддинг
+  текста 4, подпись Inter 500 16/20 `text/primary`. Заголовок теперь обрезается многоточием в одну
+  строку, как `textTruncation` ноды; больше в компоненте ничего не менялось.
+- `ShimmerBlock` остался заглушкой загрузки кита. В макете её нет — состояние загрузки дизайнер
+  не нарисовал (`docs/figma-map.md`, «Компоненты, которых в макете нет»). Утилита
+  `.animate-shimmer-placeholder` и токены `--motion-shimmer`, `--shimmer-peak` живут в `kit.css`.
 - **Ломающее.** Внутренний `TabAction` стал публичным `NavItem` (`NavItemProps`) — так этот
   компонент назван по месту применения, а ряд сервисов main-web собирается из него напрямую,
   без `SegmentedRow`.

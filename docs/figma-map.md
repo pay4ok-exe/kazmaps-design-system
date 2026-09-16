@@ -22,7 +22,7 @@
 | Search Field            | `79:157`  | Navigation   | `SearchInput`              |                                                                                       |
 | Near Place Card         | `89:31`   | Navigation   | `PlaceRow`                 | **имя изменено**                                                                      |
 | Category Label          | `81:181`  | Navigation   | `Chip`                     | **имя изменено**: это чип с иконкой                                                   |
-| Header                  | `88:30`   | Navigation   | —                          | **удалён по решению продукта**; совпадал по замерам                                   |
+| Header                  | `88:30`   | Navigation   | `SectionHeader`            | **имя изменено**; замеры совпадают                                                    |
 | _Tab Action             | `76:342`  | Navigation   | `NavItem`                  | **имя изменено**; вес глифа меняется с состоянием                                     |
 | Map Action              | `97:53`   | Map HUD      | `IconButton`               | **имя изменено**                                                                      |
 | Map Compass             | `109:612` | Map HUD      | `MapCompass`               |                                                                                       |
@@ -67,6 +67,7 @@
 | `PasswordInput`   | пароль с глазом          | прежний кит; глифа глаза в наборе нет          |
 | `QrCode`          | QR-код                   | прежний кит                                    |
 | `ScaleBar`        | линейка масштаба карты   | снята с экрана сайта                           |
+| `ShimmerBlock`    | заглушка загрузки        | прежний кит; состояния загрузки в макете нет   |
 | `StarRating`      | рейтинг звездой          | прежний кит                                    |
 | `Toast`           | всплывающее сообщение    | прежний кит; на нём держатся все тексты ошибок |
 | `Toggle`          | переключатель «вкл/выкл» | прежний кит; не путать с `PillTabs`            |
