@@ -13,7 +13,13 @@ export default meta;
 export const AllVariants: StoryObj = { render: () => <Cases component="ForecastCard" /> };
 
 export const Playground: StoryObj<typeof ForecastCard> = {
-  args: { title: "14:00", day: "", temperature: "+20°", precipitation: "0%", current: true },
+  args: {
+    title: "Сегодня",
+    day: "14 сент.",
+    temperature: "+20°",
+    precipitation: "0%",
+    current: true,
+  },
   argTypes: { icon: { table: { disable: true } } },
   render: ({ day, ...args }) => (
     <ForecastCard

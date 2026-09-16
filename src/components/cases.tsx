@@ -193,11 +193,23 @@ export const KIT_CASES: [string, ReactElement][] = [
     />,
   ],
   [
+    "ForecastCard сегодня",
+    <ForecastCard
+      key="k"
+      current
+      title="Сегодня"
+      day="14 сент."
+      icon={<Sun size={32} aria-hidden="true" className="text-(color:--weather-sun)" />}
+      temperature="+20°"
+      precipitation="0%"
+    />,
+  ],
+  [
     "ForecastCard weekly",
     <ForecastCard
       key="k"
       title="Пн"
-      day="понедельник"
+      day="19 сент."
       icon={<Sun size={32} aria-hidden="true" className="text-(color:--weather-sun)" />}
       temperature="+20°"
       precipitation="10%"

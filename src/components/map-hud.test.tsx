@@ -85,14 +85,14 @@ describe("ForecastCard", () => {
     const { container } = render(
       <ForecastCard
         title="Пн"
-        day="понедельник"
+        day="19 сент."
         icon={<span />}
         temperature="+20°"
         precipitation="10%"
       />,
     );
     expect(container.firstElementChild?.className).toContain("overflow-hidden");
-    for (const text of ["Пн", "понедельник", "+20°", "10%"]) {
+    for (const text of ["Пн", "19 сент.", "+20°", "10%"]) {
       expect(screen.getByText(text).className, text).toContain("w-full");
     }
   });
@@ -101,14 +101,14 @@ describe("ForecastCard", () => {
     render(
       <ForecastCard
         title="Пн"
-        day="понедельник"
+        day="19 сент."
         icon={<span />}
         temperature="+20°"
         precipitation="10%"
       />,
     );
     expect(screen.getByText("Пн").className).toContain("truncate");
-    expect(screen.getByText("понедельник").className).toContain("truncate");
+    expect(screen.getByText("19 сент.").className).toContain("truncate");
     expect(screen.getByText("+20°").className).not.toContain("truncate");
     expect(screen.getByText("10%").className).not.toContain("truncate");
   });
@@ -133,17 +133,17 @@ describe("ForecastCard", () => {
     const { rerender } = render(
       <ForecastCard title="Пн" icon={<span />} temperature="+20°" precipitation="0%" />,
     );
-    expect(screen.queryByText("понедельник")).toBeNull();
+    expect(screen.queryByText("19 сент.")).toBeNull();
     rerender(
       <ForecastCard
         title="Пн"
-        day="понедельник"
+        day="19 сент."
         icon={<span />}
         temperature="+20°"
         precipitation="0%"
       />,
     );
-    expect(screen.getByText("понедельник")).toBeInTheDocument();
+    expect(screen.getByText("19 сент.")).toBeInTheDocument();
   });
 });
 
