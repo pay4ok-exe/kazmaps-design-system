@@ -52,6 +52,7 @@ export function MenuItem({
       className={`group flex w-full items-center gap-(--spacing-gap-8) rounded-(--dimension-corner-radius-4) bg-(--background-primary) p-(--spacing-padding-6) text-left transition-interactive focus-ring disabled:cursor-not-allowed not-disabled:hover:bg-(--background-secondary) ${className}`}
     >
       <span
+        data-part="icon"
         className={`relative flex size-5 shrink-0 items-center justify-center ${ICON_TONE[tone]}`}
       >
         {active ? (activeIcon ?? icon) : icon}
@@ -63,6 +64,7 @@ export function MenuItem({
         ) : null}
       </span>
       <span
+        data-part="label"
         className={`min-w-0 flex-1 truncate text-sm leading-(--typography-line-height-20) [font-weight:var(--font-weight-book)] ${TEXT_TONE[tone]}`}
       >
         {label}

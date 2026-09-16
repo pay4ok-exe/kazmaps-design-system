@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { MenuItem } from "./menu-item";
+import { MENU_ITEM_STATE } from "./menu-item.states";
 
 const glyph = <svg data-testid="glyph" />;
 const boldGlyph = <svg data-testid="bold" />;
@@ -84,5 +85,12 @@ describe("MenuItem", () => {
     item({ onSelect });
     await userEvent.click(button());
     expect(onSelect).toHaveBeenCalledTimes(1);
+  });
+  it("витрина наведения бьёт по тем же частям, что красит компонент", () => {
+    const { container } = item();
+    expect(container.querySelector("[data-part='icon']")).not.toBeNull();
+    expect(container.querySelector("[data-part='label']")).not.toBeNull();
+    expect(MENU_ITEM_STATE.hoverPreview).toContain("data-part=icon");
+    expect(MENU_ITEM_STATE.hoverPreview).toContain("data-part=label");
   });
 });
