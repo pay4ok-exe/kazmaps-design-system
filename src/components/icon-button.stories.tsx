@@ -21,7 +21,7 @@ const TYPES = [
     label: "Приблизить",
     glyph: () => <IconPlus />,
     activeGlyph: () => <IconPlus />,
-    note: "в макете Default и Hover переставлены местами — иконка там светлеет на наведении; воспроизведён порядок двух других типов, см. docs/figma-deltas.md, пункт 13",
+    note: "в макете Default и Hover переставлены местами — иконка там светлеет на наведении; воспроизведён порядок двух других типов, см. docs/figma-deltas.md, пункт 11",
   },
   {
     name: "Dimension",

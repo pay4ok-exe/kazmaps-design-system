@@ -7,6 +7,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
 
 ### Changed
 
+- **Ломающее.** Выдуманные тени удалены: `--shadow-column`, `--shadow-button-sm`,
+  `--shadow-button-md`, `--shadow-sheet-top` и `--shadow-dropdown` не были ни в одной ноде макета.
+  Места, где они стояли, переведены на измеренную `--shadow-hud`: заглушка `EmptyState`,
+  выпадающие списки `DayPicker` и пикера регионов. Лист `BottomSheet` светит вверх, измеренной
+  тени для этого нет — он остался без тени. Остальные тени кита (`--shadow-field`, `--shadow-hud`,
+  `--shadow-hud-hover`, `--shadow-hud-side`, `--shadow-hud-badge`, `--shadow-modal`) сняты с нод
+  и остаются.
+
 - **Ломающее.** `ToggleSwitch` переименован в `PillTabs` вместе с типами `ToggleSwitchOption` и
   `ToggleSwitchProps` — в макете это `Toggle Switch` (`141:612`), ряд вкладок-пилюль, а не
   переключатель «вкл/выкл» (тот остался `Toggle`).
@@ -15,7 +23,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
   `Escape` и щелчком мимо; активный пункт назван через `aria-activedescendant`, выбранный помечен
   `aria-selected` и галочкой. Пропы `value`, `onChange`, `options`, `label`, `bordered` не менялись,
   но остальные атрибуты теперь от `<button>`, а не от `<select>`. Открытого списка в макете нет —
-  `docs/figma-deltas.md`, пункт 24.
+  `docs/figma-deltas.md`, пункт 22.
 - `Menu`, `MenuItem` и `MenuDivider` — выпадающее меню по макету: карточка `Menu` (`245:569`)
   240 в ширину, радиус 10, тень HUD, паддинг 8 и зазор 4; разделитель `Menu Item Divder` — восемь
   в высоту с линией `background/tertiary` по центру. `MenuItem` — одна оболочка на все три типа
@@ -42,25 +50,25 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
   типами `SegmentedRowItem` и `SegmentedRowProps`. В макете этих компонентов нет; main-web рисует
   заголовок секции, её ошибку и заглушку загрузки у себя. Утилита `.animate-shimmer-placeholder`
   и токены `--motion-shimmer`, `--shimmer-peak` остались в `kit.css` — на них и держится своя
-  заглушка. Подробности — `docs/figma-deltas.md`, пункт 22.
+  заглушка. Подробности — `docs/figma-deltas.md`, пункт 20.
 - **Ломающее.** Внутренний `TabAction` стал публичным `NavItem` (`NavItemProps`) — так этот
   компонент назван по месту применения, а ряд сервисов main-web собирается из него напрямую,
   без `SegmentedRow`.
 - **Ломающее.** `Panel` и тип `PanelVariant` удалены: в макете такого компонента нет, а сам он был
   обёрткой над четырьмя классами с единственным значением `variant`. Три вызова main-web переносят
-  классы к себе — `docs/figma-deltas.md`, пункт 21. Токен `--shadow-column` оставлен: он объявлен
-  у всех брендов и ждёт значения от дизайнера.
+  классы к себе — `docs/figma-deltas.md`, пункт 19. Токен `--shadow-column` удалён вместе с остальными
+  выдуманными тенями.
 - Кит рисует глифы набора `/icons`, а не `lucide-react`: `SearchInput` и пикер регионов —
   `search`, `SelectField`, `PhoneInput` и `DayPicker` — `chevron-*`, `Dialog` и `BottomSheet` —
   `close`, пикер регионов — `checkmark`, `StarRating` — `star`, `CollapseHandle` — шевроны.
   Глифы набора залиты `currentColor`, поэтому роли цвета не изменились, но начертание теперь
   макетное. Исключение — глаз в `PasswordInput` и календарь в `DayPicker`: таких иконок в наборе
-  нет (`docs/figma-deltas.md`, пункт 20).
+  нет (`docs/figma-deltas.md`, пункт 18).
 - `NavBarItem` принимает `activeIcon`: в макете вес глифа меняется вместе с состоянием —
   `light` у неактивной вкладки и наведения, `bold` у активной. Витрина `NavBar` берёт иконки
   из набора `/icons` (`search`, `route`, `users-three`, `bookmark`, `phone-and-tablet`), а не
   их заменители из `lucide`. Остальные компоненты кита пока рисуют `lucide` —
-  `docs/figma-deltas.md`, пункт 20.
+  `docs/figma-deltas.md`, пункт 18.
 - **Ломающее.** `NavRail` переименован в `NavBar` — компонент в макете называется «Nav bar»
   (`134:406`). Типы `NavRailItem` и `NavRailProps` стали `NavBarItem` и `NavBarProps`.
 - `NavBar` работает и без внешнего состояния: с `defaultActiveId` панель сама отмечает нажатую
@@ -79,7 +87,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
 - **Ломающее.** `Dialog` больше не принимает `subtitle` и `showHeader`. В макете `137:440` в шапке
   только заголовок, а сама шапка есть всегда; поясняющий текст кладётся первым абзацем в тело —
   в макете это свободный слот. Семь диалогов main-web переносят текст из `subtitle` в `children`.
-  Ширина (`size`) и растяжка тела оставлены как есть — `docs/figma-deltas.md`, пункты 18 и 19.
+  Ширина (`size`) и растяжка тела оставлены как есть — `docs/figma-deltas.md`, пункты 16 и 17.
 - **Ломающее.** `CollapseHandle` больше не принимает `children`: шеврон вшит в компонент и
   разворачивается вслед за `open`, как варианты макета (`Close` — влево, `Open` — вправо).
 - `CollapseHandle` сведён к макету сайта (`Collapse Sidebar Action`, `121:7021` и `155:7884`):
@@ -91,7 +99,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
   `--shadow-field` стоит всегда. В фокусе остаётся одна рамка `border/focus` — прежде поверх неё
   рисовалось второе кольцо `focus-ring-within`. Крестик очистки `::-webkit-search-cancel-button`
   скрыт: в макете его нет, в Firefox его не было, нашим ролям он не подчиняется.
-  Что это значит для main-web — `docs/figma-deltas.md`, пункт 16.
+  Что это значит для main-web — `docs/figma-deltas.md`, пункт 14.
 
 ## [1.0.0] — 2026-09-15
 

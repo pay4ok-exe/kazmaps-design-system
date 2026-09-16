@@ -113,7 +113,7 @@ export function BottomSheet({
       aria-modal={ariaModal ? "true" : undefined}
       tabIndex={ariaModal ? -1 : undefined}
       data-testid={testId}
-      className={`pointer-events-auto fixed inset-x-0 flex flex-col rounded-t-2xl border-t border-(--border-secondary) bg-(--background-primary) shadow-(--shadow-sheet-top) outline-none transition-[height,max-height,bottom] duration-[var(--motion-panel)] ease-[var(--ease-standard)] md:hidden ${active.heightClassName} ${className}`}
+      className={`pointer-events-auto fixed inset-x-0 flex flex-col rounded-t-2xl border-t border-(--border-secondary) bg-(--background-primary) outline-none transition-[height,max-height,bottom] duration-[var(--motion-panel)] ease-[var(--ease-standard)] md:hidden ${active.heightClassName} ${className}`}
     >
       <button
         type="button"

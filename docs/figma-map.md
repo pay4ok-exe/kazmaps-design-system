@@ -43,7 +43,7 @@
 | Nav bar                 | `134:406` | Blocks - Web | `NavBar`                   |                                                                                       |
 | Dialog                  | `137:440` | Blocks - Web | `Dialog`                   |                                                                                       |
 | _ Dialog Close          | `137:422` | Blocks - Web | внутри `Dialog`            | три состояния кнопки закрытия                                                         |
-| Captcha                 | `141:651` | Additional   | —                          | **не наш компонент**: Turnstile рисует Cloudflare в чужом iframe (`figma-deltas`, 15) |
+| Captcha                 | `141:651` | Additional   | —                          | **не наш компонент**: Turnstile рисует Cloudflare в чужом iframe (`figma-deltas`, 13) |
 | Map                     | `141:646` | Additional   | токен `--map-tile-style`   | не компонент, а название стиля тайлов                                                 |
 
 Три пункта — `_Toggle Option`, `_Menu Toggle Option`, `_ Dialog Close` — в макете помечены
@@ -76,10 +76,10 @@
 1. **`Menu Item Divder`** — опечатка, ожидается `Divider`.
 2. **`Servises Menu Item`** — опечатка, ожидается `Services`.
 3. **`icon/dander`** — опечатка в имени переменной, ожидается `icon/danger`. Имя роли мы держим
-   как в источнике, иначе рассыпается трассировка (`figma-deltas`, 8).
+   как в источнике, иначе рассыпается трассировка на `scripts/import-figma.mjs`.
 4. **`Toggle Switch` и `Menu Toggle Item`** — переключателя в них нет, это вкладки. Если
    переименуете у себя, мы приведём код к новым именам.
 5. **Высота пилюли в `Menu Toggle Switch`** — объявлен паддинг 4 при тексте 18, но высота
-   зафиксирована числом 30: сумма не сходится (`figma-deltas`, 23).
+   зафиксирована числом 30: сумма не сходится (`figma-deltas`, 21).
 
 Остальные открытые вопросы — в `docs/figma-deltas.md`.

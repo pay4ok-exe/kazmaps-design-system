@@ -142,31 +142,6 @@ const kit = {
   "motion-fast": { $type: "duration", $value: "140ms", $description: WAITING },
   "motion-panel": { $type: "duration", $value: "240ms", $description: WAITING },
   "motion-shimmer": { $type: "duration", $value: "1.6s", $description: WAITING },
-  "shadow-column": {
-    $type: "shadow",
-    $value: "rgba(16, 24, 40, 0.05) 2px 0px 8px 0px",
-    $description: WAITING,
-  },
-  "shadow-button-sm": {
-    $type: "shadow",
-    $value: "rgba(16, 24, 40, 0.08) 0px 1px 3px 0px",
-    $description: WAITING,
-  },
-  "shadow-button-md": {
-    $type: "shadow",
-    $value: "rgba(16, 24, 40, 0.1) 0px 1px 3px 0px",
-    $description: WAITING,
-  },
-  "shadow-sheet-top": {
-    $type: "shadow",
-    $value: "rgba(16, 24, 40, 0.14) 0px -4px 20px 0px",
-    $description: WAITING,
-  },
-  "shadow-dropdown": {
-    $type: "shadow",
-    $value: "rgba(16, 24, 40, 0.22) 0px 12px 32px 0px",
-    $description: WAITING,
-  },
 };
 for (const [role, def] of Object.entries(kit)) {
   staticRoles.push(role);

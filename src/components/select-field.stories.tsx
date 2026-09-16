@@ -40,7 +40,7 @@ export const AllVariants: StoryObj = {
       <p className="max-w-[620px] text-xs leading-(--typography-line-height-16) text-(color:--text-secondary)">
         Поле собрано без нативного select: список рисуется сам, ходит по стрелкам, выбирает Enter и
         закрывается Escape. Закрытое состояние снято с макета 129:77, открытого списка в макете нет
-        — он взят с карточки Menu (docs/figma-deltas.md, пункт 24).
+        — он взят с карточки Menu (docs/figma-deltas.md, пункт 22).
       </p>
       <div className="flex items-start gap-(--spacing-gap-24)">
         {[

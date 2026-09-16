@@ -89,7 +89,7 @@ export const AllVariants: StoryObj = {
       </p>
       <Row
         title="Без снимка"
-        note="Image=False в макете: глиф User weight=light, паддинг 8. На наведении глиф СВЕТЛЕЕТ — так в макете, как и у Map Action типа Default (docs/figma-deltas.md, пункт 13)."
+        note="Image=False в макете: глиф User weight=light, паддинг 8. На наведении глиф СВЕТЛЕЕТ — так в макете, как и у Map Action типа Default (docs/figma-deltas.md, пункт 11)."
       />
       <Row
         title="Без снимка, но с именем"

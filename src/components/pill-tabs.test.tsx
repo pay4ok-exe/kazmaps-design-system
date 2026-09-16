@@ -101,7 +101,7 @@ describe("PillTabs", () => {
     const option = screen.getByRole("button", { name: "Карта" }).className;
     expect(option).toContain("px-(--spacing-padding-4)");
     // Макет объявляет паддинг 4, но фиксирует высоту пилюли 30 при тексте 18 —
-    // по вертикали это ровно 6 (figma-deltas, пункт 23).
+    // по вертикали это ровно 6 (figma-deltas, пункт 21).
     expect(option).toContain("py-(--spacing-padding-6)");
     expect(option).toContain("text-sm");
     expect(option).toContain("leading-(--typography-line-height-18)");

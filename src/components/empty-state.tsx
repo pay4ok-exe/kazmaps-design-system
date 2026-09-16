@@ -2,8 +2,8 @@ function GhostStack() {
   return (
     <div className="relative mx-auto h-[112px] w-[172px]" aria-hidden="true">
       <div className="absolute inset-x-6 top-6 h-16 rounded-xl border border-(--border-secondary) bg-(--background-secondary)" />
-      <div className="absolute inset-x-3 top-3 h-16 rounded-xl border border-(--border-secondary) bg-(--background-primary) shadow-(--shadow-button-sm)" />
-      <div className="absolute inset-x-0 top-0 flex h-16 items-center gap-2 rounded-xl border border-(--border-primary) bg-(--background-primary) px-3 shadow-(--shadow-button-md)">
+      <div className="absolute inset-x-3 top-3 h-16 rounded-xl border border-(--border-secondary) bg-(--background-primary) shadow-(--shadow-hud)" />
+      <div className="absolute inset-x-0 top-0 flex h-16 items-center gap-2 rounded-xl border border-(--border-primary) bg-(--background-primary) px-3 shadow-(--shadow-hud)">
         <span className="size-8 shrink-0 rounded-full bg-(--background-secondary)" />
         <div className="flex-1 space-y-1.5">
           <div className="h-2 w-3/4 rounded-full bg-(--border-secondary)" />

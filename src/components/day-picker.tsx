@@ -142,7 +142,7 @@ export function DayPicker({
         <div
           role="dialog"
           aria-label="Выбор даты"
-          className="absolute top-[calc(100%+6px)] left-0 z-50 w-[278px] animate-modal-in rounded-[11px] border border-(--border-primary) bg-(--background-primary) p-3 shadow-(--shadow-dropdown)"
+          className="absolute top-[calc(100%+6px)] left-0 z-50 w-[278px] animate-modal-in rounded-[11px] border border-(--border-primary) bg-(--background-primary) p-3 shadow-(--shadow-hud)"
         >
           <div className="mb-2 flex items-center gap-1">
             <button

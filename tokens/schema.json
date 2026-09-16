@@ -161,12 +161,7 @@
     "ease-standard",
     "motion-fast",
     "motion-panel",
-    "motion-shimmer",
-    "shadow-column",
-    "shadow-button-sm",
-    "shadow-button-md",
-    "shadow-sheet-top",
-    "shadow-dropdown"
+    "motion-shimmer"
   ],
   "aliases": {}
 }

@@ -93,7 +93,7 @@ export function RegionPicker({
   return (
     <div
       ref={rootRef}
-      className="absolute left-0 top-[calc(100%+6px)] z-50 w-full max-w-[340px] overflow-hidden rounded-lg border border-(--border-primary) bg-(--background-primary) shadow-(--shadow-dropdown) animate-modal-in"
+      className="absolute left-0 top-[calc(100%+6px)] z-50 w-full max-w-[340px] overflow-hidden rounded-lg border border-(--border-primary) bg-(--background-primary) shadow-(--shadow-hud) animate-modal-in"
     >
       <div className="flex items-center gap-2 border-b border-(--border-primary) px-3 py-2.5 text-(color:--text-tertiary)">
         <IconSearchLight size={16} />
