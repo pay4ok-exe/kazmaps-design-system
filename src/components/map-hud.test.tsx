@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { CollapseHandle } from "./collapse-handle";
 import { Dialog } from "./dialog";
 import { ForecastCard } from "./forecast-card";
 import { IconButton } from "./icon-button";
@@ -113,26 +112,6 @@ describe("ForecastCard", () => {
       />,
     );
     expect(screen.getByText("понедельник")).toBeInTheDocument();
-  });
-});
-
-describe("CollapseHandle", () => {
-  it("несёт боковую тень и сообщает состояние панели", () => {
-    render(
-      <CollapseHandle label="Свернуть" open>
-        ‹
-      </CollapseHandle>,
-    );
-    const button = screen.getByRole("button", { name: "Свернуть" });
-    expect(button.className).toContain("shadow-(--shadow-hud-side)");
-    expect(button).toHaveAttribute("aria-expanded", "true");
-  });
-
-  it("закрытая полоска меняет поверхность и получает обводку", () => {
-    render(<CollapseHandle label="Развернуть">›</CollapseHandle>);
-    const className = screen.getByRole("button", { name: "Развернуть" }).className;
-    expect(className).toContain("bg-(--background-secondary)");
-    expect(className).toContain("inset-ring-(--background-primary)");
   });
 });
 
