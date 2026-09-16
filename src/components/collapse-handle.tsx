@@ -1,4 +1,5 @@
-import type { ComponentProps, ReactNode } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import type { ComponentProps } from "react";
 
 const CLOSED_EDGE = [
   "inset-shadow-[0_1px_0_0_var(--background-primary),0_-1px_0_0_var(--background-primary),-1px_0_0_0_var(--background-primary)]",
@@ -6,16 +7,16 @@ const CLOSED_EDGE = [
 ].join(" ");
 
 export function CollapseHandle({
-  children,
   label,
   open = false,
   className = "",
   ...rest
 }: ComponentProps<"button"> & {
-  children: ReactNode;
   label: string;
   open?: boolean;
 }) {
+  const Chevron = open ? ChevronLeft : ChevronRight;
+
   return (
     <button
       type="button"
@@ -27,7 +28,7 @@ export function CollapseHandle({
         open ? "bg-(--background-primary)" : CLOSED_EDGE
       } ${className}`}
     >
-      {children}
+      <Chevron size={20} aria-hidden="true" />
     </button>
   );
 }

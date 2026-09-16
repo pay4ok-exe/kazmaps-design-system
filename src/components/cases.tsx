@@ -1,15 +1,4 @@
-import {
-  ChevronLeft,
-  ChevronRight,
-  Coffee,
-  Layers,
-  MapPin,
-  Minus,
-  Plus,
-  Route,
-  Sun,
-  Users,
-} from "lucide-react";
+import { Coffee, Layers, MapPin, Minus, Plus, Route, Sun, Users } from "lucide-react";
 import { type ReactElement, useEffect } from "react";
 
 import { BottomSheet } from "./bottom-sheet";
@@ -214,18 +203,8 @@ export const KIT_CASES: [string, ReactElement][] = [
       precipitation="10%"
     />,
   ],
-  [
-    "CollapseHandle открыта",
-    <CollapseHandle key="k" open label="Свернуть панель">
-      <ChevronLeft size={20} aria-hidden="true" />
-    </CollapseHandle>,
-  ],
-  [
-    "CollapseHandle свёрнута",
-    <CollapseHandle key="k" label="Развернуть панель">
-      <ChevronRight size={20} aria-hidden="true" />
-    </CollapseHandle>,
-  ],
+  ["CollapseHandle открыта", <CollapseHandle key="k" open label="Свернуть панель" />],
+  ["CollapseHandle свёрнута", <CollapseHandle key="k" label="Развернуть панель" />],
   [
     "LegalLink",
     <LegalLink key="k" href="https://kazmaps.dev">

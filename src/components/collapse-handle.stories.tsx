@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { ChevronLeft } from "lucide-react";
 
 import { Cases } from "./cases";
 import { CollapseHandle } from "./collapse-handle";
@@ -14,10 +13,4 @@ export const AllVariants: StoryObj = { render: () => <Cases component="CollapseH
 
 export const Playground: StoryObj<typeof CollapseHandle> = {
   args: { open: true, label: "Свернуть панель" },
-  argTypes: { children: { table: { disable: true } } },
-  render: (args) => (
-    <CollapseHandle {...args}>
-      <ChevronLeft size={20} aria-hidden="true" />
-    </CollapseHandle>
-  ),
 };
