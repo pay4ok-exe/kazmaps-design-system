@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 import { MapCompass } from "./map-compass";
 
 const dial = (c: HTMLElement) => c.querySelector("svg");
+const letter = (c: HTMLElement) => c.querySelector("svg svg");
 
 describe("MapCompass", () => {
   it("подписан и кликается", async () => {
@@ -15,28 +16,76 @@ describe("MapCompass", () => {
   });
 
   it("циферблат поворачивается против азимута", () => {
-    const { container, rerender } = render(<MapCompass label="Север" />);
+    const { container, rerender } = render(<MapCompass label="Север" heading={0} />);
     expect(dial(container)).toHaveStyle({ rotate: "0deg" });
     rerender(<MapCompass label="Север" heading={90} />);
     expect(dial(container)).toHaveStyle({ rotate: "-90deg" });
   });
 
+  it("буква вращается вместе со шкалой, а не висит отдельно", () => {
+    const { container } = render(<MapCompass label="Север" heading={90} />);
+    // Буква вложена в тот же svg, которому задан поворот: отдельного слоя,
+    // способного остаться неподвижным, у неё нет.
+    expect(letter(container)?.closest("svg[style]")).toBe(dial(container));
+  });
+
+  it("буква стоит в центре по паддингу макета", () => {
+    const { container } = render(<MapCompass label="Север" />);
+    const n = letter(container);
+    expect(n?.getAttribute("x")).toBe("12");
+    expect(n?.getAttribute("y")).toBe("12");
+    expect(n?.getAttribute("width")).toBe("16");
+  });
+
   it("aligned подсвечивает букву акцентом", () => {
-    const { rerender } = render(<MapCompass label="Север" />);
+    const { rerender } = render(<MapCompass label="Север" heading={35} />);
     expect(screen.getByRole("button", { name: "Север" }).className).toContain(
       "text-(color:--icon-secondary)",
     );
-    rerender(<MapCompass label="Север" aligned />);
+    rerender(<MapCompass label="Север" heading={35} aligned />);
     expect(screen.getByRole("button", { name: "Север" }).className).toContain(
       "text-(color:--icon-accent)",
     );
   });
 
-  it("держит размер и паддинг макета", () => {
+  it("без явного aligned состояние выводится из азимута", () => {
+    const { rerender } = render(<MapCompass label="Север" heading={0} />);
+    expect(screen.getByRole("button", { name: "Север" }).className).toContain(
+      "text-(color:--icon-accent)",
+    );
+    rerender(<MapCompass label="Север" heading={360} />);
+    expect(screen.getByRole("button", { name: "Север" }).className).toContain(
+      "text-(color:--icon-accent)",
+    );
+    rerender(<MapCompass label="Север" heading={35} />);
+    expect(screen.getByRole("button", { name: "Север" }).className).toContain(
+      "text-(color:--icon-secondary)",
+    );
+  });
+
+  it("держит размер макета", () => {
     render(<MapCompass label="Север" />);
-    const className = screen.getByRole("button", { name: "Север" }).className;
-    expect(className).toContain("size-[40px]");
-    expect(className).toContain("p-(--spacing-padding-12)");
+    expect(screen.getByRole("button", { name: "Север" }).className).toContain("size-[40px]");
+  });
+});
+
+describe("MapCompass без внешнего состояния", () => {
+  it("клик возвращает компас на север сам", async () => {
+    const { container } = render(<MapCompass label="Север" defaultHeading={90} />);
+    expect(dial(container)).toHaveStyle({ rotate: "-90deg" });
+    await userEvent.click(screen.getByRole("button", { name: "Север" }));
+    expect(dial(container)).toHaveStyle({ rotate: "0deg" });
+    expect(screen.getByRole("button", { name: "Север" }).className).toContain(
+      "text-(color:--icon-accent)",
+    );
+  });
+
+  it("под внешним heading клик компас не крутит — решает приложение", async () => {
+    const onClick = vi.fn();
+    const { container } = render(<MapCompass label="Север" heading={90} onClick={onClick} />);
+    await userEvent.click(screen.getByRole("button", { name: "Север" }));
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(dial(container)).toHaveStyle({ rotate: "-90deg" });
   });
 });
 
@@ -48,9 +97,10 @@ describe("MapCompass rotation", () => {
     expect(dial(container)).toHaveStyle({ rotate: "-362deg" });
   });
 
-  it("keeps the glyph shadow outside the rotating layer", () => {
+  it("тень лежит на шкале, а не на букве — так в макете", () => {
     const { container } = render(<MapCompass label="Север" heading={180} />);
     expect(dial(container)?.style.filter).toBe("");
-    expect(dial(container)?.parentElement?.style.filter).toContain("drop-shadow");
+    expect(container.querySelector("svg > g")?.getAttribute("style")).toContain("drop-shadow");
+    expect(letter(container)?.getAttribute("style")).toBeNull();
   });
 });

@@ -125,7 +125,7 @@ import { IconSearchBold, IconStarLight } from "@temirtator/kazmaps-design-system
 
 Оверлеи: `Dialog`, `BottomSheet`, `ToastProvider` + `useToast`.
 
-Карта: `MapCompass`, `MapTrafficBadge`, `WeatherBadge`, `ForecastCard`, `ScaleBar`, `NavRail`,
+Карта: `MapCompass` (клик возвращает на север; с `heading` поворотом управляет приложение), `MapTrafficBadge`, `WeatherBadge`, `ForecastCard`, `ScaleBar`, `NavRail`,
 `CollapseHandle`, `Panel`.
 
 Содержимое: `PlaceRow`, `ListRow`, `SectionHeader`, `SectionError`, `EmptyState`,

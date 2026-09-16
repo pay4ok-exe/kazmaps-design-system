@@ -63,17 +63,27 @@ const LETTER_N = (
   />
 );
 
+const normalize = (deg: number) => ((deg % 360) + 360) % 360;
+
 export function MapCompass({
-  heading = 0,
-  aligned = false,
+  heading: headingProp,
+  defaultHeading = 0,
+  aligned: alignedProp,
+  onClick,
   label,
   className = "",
   ...rest
 }: ComponentProps<"button"> & {
   heading?: number;
+  defaultHeading?: number;
   aligned?: boolean;
   label: string;
 }) {
+  const controlled = headingProp !== undefined;
+  const [ownHeading, setOwnHeading] = useState(defaultHeading);
+  const heading = controlled ? headingProp : ownHeading;
+  const aligned = alignedProp ?? normalize(heading) === 0;
+
   const [turn, setTurn] = useState({ heading, rotation: -heading });
   if (turn.heading !== heading) {
     const delta = ((((heading - turn.heading) % 360) + 540) % 360) - 180;
@@ -86,28 +96,26 @@ export function MapCompass({
       aria-label={label}
       title={label}
       {...rest}
-      className={`relative flex size-[40px] items-center justify-center rounded-(--dimension-corner-radius-max) bg-(--background-primary) p-(--spacing-padding-12) shadow-(--shadow-hud) transition-interactive focus-ring hover:shadow-(--shadow-hud-hover) ${
+      onClick={(event) => {
+        if (!controlled) setOwnHeading(0);
+        onClick?.(event);
+      }}
+      className={`relative block size-[40px] rounded-(--dimension-corner-radius-max) bg-(--background-primary) shadow-(--shadow-hud) transition-interactive focus-ring hover:shadow-(--shadow-hud-hover) ${
         aligned
           ? "text-(color:--icon-accent)"
           : "text-(color:--icon-secondary) hover:text-(color:--icon-primary)"
       } ${className}`}
     >
-      <span
+      <svg
+        viewBox="0 0 40 40"
         aria-hidden="true"
-        className="absolute inset-0"
-        style={{ filter: "drop-shadow(0 4px 8px rgb(0 0 0 / 0.12))" }}
+        className="block size-full transition-[rotate] duration-(--motion-panel) ease-(--ease-standard)"
+        style={{ rotate: `${String(turn.rotation)}deg` }}
       >
-        <svg
-          viewBox="0 0 40 40"
-          aria-hidden="true"
-          className="block size-full transition-[rotate] duration-(--motion-panel) ease-(--ease-standard)"
-          style={{ rotate: `${String(turn.rotation)}deg` }}
-        >
-          {DIAL}
+        <g style={{ filter: "drop-shadow(0 4px 8px rgb(0 0 0 / 0.12))" }}>{DIAL}</g>
+        <svg x="12" y="12" width="16" height="16" viewBox="0 0 16 16">
+          {LETTER_N}
         </svg>
-      </span>
-      <svg viewBox="0 0 16 16" aria-hidden="true" className="relative size-[16px]">
-        {LETTER_N}
       </svg>
     </button>
   );
