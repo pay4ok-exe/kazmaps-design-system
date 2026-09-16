@@ -119,7 +119,8 @@ import { IconSearchBold, IconStarLight } from "@temirtator/kazmaps-design-system
 Действия: `Button` (`accent` | `neutral` | `danger`), `IconButton` (Map Action, 36), `IconButtonGroup` (зум), `Chip`, `Toggle`,
 `ToggleSwitch`, `SegmentedRow`, `Avatar`.
 
-Поля: `TextInput`, `PasswordInput`, `SearchInput`, `PhoneInput`, `CodeInput`, `SelectField`,
+Поля: `TextInput`, `PasswordInput`, `SearchInput` (обводка, иконка и ввод — отправка по Enter),
+`PhoneInput`, `CodeInput`, `SelectField`,
 `DayPicker`.
 
 Оверлеи: `Dialog`, `BottomSheet`, `ToastProvider` + `useToast`.

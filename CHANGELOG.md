@@ -3,6 +3,17 @@
 All notable changes to `@temirtator/kazmaps-design-system` are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: semver.
 
+## [Не выпущено]
+
+### Changed
+
+- **Ломающее.** `SearchInput` сведён к макету `79:157`: пропы `onSubmit`, `submitLabel`,
+  `compact` и `suffix` удалены вместе с синей кнопкой отправки и слотом справа, тень
+  `--shadow-field` стоит всегда. В фокусе остаётся одна рамка `border/focus` — прежде поверх неё
+  рисовалось второе кольцо `focus-ring-within`. Крестик очистки `::-webkit-search-cancel-button`
+  скрыт: в макете его нет, в Firefox его не было, нашим ролям он не подчиняется.
+  Что это значит для main-web — `docs/figma-deltas.md`, пункт 16.
+
 ## [1.0.0] — 2026-09-15
 
 Один кит на все бренды. Все пункты «Removed» и отмеченные пункты «Changed» ломают совместимость с 0.7.0.

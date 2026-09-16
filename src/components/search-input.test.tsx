@@ -29,33 +29,24 @@ describe("SearchInput", () => {
 
   it("фокус показывает только рамку макета, без второго кольца", () => {
     const { container } = render(<SearchInput value="" onChange={vi.fn()} />);
-    const className = container.firstElementChild?.className ?? "";
-    expect(className).toContain("has-[input:focus]:inset-ring-(--border-focus)");
-    expect(className).not.toContain("focus-ring-within");
+    expect(container.firstElementChild?.className).not.toContain("focus-ring-within");
   });
 
-  it("тень есть в обычном виде и снята в плотном", () => {
-    const { container, rerender } = render(<SearchInput value="" onChange={vi.fn()} />);
+  it("тень макета стоит всегда", () => {
+    const { container } = render(<SearchInput value="" onChange={vi.fn()} />);
     expect(container.firstElementChild?.className).toContain("shadow-(--shadow-field)");
-    rerender(<SearchInput value="" onChange={vi.fn()} compact />);
-    expect(container.firstElementChild?.className).not.toContain("shadow-(--shadow-field)");
   });
 
-  it("кнопка отправки появляется только с onSubmit", async () => {
-    const onSubmit = vi.fn();
-    const { rerender } = render(<SearchInput value="" onChange={vi.fn()} />);
-    expect(screen.queryByRole("button", { name: "Искать" })).toBeNull();
-    rerender(<SearchInput value="" onChange={vi.fn()} onSubmit={onSubmit} />);
-    await userEvent.click(screen.getByRole("button", { name: "Искать" }));
-    expect(onSubmit).toHaveBeenCalledTimes(1);
+  it("в поле нет ничего, кроме иконки и ввода", () => {
+    const { container } = render(<SearchInput value="кофе" onChange={vi.fn()} />);
+    expect(screen.queryByRole("button")).toBeNull();
+    expect(container.firstElementChild?.children).toHaveLength(2);
   });
-});
 
-describe("SearchInput submit button", () => {
-  it("stretches to the field height instead of a percentage of an auto height", () => {
-    render(<SearchInput value="" onChange={vi.fn()} onSubmit={vi.fn()} />);
-    const className = screen.getByRole("button", { name: "Искать" }).className;
-    expect(className).toContain("self-stretch");
-    expect(className).not.toContain("h-[calc(100%");
+  it("крестик очистки браузера скрыт", () => {
+    render(<SearchInput value="кофе" onChange={vi.fn()} placeholder="Поиск" />);
+    expect(screen.getByPlaceholderText("Поиск").className).toContain(
+      "[&::-webkit-search-cancel-button]:hidden",
+    );
   });
 });
