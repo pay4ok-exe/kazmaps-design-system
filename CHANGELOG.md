@@ -7,6 +7,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: se
 
 ### Changed
 
+- Набор `/icons` подтянут из макета: 104 глифа вместо 101 — добавились `printer` в двух
+  начертаниях и `ruler`. Ничего не удалено, существующие глифы не изменились.
+
 - **Ломающее.** Выдуманные тени удалены: `--shadow-column`, `--shadow-button-sm`,
   `--shadow-button-md`, `--shadow-sheet-top` и `--shadow-dropdown` не были ни в одной ноде макета.
   Места, где они стояли, переведены на измеренную `--shadow-hud`: заглушка `EmptyState`,

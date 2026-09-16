@@ -433,6 +433,18 @@ export const ICON_MANIFEST = [
     weight: null,
   },
   {
+    slug: "printer-bold",
+    multicolour: false,
+    section: "Interface Icons",
+    weight: "bold",
+  },
+  {
+    slug: "printer-light",
+    multicolour: false,
+    section: "Interface Icons",
+    weight: "light",
+  },
+  {
     slug: "rain",
     multicolour: true,
     section: "Weather Icons",
@@ -449,6 +461,12 @@ export const ICON_MANIFEST = [
     multicolour: false,
     section: "Interface Icons",
     weight: "light",
+  },
+  {
+    slug: "ruler",
+    multicolour: false,
+    section: "Interface Icons",
+    weight: null,
   },
   {
     slug: "scissors",

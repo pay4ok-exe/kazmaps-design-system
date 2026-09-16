@@ -287,6 +287,14 @@
     "section": "Interface Icons",
     "weight": null
   },
+  "printer-bold": {
+    "section": "Interface Icons",
+    "weight": "bold"
+  },
+  "printer-light": {
+    "section": "Interface Icons",
+    "weight": "light"
+  },
   "rain": {
     "section": "Weather Icons",
     "weight": null
@@ -298,6 +306,10 @@
   "route-light": {
     "section": "Interface Icons",
     "weight": "light"
+  },
+  "ruler": {
+    "section": "Interface Icons",
+    "weight": null
   },
   "scissors": {
     "section": "Map UI Icons",
